@@ -1,0 +1,111 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_start">
+
+    <LinearLayout
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="26dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <!-- Help Icon at the top right -->
+        <ImageView
+            android:id="@+id/help_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/baseline_help_outline_24"
+            android:contentDescription="Help Icon" />
+    </LinearLayout>
+    <!-- Illustration Image (centered) -->
+    <RelativeLayout
+
+        android:layout_marginTop="480dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <!-- Title Text -->
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Linked to Farmer,\nLets be part"
+            android:textColor="#FFFFFF"
+            android:textSize="32dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            />
+
+        <!-- Subtitle Text -->
+        <TextView
+            android:id="@+id/subtitle_text"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="jadilah bagian dari perubahan untuk masa depan pertanian yang lebih baik."
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:layout_below="@id/title_text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:paddingHorizontal="16dp" />
+
+        <!-- Login and Register Buttons -->
+        <LinearLayout
+            android:id="@+id/button_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_below="@id/subtitle_text"
+            android:layout_marginTop="24dp">
+
+            <Button
+                android:id="@+id/btn_login"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:text="Masuk"
+                android:backgroundTint="#F5F5F5"
+                android:textColor="#B23838"
+                android:layout_marginBottom="6dp" />
+
+            <Button
+                android:id="@+id/btn_register"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:text="Daftar"
+                android:backgroundTint="#7E1616"
+                android:textColor="#FFFFFF" />
+
+        </LinearLayout>
+
+        <!-- Sign-in with Google -->
+        <LinearLayout
+
+            android:layout_marginTop="6dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_below="@id/button_container"
+            android:layout_centerHorizontal="true"
+            >
+
+
+            <ImageView
+                android:id="@+id/google_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/login_google"
+                android:contentDescription="Google Icon" />
+
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

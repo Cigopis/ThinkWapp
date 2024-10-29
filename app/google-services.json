@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "414964974859",
+    "project_id": "thinkwapp",
+    "storage_bucket": "thinkwapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414964974859:android:e68bcc3ec71790350f0e0e",
+        "android_client_info": {
+          "package_name": "com.wongcoco.thinkwapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414964974859-58itqgrtm5cerd14i3ggubtjri7rcprf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8TdCf_dTVt1DeaHO3FcP9kFU7cWHgxVw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414964974859-58itqgrtm5cerd14i3ggubtjri7rcprf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

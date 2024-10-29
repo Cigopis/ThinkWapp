@@ -1,0 +1,170 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E8F5E9">
+
+    <!-- Field OTP -->
+    <EditText
+        android:id="@+id/otpField"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:hint="Masukkan OTP"
+        android:backgroundTint="#FFCDD2"
+        android:textColorHint="#B23C38"
+        android:inputType="number"
+        android:layout_below="@id/signInButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:padding="12dp"
+        android:visibility="gone"
+        android:background="@drawable/edit_text_background" />
+
+    <!-- Tombol Verifikasi OTP -->
+    <Button
+        android:id="@+id/verifyOtpButton"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:text="Verifikasi OTP"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button_background"
+        android:backgroundTint="#C62828"
+        android:layout_below="@id/otpField"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:layout_marginTop="16dp" />
+
+    <!-- Logo di bagian atas -->
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:src="@drawable/logo_wongcoco"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:contentDescription="Logo Wong Coco" />
+
+    <!-- Ikon Help di kanan atas -->
+    <ImageView
+        android:id="@+id/help_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/baseline_help_outline_24"
+        android:contentDescription="Help Icon"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="26dp" />
+
+    <!-- Judul Halaman -->
+    <TextView
+        android:id="@+id/title_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Masuk"
+        android:textColor="#C62828"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_below="@id/logo"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="40dp" />
+
+    <!-- Subtitle -->
+    <TextView
+        android:id="@+id/subtitle_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Silahkan masuk untuk melanjutkan menggunakan aplikasi kami."
+        android:textColor="#C62828"
+        android:textSize="14sp"
+        android:layout_below="@id/title_text"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp" />
+
+    <!-- Input Email -->
+    <EditText
+        android:id="@+id/emailField"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:hint="Email Address"
+        android:backgroundTint="#FFCDD2"
+        android:textColorHint="#B23C38"
+        android:layout_below="@id/subtitle_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:padding="12dp"
+        android:background="@drawable/edit_text_background" />
+
+    <!-- Input Password -->
+    <EditText
+        android:id="@+id/passwordField"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:backgroundTint="#FFCDD2"
+        android:textColorHint="#B23C38"
+        android:inputType="textPassword"
+        android:layout_below="@id/emailField"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:padding="12dp"
+        android:background="@drawable/edit_text_background" />
+
+    <!-- Tombol Masuk -->
+    <Button
+        android:id="@+id/signInButton"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:text="Masuk"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button_background"
+        android:backgroundTint="#C62828"
+        android:layout_below="@id/passwordField"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp" />
+
+    <!-- Tombol Sign-In with Google -->
+    <LinearLayout
+        android:id="@+id/google_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/signInButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/signin_google"
+            android:contentDescription="Google Icon"
+            android:layout_marginEnd="8dp" />
+
+
+    </LinearLayout>
+
+    <!-- Link Daftar -->
+    <TextView
+        android:id="@+id/register_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Belum punya akun? Daftar di sini."
+        android:textColor="#C62828"
+        android:textSize="14sp"
+        android:layout_below="@id/google_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
+
+    <!-- Ilustrasi di bagian bawah -->
+    <ImageView
+        android:id="@+id/illustration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/farmer_illustration"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        />
+
+</RelativeLayout>
