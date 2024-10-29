@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/Primary" /> <!-- Warna background, ganti sesuai keinginan -->
+    <corners android:radius="8dp" /> <!-- Radius untuk semua sudut -->
+    <padding
+        android:left="30dp"
+        android:top="10dp"
+        android:right="10dp"
+        android:bottom="10dp" /> <!-- Padding untuk memberi ruang dalam TextView -->
+</shape>

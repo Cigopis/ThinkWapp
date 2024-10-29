@@ -2,6 +2,7 @@ package com.wongcoco.thinkwapp;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -99,6 +100,8 @@ public class SignInActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
                         if (user != null) {
+                            // Simpan email ke SharedPreferences
+                            saveEmailToPreferences(email);
                             sendOtp(user);
                         }
                     } else {
@@ -133,11 +136,22 @@ public class SignInActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
-                        sendOtp(user);
+                        if (user != null) {
+                            // Simpan email ke SharedPreferences
+                            saveEmailToPreferences(user.getEmail());
+                            sendOtp(user);
+                        }
                     } else {
                         Toast.makeText(SignInActivity.this, "Login dengan Google gagal.", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    private void saveEmailToPreferences(String email) {
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("user_email", email);
+        editor.apply();
     }
 
     private void sendOtp(FirebaseUser user) {
