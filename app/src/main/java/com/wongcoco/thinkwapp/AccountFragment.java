@@ -53,6 +53,13 @@ public class AccountFragment extends Fragment {
             logout();
         });
 
+        // Inisialisasi tombol Panduan
+        ImageView btnPanduan = view.findViewById(R.id.panduan);
+        btnPanduan.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), PanduanActivity.class);
+            startActivity(intent);
+        });
+
         return view;
     }
 

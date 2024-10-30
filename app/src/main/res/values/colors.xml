@@ -8,5 +8,6 @@
     <color name="unselectedIconColor">#00950F</color>
     <color name="Primary">#00950F</color>
     <color name="Secondary">#AEE1AC</color>
-
+    <color name="third">#C8E9CB</color>
+    <color name="Four">#005308</color>
 </resources>

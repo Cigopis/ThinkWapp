@@ -32,6 +32,7 @@
         <activity android:name=".SignUpActivity" android:exported="true" />
         <activity android:name=".MessageActivity" android:exported="true" />
         <activity android:name=".ContactActivity" android:exported="true" />
+        <activity android:name=".PanduanActivity" android:exported="true" />
 
     </application>
 

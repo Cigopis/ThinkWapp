@@ -79,7 +79,7 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:text="Daftar"
-                android:backgroundTint="#7E1616"
+                android:backgroundTint="@color/Four"
                 android:textColor="#FFFFFF" />
 
         </LinearLayout>
