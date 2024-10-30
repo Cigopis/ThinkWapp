@@ -182,7 +182,7 @@ public class SignInActivity extends AppCompatActivity {
                 + "}";
 
         RequestBody body = RequestBody.create(json, MediaType.parse("application/json"));
-        String mailjetCredentials = "4d4a318cd572561ff33ad47208a4d47e:94eb149a0208f50a9fe964e0ce7b5630";
+        String mailjetCredentials = "e17b3831947f53a97bc8cf4043e07a9f:13a322d327fb702d2e9099d34136ea35";
 
         Request request = new Request.Builder()
                 .url("https://api.mailjet.com/v3.1/send")
