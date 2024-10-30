@@ -30,6 +30,8 @@
         <activity android:name=".MainActivity" android:exported="true"/>
         <activity android:name=".SignInActivity" android:exported="true"/>
         <activity android:name=".SignUpActivity" android:exported="true" />
+        <activity android:name=".MessageActivity" android:exported="true" />
+        <activity android:name=".ContactActivity" android:exported="true" />
 
     </application>
 
