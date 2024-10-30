@@ -3,12 +3,145 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".AccountFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/mapsss"/>
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_marginTop="220dp"
+        android:background="@drawable/rounded_top_corner">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/supplier"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/syarat_panduan" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/tanya_kami" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ellipse1"
+                android:layout_gravity="center"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ellipse2"
+                android:layout_gravity="center_horizontal"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ellipse3"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center_horizontal"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sejarah"
+                android:textStyle="bold"
+                android:textSize="24sp"
+                android:layout_marginLeft="25dp"
+                android:textColor="@color/unselectedTextColor"
+                android:layout_marginTop="6dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="5dp"
+                android:justificationMode="inter_word"
+                android:text="Usaha Wong Coco Group dimulai pada tahun 1986 dengan berdirinya PT. Keong Nusantara Abadi
+yang memproduksi escargot (daging bekicot) yang sebagian besar diekspor seluruhnya ke luar negeri.
+Pabrik pengolahan escargot pertama kali didirikan di Natar, Lampung. Daging bekicot yang awalnya
+tidak terlalu menarik perhatian masyarakat Indonesia, ternyata menjadi makanan favorit dan mewah bagi masyarakat dunia."/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/gedung_wongcoco"
+                android:layout_marginTop="13dp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Think Wood"
+                android:textStyle="bold"
+                android:textSize="24sp"
+                android:layout_marginLeft="25dp"
+                android:textColor="@color/unselectedTextColor"
+                android:layout_marginTop="6dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="5dp"
+                android:justificationMode="inter_word"
+                android:text="Pada tahun 2009, PT. KNA meluncurkan divisi baru “thinkWood” yang memproduksi kemasan kayu
+dari bahan Kayu Sengon dengan orientasi pasar utama ekspor. Kayu sengon ramah lingkungan dan menambah nilai hakiki Wong Coco Group
+sebagai korporasi yang peduli terhadap lingkungan sekitarnya."/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="25dp"
+                android:src="@drawable/produk"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="57dp"
+                android:src="@drawable/pahami"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
 
 </FrameLayout>
