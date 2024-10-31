@@ -18,12 +18,18 @@ public class PanduanExpandableListAdapter extends BaseExpandableListAdapter {
     private List<String> listDataHeader;
     private HashMap<String, List<String>> listDataChild;
     private static final int ROTATE_DURATION = 300;
+    private boolean[] groupExpanded; // Array untuk menyimpan status grup yang diperluas
 
     public PanduanExpandableListAdapter(Context context, List<String> listDataHeader,
                                         HashMap<String, List<String>> listChildData) {
         this.context = context;
         this.listDataHeader = listDataHeader;
         this.listDataChild = listChildData;
+        this.groupExpanded = new boolean[listDataHeader.size()]; // Inisialisasi status grup
+    }
+
+    public boolean isGroupExpanded(int groupPosition) {
+        return groupExpanded[groupPosition];
     }
 
     @Override
@@ -73,17 +79,26 @@ public class PanduanExpandableListAdapter extends BaseExpandableListAdapter {
         TextView lblListHeader = convertView.findViewById(R.id.lblListItem);
         lblListHeader.setText(headerTitle);
 
-        // Setup ImageView and rotate animation
+        // Setup ImageView dan rotasi animasi
         ImageView dropdownIcon = convertView.findViewById(R.id.dropdownIcon);
-        if (dropdownIcon != null) {
+
+        // Set rotasi berdasarkan status ekspansi saat ini
+        dropdownIcon.clearAnimation();
+        float rotationAngle = isExpanded ? 180 : 0;
+        dropdownIcon.setRotation(rotationAngle);
+
+        // Cek dan atur status grup
+        if (groupExpanded[groupPosition] != isExpanded) {
+            groupExpanded[groupPosition] = isExpanded;
+
+            // Rotasi animasi
             RotateAnimation rotateAnimation = new RotateAnimation(
-                    isExpanded ? 0 : 180, // From degree
-                    isExpanded ? 180 : 0, // To degree
+                    isExpanded ? 0 : 180, // Dari degree
+                    isExpanded ? 180 : 0, // Ke degree
                     RotateAnimation.RELATIVE_TO_SELF, 0.5f,
                     RotateAnimation.RELATIVE_TO_SELF, 0.5f);
             rotateAnimation.setDuration(ROTATE_DURATION);
             rotateAnimation.setFillAfter(true);
-
             dropdownIcon.startAnimation(rotateAnimation);
         }
 

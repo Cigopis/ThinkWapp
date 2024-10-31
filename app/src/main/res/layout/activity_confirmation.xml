@@ -1,0 +1,32 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tvConfirmation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/imgKTP"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="#CCCCCC"
+        android:scaleType="centerCrop" />
+
+    <ImageView
+        android:id="@+id/imgLahan"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="#CCCCCC"
+        android:scaleType="centerCrop" />
+
+    <Button
+        android:id="@+id/btnConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Simpan Data" />
+</LinearLayout>

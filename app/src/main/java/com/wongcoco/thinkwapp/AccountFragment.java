@@ -1,5 +1,6 @@
 package com.wongcoco.thinkwapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog; // Tambahkan ini
 import androidx.fragment.app.Fragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -50,7 +52,7 @@ public class AccountFragment extends Fragment {
         // Inisialisasi tombol Log Out
         ImageView btnLogout = view.findViewById(R.id.logout);
         btnLogout.setOnClickListener(v -> {
-            logout();
+            showLogoutConfirmationDialog(); // Tampilkan dialog konfirmasi saat logout
         });
 
         // Inisialisasi tombol Panduan
@@ -61,6 +63,27 @@ public class AccountFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void showLogoutConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Konfirmasi Logout");
+        builder.setMessage("Apakah Anda yakin ingin logout?");
+        builder.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                logout(); // Jika pengguna mengonfirmasi, panggil metode logout
+            }
+        });
+        builder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss(); // Tutup dialog jika tidak
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show(); // Tampilkan dialog konfirmasi
     }
 
     private void logout() {

@@ -1,8 +1,10 @@
 package com.wongcoco.thinkwapp;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ExpandableListView;
 import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,15 +21,23 @@ public class PanduanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_panduan);
 
+        // Inisialisasi ExpandableListView
         expandableListView = findViewById(R.id.expandableListView);
         prepareListData();
 
+        // Inisialisasi dan set adapter
         adapter = new PanduanExpandableListAdapter(this, listDataHeader, listDataChild);
         expandableListView.setAdapter(adapter);
 
         // Listener untuk animasi ikon saat grup diperluas atau ditutup
-        expandableListView.setOnGroupExpandListener(groupPosition -> adapter.notifyDataSetChanged());
-        expandableListView.setOnGroupCollapseListener(groupPosition -> adapter.notifyDataSetChanged());
+        expandableListView.setOnGroupExpandListener(groupPosition -> {
+            if (adapter.isGroupExpanded(groupPosition)) return; // Cek apakah grup sudah diperluas
+            adapter.notifyDataSetChanged();
+        });
+        expandableListView.setOnGroupCollapseListener(groupPosition -> {
+            adapter.notifyDataSetChanged();
+        });
+
     }
 
     // Menyiapkan data untuk ExpandableListView
