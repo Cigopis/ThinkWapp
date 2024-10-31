@@ -1,10 +1,8 @@
 package com.wongcoco.thinkwapp;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -20,6 +18,7 @@ public class UploadActivity extends AppCompatActivity {
     private Button btnNext;
     private DoubleLinkedList registrationList;
     private Uri uriKTP, uriLahan; // Menyimpan URI gambar yang dipilih
+    private RegistrationData registrationData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,22 +32,25 @@ public class UploadActivity extends AppCompatActivity {
         // Mengambil data dari LinkedList
         registrationList = ((FormActivity) getApplication()).getRegistrationList();
 
+        // Mengambil data registrasi dari RegistrationActivity
+        if (registrationList != null && registrationList.size() > 0) {
+            registrationData = registrationList.getLast(); // Ambil data terakhir yang ditambahkan di RegistrationActivity
+        }
+
         imgKTP.setOnClickListener(v -> openGallery(PICK_IMAGE_KTP));
         imgLahan.setOnClickListener(v -> openGallery(PICK_IMAGE_LAHAN));
 
         btnNext.setOnClickListener(v -> {
-            if (uriKTP != null && uriLahan != null) {
-                // Simpan URI ke dalam LinkedList (atau data lain sesuai kebutuhan)
-                RegistrationData registrationData = new RegistrationData(
-                        "NIK", // Ganti dengan nilai NIK yang sesuai
-                        "Nama", // Ganti dengan nilai nama yang sesuai
-                        "Alamat", // Ganti dengan nilai alamat yang sesuai
-                        "Nomor Telepon", // Ganti dengan nilai nomor telepon yang sesuai
-                        "Luas Lahan", // Ganti dengan nilai luas lahan yang sesuai
-                        uriKTP.toString(),
-                        uriLahan.toString()
-                );
-                registrationList.add(registrationData); // Simpan data registrasi
+            if (uriKTP != null && uriLahan != null && registrationData != null) {
+                // Update data registrasi dengan URI gambar yang dipilih
+                registrationData.setUriKTP(uriKTP.toString());
+                registrationData.setUriLahan(uriLahan.toString());
+
+                // Tambahkan data ke dalam LinkedList
+                registrationList.updateLast(registrationData); // Metode untuk memperbarui item terakhir di list
+                ((FormActivity) getApplication()).setRegistrationList(registrationList);
+
+                // Berpindah ke ConfirmationActivity
                 Intent confirmIntent = new Intent(UploadActivity.this, ConfirmationActivity.class);
                 startActivity(confirmIntent);
             } else {

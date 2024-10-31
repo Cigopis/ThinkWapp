@@ -12,6 +12,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class ConfirmationActivity extends AppCompatActivity {
 
@@ -20,6 +21,7 @@ public class ConfirmationActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private ImageView imgKTP, imgLahan;
     private DoubleLinkedList registrationList;
+    private String userId;  // Menyimpan userId dari FirebaseAuth
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,33 +34,31 @@ public class ConfirmationActivity extends AppCompatActivity {
         imgLahan = findViewById(R.id.imgLahan);
 
         db = FirebaseFirestore.getInstance();
+        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();  // Dapatkan userId dari FirebaseAuth
 
         // Mengambil data dari LinkedList
         registrationList = ((FormActivity) getApplication()).getRegistrationList();
         RegistrationData data = registrationList.getLast();
 
         if (data != null) {
-            // Menampilkan informasi registrasi
             tvConfirmation.setText("NIK: " + data.getNik() +
                     "\nNama: " + data.getNama() +
                     "\nAlamat: " + data.getAlamat() +
                     "\nNomor Telepon: " + data.getNomorTelepon() +
                     "\nLuas Lahan: " + data.getLuasLahan());
 
-            // Menampilkan gambar KTP dan lahan jika ada
             imgKTP.setImageURI(Uri.parse(data.getUriKTP()));
             imgLahan.setImageURI(Uri.parse(data.getUriLahan()));
+
+            // Set userId pada data registrasi
+            data.setUserId(userId);
         }
 
-        btnConfirm.setOnClickListener(v -> {
-            saveDataToFirestore(data);
-        });
+        btnConfirm.setOnClickListener(v -> saveDataToFirestore(data));
     }
 
     private void saveDataToFirestore(RegistrationData data) {
-        // Menyimpan data registrasi ke Firestore
         if (data != null) {
-            // Membuat map untuk menyimpan data
             Map<String, Object> registrationMap = new HashMap<>();
             registrationMap.put("nik", data.getNik());
             registrationMap.put("nama", data.getNama());
@@ -68,11 +68,13 @@ public class ConfirmationActivity extends AppCompatActivity {
             registrationMap.put("uriKTP", data.getUriKTP());
             registrationMap.put("uriLahan", data.getUriLahan());
 
+            // Simpan dengan userId sebagai document ID di Firestore
             db.collection("registrations")
-                    .add(registrationMap) // Menyimpan map
-                    .addOnSuccessListener(documentReference -> {
+                    .document(userId) // Menggunakan userId sebagai primary key
+                    .set(registrationMap)
+                    .addOnSuccessListener(aVoid -> {
                         Toast.makeText(ConfirmationActivity.this, "Data berhasil disimpan!", Toast.LENGTH_SHORT).show();
-                        finish(); // Kembali ke aktivitas sebelumnya
+                        finish();
                     })
                     .addOnFailureListener(e -> {
                         Toast.makeText(ConfirmationActivity.this, "Gagal menyimpan data: " + e.getMessage(), Toast.LENGTH_SHORT).show();

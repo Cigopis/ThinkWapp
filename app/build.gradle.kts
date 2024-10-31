@@ -55,6 +55,8 @@ dependencies {
     implementation ("com.mailjet:mailjet-client:5.2.1")
     implementation ("com.squareup.okhttp3:okhttp:4.9.3")
 
+    implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+
 
 
 
