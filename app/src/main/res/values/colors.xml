@@ -10,4 +10,5 @@
     <color name="Secondary">#AEE1AC</color>
     <color name="third">#C8E9CB</color>
     <color name="Four">#005308</color>
+    <color name="transparent">#00000000</color>
 </resources>

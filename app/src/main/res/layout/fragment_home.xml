@@ -151,6 +151,7 @@ yang memproduksi escargot (daging bekicot) yang sebagian besar diekspor seluruhn
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginTop="20dp"
+                    android:layout_marginBottom="60dp"
                     android:gravity="center">
 
                     <ImageView

@@ -2,15 +2,15 @@
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/baseline_home_filled_24"
-        android:title="Beranda" />
+        android:title="" />
 
     <item
         android:id="@+id/nav_messages"
         android:icon="@drawable/baseline_message_24"
-        android:title="Pesan" />
+        android:title="" />
 
     <item
         android:id="@+id/nav_account"
         android:icon="@drawable/baseline_person_24"
-        android:title="Akun" />
+        android:title="" />
 </menu>
