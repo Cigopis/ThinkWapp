@@ -2,31 +2,161 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@color/white">
+
+    <!-- Step Indicator -->
+    <LinearLayout
+        android:id="@+id/stepIndicatorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:padding="8dp">
+
+        <!-- Formulir Step -->
+        <ImageView
+            android:id="@+id/stepFormulir"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/circle_grey" />
+
+        <TextView
+            android:id="@+id/textFormulir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Formulir"
+            android:textColor="@color/black"
+            android:paddingStart="4dp"
+            android:paddingEnd="8dp" />
+
+        <View
+            android:id="@+id/lineFormulirToUnggah"
+            android:layout_width="24dp"
+            android:layout_height="2dp"
+            android:background="@color/Secondary" />
+
+        <!-- Unggah Step -->
+        <ImageView
+            android:id="@+id/stepUnggah"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/circle_green" />
+
+        <TextView
+            android:id="@+id/textUnggah"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Unggah"
+            android:textColor="@color/black"
+            android:paddingStart="4dp"
+            android:paddingEnd="8dp" />
+
+        <View
+            android:id="@+id/lineUnggahToKonfirmasi"
+            android:layout_width="24dp"
+            android:layout_height="2dp"
+            android:background="@color/Secondary" />
+
+        <!-- Konfirmasi Step -->
+        <ImageView
+            android:id="@+id/stepKonfirmasi"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/circle_grey" />
+
+        <TextView
+            android:id="@+id/textKonfirmasi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Konfirmasi"
+            android:textColor="@color/black"
+            android:paddingStart="4dp" />
+    </LinearLayout>
+    <!-- Foto KTP Upload Section -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Foto KTP"
+        android:textColor="@color/black"
+        android:layout_marginTop="16dp"/>
 
     <ImageView
         android:id="@+id/imgKTP"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="#CCCCCC"
-        android:scaleType="centerCrop" />
+        android:layout_height="180dp"
+        android:layout_marginTop="8dp"
+        android:scaleType="centerCrop"
+        android:background="@drawable/image_background" />
 
-    <ImageView
-        android:id="@+id/imgLahan"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="#CCCCCC"
-        android:scaleType="centerCrop" />
+    <!-- Foto Lahan Upload Section -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Foto Lahan"
+        android:textColor="@color/black"
+        android:layout_marginTop="16dp"/>
 
-    <Button
-        android:id="@+id/btnUpload"
+    <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Unggah Foto" />
+        android:layout_marginTop="8dp">
 
-    <Button
-        android:id="@+id/btnNext"
+        <LinearLayout
+            android:id="@+id/layoutFotoLahan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/tambahFoto"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginEnd="8dp"
+                android:scaleType="centerCrop"
+                android:background="@drawable/image_background"
+                android:src="@drawable/upload_foto" />
+
+
+
+            <!-- Tambahkan ImageView tambahan sesuai kebutuhan -->
+        </LinearLayout>
+    </HorizontalScrollView>
+
+
+    <!-- Button Layout -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Konfirmasi" />
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:paddingTop="16dp">
+
+        <!-- Previous Button -->
+        <TextView
+            android:id="@+id/btnPrevious"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kembali"
+            android:textColor="@color/Secondary"
+            android:textSize="16sp"
+            android:paddingEnd="16dp" />
+
+        <!-- Next Button -->
+        <TextView
+            android:id="@+id/btnNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selanjutnya"
+            android:textColor="@color/Primary"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/iconNextArrow"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/arrow_right"
+            android:paddingStart="4dp" />
+    </LinearLayout>
 </LinearLayout>

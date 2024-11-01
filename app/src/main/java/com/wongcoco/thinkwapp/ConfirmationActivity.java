@@ -2,15 +2,14 @@ package com.wongcoco.thinkwapp;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -19,8 +18,9 @@ public class ConfirmationActivity extends AppCompatActivity {
     private TextView tvConfirmation;
     private Button btnConfirm;
     private FirebaseFirestore db;
-    private ImageView imgKTP, imgLahan;
-    private DoubleLinkedList registrationList;
+    private ImageView imgKTP; // Hanya satu ImageView untuk KTP
+    private ImageView imgLahan; // Untuk lahan, sebaiknya gunakan RecyclerView jika banyak
+    private DoubleLinkedList<RegistrationData> registrationList;
     private String userId;  // Menyimpan userId dari FirebaseAuth
 
     @Override
@@ -31,7 +31,7 @@ public class ConfirmationActivity extends AppCompatActivity {
         tvConfirmation = findViewById(R.id.tvConfirmation);
         btnConfirm = findViewById(R.id.btnConfirm);
         imgKTP = findViewById(R.id.imgKTP);
-        imgLahan = findViewById(R.id.imgLahan);
+        imgLahan = findViewById(R.id.imgLahan); // Untuk lahan, sebaiknya gunakan RecyclerView jika banyak
 
         db = FirebaseFirestore.getInstance();
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();  // Dapatkan userId dari FirebaseAuth
@@ -48,7 +48,14 @@ public class ConfirmationActivity extends AppCompatActivity {
                     "\nLuas Lahan: " + data.getLuasLahan());
 
             imgKTP.setImageURI(Uri.parse(data.getUriKTP()));
-            imgLahan.setImageURI(Uri.parse(data.getUriLahan()));
+
+            // Menampilkan gambar lahan
+            List<String> uriLahanList = data.getUriLahan();
+            // Jika menggunakan ImageView untuk lahan, Anda dapat menampilkan salah satu gambar
+            // Contoh untuk menampilkan gambar pertama
+            if (!uriLahanList.isEmpty()) {
+                imgLahan.setImageURI(Uri.parse(uriLahanList.get(0))); // Menggunakan gambar pertama dari daftar
+            }
 
             // Set userId pada data registrasi
             data.setUserId(userId);
@@ -67,20 +74,18 @@ public class ConfirmationActivity extends AppCompatActivity {
             registrationMap.put("luasLahan", data.getLuasLahan());
             registrationMap.put("uriKTP", data.getUriKTP());
             registrationMap.put("uriLahan", data.getUriLahan());
+            registrationMap.put("userId", data.getUserId());
 
-            // Simpan dengan userId sebagai document ID di Firestore
             db.collection("registrations")
-                    .document(userId) // Menggunakan userId sebagai primary key
-                    .set(registrationMap)
+                    .document(userId) // Menggunakan userId sebagai ID dokumen
+                    .update(registrationMap)
                     .addOnSuccessListener(aVoid -> {
                         Toast.makeText(ConfirmationActivity.this, "Data berhasil disimpan!", Toast.LENGTH_SHORT).show();
-                        finish();
+                        // Lanjutkan ke aktivitas berikutnya
                     })
                     .addOnFailureListener(e -> {
                         Toast.makeText(ConfirmationActivity.this, "Gagal menyimpan data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     });
-        } else {
-            Toast.makeText(ConfirmationActivity.this, "Data tidak tersedia untuk disimpan!", Toast.LENGTH_SHORT).show();
         }
     }
 }

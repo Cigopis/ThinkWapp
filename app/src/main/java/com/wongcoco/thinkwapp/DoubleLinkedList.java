@@ -1,6 +1,6 @@
 package com.wongcoco.thinkwapp;
 
-public class DoubleLinkedList {
+public class DoubleLinkedList<R> {
     private Node head;
     private Node tail;
     private int size = 0; // Menyimpan jumlah node dalam list

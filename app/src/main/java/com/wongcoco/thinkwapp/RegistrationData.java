@@ -1,5 +1,7 @@
 package com.wongcoco.thinkwapp;
 
+import java.util.List;
+
 public class RegistrationData {
     private String userId;  // Primary key for the user
     private String nik;
@@ -8,9 +10,14 @@ public class RegistrationData {
     private String nomorTelepon;
     private String luasLahan;
     private String uriKTP;
-    private String uriLahan;
+    private List<String> uriLahan; // List to store multiple URIs
 
-    public RegistrationData(String userId, String nik, String nama, String alamat, String nomorTelepon, String luasLahan, String uriKTP, String uriLahan) {
+    // No-argument constructor for Firestore
+    public RegistrationData() {
+        // Required for Firestore serialization/deserialization
+    }
+
+    public RegistrationData(String userId, String nik, String nama, String alamat, String nomorTelepon, String luasLahan, String uriKTP, List<String> uriLahan) {
         this.userId = userId;
         this.nik = nik;
         this.nama = nama;
@@ -21,7 +28,7 @@ public class RegistrationData {
         this.uriLahan = uriLahan;
     }
 
-    // Getter dan setter untuk userId
+    // Getter and setter for userId
     public String getUserId() {
         return userId;
     }
@@ -30,34 +37,66 @@ public class RegistrationData {
         this.userId = userId;
     }
 
-    // Setter untuk URI KTP
-    public void setUriKTP(String uriKTP) {
-        this.uriKTP = uriKTP;
+    // Getter and setter for NIK
+    public String getNik() {
+        return nik;
     }
 
-    // Setter untuk URI lahan
-    public void setUriLahan(String uriLahan) {
-        this.uriLahan = uriLahan;
+    public void setNik(String nik) {
+        this.nik = nik;
     }
 
-    // Getter untuk URI KTP
+    // Getter and setter for name
+    public String getNama() {
+        return nama;
+    }
+
+    public void setNama(String nama) {
+        this.nama = nama;
+    }
+
+    // Getter and setter for address
+    public String getAlamat() {
+        return alamat;
+    }
+
+    public void setAlamat(String alamat) {
+        this.alamat = alamat;
+    }
+
+    // Getter and setter for phone number
+    public String getNomorTelepon() {
+        return nomorTelepon;
+    }
+
+    public void setNomorTelepon(String nomorTelepon) {
+        this.nomorTelepon = nomorTelepon;
+    }
+
+    // Getter and setter for land area
+    public String getLuasLahan() {
+        return luasLahan;
+    }
+
+    public void setLuasLahan(String luasLahan) {
+        this.luasLahan = luasLahan;
+    }
+
+    // Getter and setter for KTP URI
     public String getUriKTP() {
         return uriKTP;
     }
 
-    // Getter untuk URI lahan
-    public String getUriLahan() {
+    public void setUriKTP(String uriKTP) {
+        this.uriKTP = uriKTP;
+    }
+
+    // Getter and setter for land URI list
+    public List<String> getUriLahan() {
         return uriLahan;
     }
 
-
-
-
-    // Getter dan setter lainnya
-    public String getNik() { return nik; }
-    public String getNama() { return nama; }
-    public String getAlamat() { return alamat; }
-    public String getNomorTelepon() { return nomorTelepon; }
-    public String getLuasLahan() { return luasLahan; }
-
+    public void setUriLahan(List<String> uriLahan) {
+        this.uriLahan = uriLahan;
+    }
 }
