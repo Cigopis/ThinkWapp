@@ -21,13 +21,22 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-public class HomeFragment extends Fragment {
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
     private ImageView bulat1, bulat2, bulat3, produkImage, pahamiImage, imageContent;
     private TextView registerClick, sejarahTitle, thinkWoodTitle, sejarahDesc, thinkWoodDesc, syarat, tanya;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private FrameLayout backgroundLayout;
+
     private ScrollView scrollView;
+    private GoogleMap mMap;
+
 
     @Nullable
     @Override
@@ -46,11 +55,20 @@ public class HomeFragment extends Fragment {
         produkImage = view.findViewById(R.id.produkImage);
         pahamiImage = view.findViewById(R.id.pahamiImage);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
-        backgroundLayout = view.findViewById(R.id.frameMaps);
+
         scrollView = view.findViewById(R.id.scrollView);
         imageContent = view.findViewById(R.id.imageContent);
         syarat = view.findViewById(R.id.syarat);
         tanya = view.findViewById(R.id.tanya);
+
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
+                .findFragmentById(R.id.frameMaps);
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(this); // Meminta peta asinkron
+        }
+
+
 
         // Load animasi
         final Animation zoomIn = AnimationUtils.loadAnimation(getContext(), R.anim.zoom_in);
@@ -72,7 +90,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 v.startAnimation(zoomIn);
-                // Tambahkan aksi lain yang diinginkan
+                Intent intent = new Intent(getActivity(), PanduanActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -103,12 +122,16 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
+
         // Setup SwipeRefreshLayout
         setupSwipeRefreshLayout();
         setupScrollListener();
 
         return view;
     }
+
+
 
     private void animateRegisterClick() {
         ObjectAnimator moveRight = ObjectAnimator.ofFloat(registerClick, "translationX", 0f, 16f);
@@ -136,26 +159,28 @@ public class HomeFragment extends Fragment {
     }
 
     private void refreshData() {
-        // Simulasi proses refresh data, misalnya mengambil data dari API
+        // Simulate data refresh process, e.g., fetching data from an API
         swipeRefreshLayout.postDelayed(() -> {
-            boolean dataFetched = true; // Ganti ini dengan logika sebenarnya
+            boolean dataFetched = true; // Replace with actual data fetch logic
 
             if (dataFetched) {
-                animateEllips(); // Memanggil metode animasi
+                animateEllips(); // Call the animation method
                 setViewsVisibility(View.VISIBLE);
+                Toast.makeText(getContext(), "Data updated successfully!", Toast.LENGTH_SHORT).show();
             } else {
-                showError("Gagal memuat data. Silakan coba lagi.");
+                showError("Failed to load data. Please try again.");
                 setViewsVisibility(View.INVISIBLE);
             }
 
-            // Matikan animasi refresh setelah data diperbarui
+            // Stop the refresh animation
             swipeRefreshLayout.setRefreshing(false);
-        }, 2000);
+        }, 2000); // Simulate delay for data fetching
     }
 
     private void showError(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
+
 
     private void setViewsVisibility(int visibility) {
         bulat1.setVisibility(visibility);
@@ -168,7 +193,7 @@ public class HomeFragment extends Fragment {
         thinkWoodDesc.setVisibility(visibility);
         produkImage.setVisibility(visibility);
         pahamiImage.setVisibility(visibility);
-        backgroundLayout.setVisibility(visibility);
+
     }
 
     private void animateEllips() {
@@ -281,6 +306,7 @@ public class HomeFragment extends Fragment {
                 float totalHeight = scrollView.getChildAt(0).getHeight();
                 float scrollPercentage = (float) scrollY / (totalHeight - height);
 
+                // Call animateOnScroll for each view
                 animateOnScroll(sejarahTitle, scrollPercentage);
                 animateOnScroll(sejarahDesc, scrollPercentage);
                 animateOnScroll(thinkWoodTitle, scrollPercentage);
@@ -291,12 +317,14 @@ public class HomeFragment extends Fragment {
         });
     }
 
+
     private void animateOnScroll(View view, float scrollPercentage) {
         float threshold = 0.5f; // Ubah ini untuk menyesuaikan sensitivitas
         float translationY = -200 * (1 - Math.abs(scrollPercentage - threshold) / threshold);
 
         // Pastikan elemen tidak menghilang sepenuhnya
         view.setTranslationY(translationY);
+        view.setAlpha(1 - scrollPercentage);
 
         // Atur alpha agar tetap terlihat meskipun di-scroll
         if (scrollPercentage < threshold) {
@@ -305,5 +333,18 @@ public class HomeFragment extends Fragment {
             view.setAlpha(1f); // Set alpha penuh saat scroll ke bawah
         }
     }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        // Set lokasi untuk ditampilkan di peta
+        LatLng lokasi = new LatLng(-7.667999570445097, 112.14894567646326); // Contoh koordinat Surabaya
+        mMap.addMarker(new MarkerOptions().position(lokasi).title("PT. Keong Nusantara Abadi (Thinkwood)"));
+        mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lokasi, 15));
+    }
+
+
 
 }

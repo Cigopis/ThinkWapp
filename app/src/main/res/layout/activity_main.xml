@@ -17,10 +17,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:background="@drawable/bottom_nav_background"
         app:menu="@menu/bottom_nav_menu"
         app:labelVisibilityMode="labeled"
-        app:itemIconTint="@color/selector_icon_color"
-        app:itemTextColor="@color/selector_text_color"
-        app:backgroundTint="@color/white" />
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
+        app:elevation="2dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        />
 
 </RelativeLayout>

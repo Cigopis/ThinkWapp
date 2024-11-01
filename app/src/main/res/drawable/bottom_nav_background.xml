@@ -1,0 +1,8 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:startColor="@color/Four"
+        android:endColor="@color/Four"
+        android:angle="90" />
+    <corners android:radius="30dp" /> <!-- Mengatur sudut melengkung -->
+</shape>
