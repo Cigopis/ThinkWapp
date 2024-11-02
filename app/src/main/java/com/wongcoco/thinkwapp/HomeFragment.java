@@ -1,15 +1,19 @@
 package com.wongcoco.thinkwapp;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.OvershootInterpolator;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ScrollView;
@@ -27,6 +31,16 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.List;
 
 public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
@@ -37,6 +51,10 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     private ScrollView scrollView;
     private GoogleMap mMap;
 
+    // Interface untuk mendapatkan username
+    interface OnUsernameRetrievedListener {
+        void onUsernameRetrieved(String username);
+    }
 
     @Nullable
     @Override
@@ -61,18 +79,29 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         syarat = view.findViewById(R.id.syarat);
         tanya = view.findViewById(R.id.tanya);
 
-
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.frameMaps);
         if (mapFragment != null) {
             mapFragment.getMapAsync(this); // Meminta peta asinkron
         }
 
-
-
         // Load animasi
         final Animation zoomIn = AnimationUtils.loadAnimation(getContext(), R.anim.zoom_in);
 
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid(); // Dapatkan userId
+
+        // Ambil username dari Firestore
+        getUsernameFromFirestore(userId, new OnUsernameRetrievedListener() {
+            @Override
+            public void onUsernameRetrieved(String username) {
+                if (username != null) {
+                    // Panggil metode untuk memeriksa pendaftaran
+                    checkUserRegistration( userId, username);
+                } else {
+                    Log.w(TAG, "Username tidak ditemukan.");
+                }
+            }
+        });
 
         // Panggil metode untuk animasi
         animateEllips();
@@ -86,43 +115,29 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         });
 
         // Set OnClickListener untuk syarat
-        syarat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.startAnimation(zoomIn);
-                Intent intent = new Intent(getActivity(), PanduanActivity.class);
-                startActivity(intent);
-            }
+        syarat.setOnClickListener(v -> {
+            v.startAnimation(zoomIn);
+            Intent intent = new Intent(getActivity(), PanduanActivity.class);
+            startActivity(intent);
         });
 
         // Set OnClickListener untuk tanya
-        tanya.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.startAnimation(zoomIn);
-                // Tambahkan aksi lain yang diinginkan
-            }
+        tanya.setOnClickListener(v -> {
+            v.startAnimation(zoomIn);
+            // Tambahkan aksi lain yang diinginkan
         });
 
         // Set OnClickListener untuk produkImage
-        produkImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.startAnimation(zoomIn);
-                // Tambahkan aksi lain yang diinginkan
-            }
+        produkImage.setOnClickListener(v -> {
+            v.startAnimation(zoomIn);
+            // Tambahkan aksi lain yang diinginkan
         });
 
         // Set OnClickListener untuk pahamiImage
-        pahamiImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.startAnimation(zoomIn);
-                // Tambahkan aksi lain yang diinginkan
-            }
+        pahamiImage.setOnClickListener(v -> {
+            v.startAnimation(zoomIn);
+            // Tambahkan aksi lain yang diinginkan
         });
-
-
 
         // Setup SwipeRefreshLayout
         setupSwipeRefreshLayout();
@@ -131,7 +146,22 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         return view;
     }
 
-
+    // Metode untuk mendapatkan username dari Firestore
+    private void getUsernameFromFirestore(String userId, OnUsernameRetrievedListener listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference userRef = db.collection("users").document(userId);
+        userRef.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                String username = documentSnapshot.getString("username");
+                listener.onUsernameRetrieved(username);
+            } else {
+                listener.onUsernameRetrieved(null);
+            }
+        }).addOnFailureListener(e -> {
+            Log.e(TAG, "Error getting username", e);
+            listener.onUsernameRetrieved(null);
+        });
+    }
 
     private void animateRegisterClick() {
         ObjectAnimator moveRight = ObjectAnimator.ofFloat(registerClick, "translationX", 0f, 16f);
@@ -159,12 +189,11 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private void refreshData() {
-        // Simulate data refresh process, e.g., fetching data from an API
         swipeRefreshLayout.postDelayed(() -> {
-            boolean dataFetched = true; // Replace with actual data fetch logic
+            // Logika untuk memperbarui data
+            boolean dataFetched = true; // Ganti dengan logika pengambilan data yang sebenarnya
 
             if (dataFetched) {
-                animateEllips(); // Call the animation method
                 setViewsVisibility(View.VISIBLE);
                 Toast.makeText(getContext(), "Data updated successfully!", Toast.LENGTH_SHORT).show();
             } else {
@@ -172,15 +201,15 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 setViewsVisibility(View.INVISIBLE);
             }
 
-            // Stop the refresh animation
+            // Berhenti dari animasi refresh
             swipeRefreshLayout.setRefreshing(false);
-        }, 2000); // Simulate delay for data fetching
+        }, 2000); // Simulasi delay untuk pengambilan data
     }
+
 
     private void showError(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
-
 
     private void setViewsVisibility(int visibility) {
         bulat1.setVisibility(visibility);
@@ -193,109 +222,42 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         thinkWoodDesc.setVisibility(visibility);
         produkImage.setVisibility(visibility);
         pahamiImage.setVisibility(visibility);
-
     }
 
     private void animateEllips() {
-        ObjectAnimator ellips1AnimY = ObjectAnimator.ofFloat(bulat1, "translationY", -300f, 0f);
-        ellips1AnimY.setInterpolator(new OvershootInterpolator());
-        ellips1AnimY.setDuration(700);
-        ObjectAnimator ellips1AnimAlpha = ObjectAnimator.ofFloat(bulat1, "alpha", 0f, 1f);
-        ellips1AnimAlpha.setDuration(700);
-
-        ObjectAnimator ellips2AnimY = ObjectAnimator.ofFloat(bulat2, "translationY", -300f, 0f);
-        ellips2AnimY.setInterpolator(new OvershootInterpolator());
-        ellips2AnimY.setDuration(700);
-        ellips2AnimY.setStartDelay(200);
-        ObjectAnimator ellips2AnimAlpha = ObjectAnimator.ofFloat(bulat2, "alpha", 0f, 1f);
-        ellips2AnimAlpha.setDuration(700);
-        ellips2AnimAlpha.setStartDelay(200);
-
-        ObjectAnimator ellips3AnimY = ObjectAnimator.ofFloat(bulat3, "translationY", -300f, 0f);
-        ellips3AnimY.setInterpolator(new OvershootInterpolator());
-        ellips3AnimY.setDuration(700);
-        ellips3AnimY.setStartDelay(400);
-        ObjectAnimator ellips3AnimAlpha = ObjectAnimator.ofFloat(bulat3, "alpha", 0f, 1f);
-        ellips3AnimAlpha.setDuration(700);
-        ellips3AnimAlpha.setStartDelay(400);
-
         AnimatorSet ellipsAnimatorSet = new AnimatorSet();
-        ellipsAnimatorSet.playTogether(ellips1AnimY, ellips1AnimAlpha, ellips2AnimY, ellips2AnimAlpha, ellips3AnimY, ellips3AnimAlpha);
+        ObjectAnimator[] animators = new ObjectAnimator[3];
 
-        ellipsAnimatorSet.addListener(new AnimatorSet.AnimatorListener() {
-            @Override
-            public void onAnimationEnd(android.animation.Animator animation) {
-                animateContent();
-            }
-            @Override public void onAnimationStart(android.animation.Animator animation) {}
-            @Override public void onAnimationCancel(android.animation.Animator animation) {}
-            @Override public void onAnimationRepeat(android.animation.Animator animation) {}
-        });
+        for (int i = 0; i < 3; i++) {
+            animators[i] = ObjectAnimator.ofFloat(getEllipseByIndex(i), "translationY", -300f, 0f);
+            animators[i].setInterpolator(new OvershootInterpolator());
+            animators[i].setDuration(700);
+            animators[i].setStartDelay(i * 200);
+            ellipsAnimatorSet.playTogether(animators[i]);
+        }
 
         ellipsAnimatorSet.start();
     }
 
-    private void animateContent() {
-        registerClick.setAlpha(1f);
-        registerClick.setTranslationY(0f);
-
-        animateImageContent();
-
-        ObjectAnimator sejarahTitleAnimY = ObjectAnimator.ofFloat(sejarahTitle, "translationY", -200f, 0f);
-        sejarahTitleAnimY.setInterpolator(new OvershootInterpolator());
-        sejarahTitleAnimY.setDuration(600);
-        ObjectAnimator sejarahTitleAlpha = ObjectAnimator.ofFloat(sejarahTitle, "alpha", 0f, 1f);
-        sejarahTitleAlpha.setDuration(600);
-
-        ObjectAnimator sejarahDescAnimY = ObjectAnimator.ofFloat(sejarahDesc, "translationY", -200f, 0f);
-        sejarahDescAnimY.setInterpolator(new OvershootInterpolator());
-        sejarahDescAnimY.setDuration(600);
-        ObjectAnimator sejarahDescAlpha = ObjectAnimator.ofFloat(sejarahDesc, "alpha", 0f, 1f);
-        sejarahDescAlpha.setDuration(600);
-
-        ObjectAnimator thinkWoodTitleAnimY = ObjectAnimator.ofFloat(thinkWoodTitle, "translationY", -200f, 0f);
-        thinkWoodTitleAnimY.setInterpolator(new OvershootInterpolator());
-        thinkWoodTitleAnimY.setDuration(600);
-        ObjectAnimator thinkWoodTitleAlpha = ObjectAnimator.ofFloat(thinkWoodTitle, "alpha", 0f, 1f);
-        thinkWoodTitleAlpha.setDuration(600);
-
-        ObjectAnimator thinkWoodDescAnimY = ObjectAnimator.ofFloat(thinkWoodDesc, "translationY", -200f, 0f);
-        thinkWoodDescAnimY.setInterpolator(new OvershootInterpolator());
-        thinkWoodDescAnimY.setDuration(600);
-        ObjectAnimator thinkWoodDescAlpha = ObjectAnimator.ofFloat(thinkWoodDesc, "alpha", 0f, 1f);
-        thinkWoodDescAlpha.setDuration(600);
-
-        ObjectAnimator produkImageAnimY = ObjectAnimator.ofFloat(produkImage, "translationY", -200f, 0f);
-        produkImageAnimY.setInterpolator(new OvershootInterpolator());
-        produkImageAnimY.setDuration(600);
-        ObjectAnimator produkImageAlpha = ObjectAnimator.ofFloat(produkImage, "alpha", 0f, 1f);
-        produkImageAlpha.setDuration(600);
-
-        ObjectAnimator pahamiImageAnimY = ObjectAnimator.ofFloat(pahamiImage, "translationY", -200f, 0f);
-        pahamiImageAnimY.setInterpolator(new OvershootInterpolator());
-        pahamiImageAnimY.setDuration(600);
-        ObjectAnimator pahamiImageAlpha = ObjectAnimator.ofFloat(pahamiImage, "alpha", 0f, 1f);
-        pahamiImageAlpha.setDuration(600);
-
-        AnimatorSet contentAnimatorSet = new AnimatorSet();
-        contentAnimatorSet.playTogether(
-                sejarahTitleAnimY, sejarahTitleAlpha,
-                sejarahDescAnimY, sejarahDescAlpha,
-                thinkWoodTitleAnimY, thinkWoodTitleAlpha,
-                thinkWoodDescAnimY, thinkWoodDescAlpha,
-                produkImageAnimY, produkImageAlpha,
-                pahamiImageAnimY, pahamiImageAlpha
-        );
-
-        contentAnimatorSet.start();
+    private View getEllipseByIndex(int index) {
+        switch (index) {
+            case 0: return bulat1;
+            case 1: return bulat2;
+            case 2: return bulat3;
+            default: return null;
+        }
     }
 
-    private void animateImageContent() {
-        // Animasi untuk imageContent jika diperlukan
-        ObjectAnimator imageContentAnimY = ObjectAnimator.ofFloat(imageContent, "translationY", -200f, 0f);
-        imageContentAnimY.setInterpolator(new OvershootInterpolator());
-        imageContentAnimY.setDuration(600);
-        imageContentAnimY.start();
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        // Set lokasi untuk ditampilkan di peta
+        LatLng lokasi = new LatLng(-7.667999570445097, 112.14894567646326); // Contoh koordinat Surabaya
+        mMap.addMarker(new MarkerOptions().position(lokasi).title("PT. Keong Nusantara Abadi (Thinkwood)"));
+        mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lokasi, 15));
     }
 
     private void setupScrollListener() {
@@ -317,7 +279,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         });
     }
 
-
     private void animateOnScroll(View view, float scrollPercentage) {
         float threshold = 0.5f; // Ubah ini untuk menyesuaikan sensitivitas
         float translationY = -200 * (1 - Math.abs(scrollPercentage - threshold) / threshold);
@@ -334,17 +295,40 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+    private void checkUserRegistration(String userId, String username) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference userRef = db.collection("users").document(userId);
 
-        // Set lokasi untuk ditampilkan di peta
-        LatLng lokasi = new LatLng(-7.667999570445097, 112.14894567646326); // Contoh koordinat Surabaya
-        mMap.addMarker(new MarkerOptions().position(lokasi).title("PT. Keong Nusantara Abadi (Thinkwood)"));
-        mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lokasi, 15));
+        // Cek apakah pengguna sudah terdaftar
+        userRef.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                // Jika pengguna sudah terdaftar, tampilkan pesan selamat datang
+                Toast.makeText(getContext(), "Selamat datang kembali, " + username + "!", Toast.LENGTH_SHORT).show();
+
+                // Cek apakah userId pengguna juga ada di koleksi registration
+                db.collection("registration").whereEqualTo("userId", userId).get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                        // Jika userId ditemukan dalam koleksi registration, sembunyikan tombol registerClick
+                        registerClick.setVisibility(View.GONE);
+                        // Pindah ke DoneActivity
+                        Intent intent = new Intent(getActivity(), DoneActivity.class);
+                        startActivity(intent);
+                        getActivity().finish(); // Menghentikan aktivitas saat ini
+                    } else {
+                        // Jika userId tidak ditemukan, tampilkan UI untuk mendaftar
+                        Toast.makeText(getContext(), "Anda belum terdaftar sebagai supplier. Silakan mendaftar.", Toast.LENGTH_SHORT).show();
+                        registerClick.setVisibility(View.VISIBLE);
+                    }
+                });
+            } else {
+                // Jika pengguna belum terdaftar, tampilkan UI untuk mendaftar
+                Toast.makeText(getContext(), "Anda belum terdaftar. Silakan mendaftar.", Toast.LENGTH_SHORT).show();
+                registerClick.setVisibility(View.VISIBLE);
+            }
+        }).addOnFailureListener(e -> {
+            Log.e(TAG, "Error checking user registration", e);
+            Toast.makeText(getContext(), "Terjadi kesalahan saat memeriksa pendaftaran.", Toast.LENGTH_SHORT).show();
+        });
     }
-
-
 
 }

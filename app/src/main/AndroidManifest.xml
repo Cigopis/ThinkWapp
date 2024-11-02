@@ -46,6 +46,7 @@
         <activity android:name=".ConfirmationActivity" android:exported="true" />
         <activity android:name=".RegistrationActivity" android:exported="true" />
         <activity android:name=".UploadActivity" android:exported="true" />
+        <activity android:name=".DoneActivity" android:exported="true"/>
 
     </application>
 

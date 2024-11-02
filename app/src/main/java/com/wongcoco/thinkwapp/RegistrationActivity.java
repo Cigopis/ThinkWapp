@@ -49,6 +49,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         // Set warna awal untuk langkah pertama
         setStepActive(currentStep);
+        registerClick();
 
         btnNext.setOnClickListener(v -> {
             // Memeriksa apakah semua field telah diisi sebelum melanjutkan
@@ -121,5 +122,32 @@ public class RegistrationActivity extends AppCompatActivity {
             etNomorTelepon.setText(registrationData.getNomorTelepon());
             etLuasLahan.setText(registrationData.getLuasLahan());
         }
+    }
+
+    private void registerClick() {
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        // Memeriksa apakah pengguna sudah terdaftar
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("registrations").document(userId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        // Pengguna sudah terdaftar, arahkan ke DoneActivity
+                        Intent doneIntent = new Intent(RegistrationActivity.this, DoneActivity.class);
+                        startActivity(doneIntent);
+                        finish(); // Tutup aktivitas ini jika perlu
+                    } else {
+                        // Pengguna belum terdaftar, lanjutkan dengan proses pendaftaran
+                        // Tambahkan logika pendaftaran Anda di sini
+                        performRegistration();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(RegistrationActivity.this, "Gagal memeriksa status pendaftaran: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+    }
+    private void performRegistration() {
+        // Logika pendaftaran Anda di sini
     }
 }
