@@ -2,8 +2,14 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.ThinkWapp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="buttonStyle">@style/MyButtonStyle</item>
     </style>
 
     <style name="Theme.ThinkWapp" parent="Base.Theme.ThinkWapp" />
+
+    <style name="MyButtonStyle" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/button_background</item> <!-- Gunakan drawable untuk latar belakang -->
+        <item name="android:textColor">#FFFFFF</item> <!-- Warna teks putih -->
+        <!-- Hapus android:backgroundTint jika ada -->
+    </style>
 </resources>
