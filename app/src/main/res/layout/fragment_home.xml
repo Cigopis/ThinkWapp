@@ -42,7 +42,8 @@
                     android:layout_marginRight="6dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="25dp"
-                    android:background="@drawable/supplier" />
+                    android:background="@drawable/supplier"
+                    android:visibility="gone"/>
 
                 <!-- Row with syarat panduan and tanya kami -->
                 <LinearLayout

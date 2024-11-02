@@ -96,7 +96,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             public void onUsernameRetrieved(String username) {
                 if (username != null) {
                     // Panggil metode untuk memeriksa pendaftaran
-                    checkUserRegistration( userId, username);
+                    checkUserRegistration( userId);
                 } else {
                     Log.w(TAG, "Username tidak ditemukan.");
                 }
@@ -295,40 +295,30 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
-    private void checkUserRegistration(String userId, String username) {
+    private void checkUserRegistration(String userId) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference userRef = db.collection("users").document(userId);
 
-        // Cek apakah pengguna sudah terdaftar
-        userRef.get().addOnSuccessListener(documentSnapshot -> {
-            if (documentSnapshot.exists()) {
-                // Jika pengguna sudah terdaftar, tampilkan pesan selamat datang
-                Toast.makeText(getContext(), "Selamat datang kembali, " + username + "!", Toast.LENGTH_SHORT).show();
-
-                // Cek apakah userId pengguna juga ada di koleksi registration
-                db.collection("registration").whereEqualTo("userId", userId).get().addOnCompleteListener(task -> {
+        // Cek apakah userId ada di koleksi registrations
+        db.collection("registrations").whereEqualTo("userId", userId).get()
+                .addOnCompleteListener(task -> {
                     if (task.isSuccessful() && !task.getResult().isEmpty()) {
-                        // Jika userId ditemukan dalam koleksi registration, sembunyikan tombol registerClick
+                        Log.d(TAG, "User ID ditemukan di koleksi registrations");
+
                         registerClick.setVisibility(View.GONE);
-                        // Pindah ke DoneActivity
-                        Intent intent = new Intent(getActivity(), DoneActivity.class);
-                        startActivity(intent);
-                        getActivity().finish(); // Menghentikan aktivitas saat ini
+
                     } else {
-                        // Jika userId tidak ditemukan, tampilkan UI untuk mendaftar
+                        Log.d(TAG, "User ID tidak ditemukan di koleksi registrations");
                         Toast.makeText(getContext(), "Anda belum terdaftar sebagai supplier. Silakan mendaftar.", Toast.LENGTH_SHORT).show();
                         registerClick.setVisibility(View.VISIBLE);
                     }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Gagal mendapatkan data dari koleksi registrations", e);
+                    Toast.makeText(getContext(), "Terjadi kesalahan saat memeriksa pendaftaran.", Toast.LENGTH_SHORT).show();
                 });
-            } else {
-                // Jika pengguna belum terdaftar, tampilkan UI untuk mendaftar
-                Toast.makeText(getContext(), "Anda belum terdaftar. Silakan mendaftar.", Toast.LENGTH_SHORT).show();
-                registerClick.setVisibility(View.VISIBLE);
-            }
-        }).addOnFailureListener(e -> {
-            Log.e(TAG, "Error checking user registration", e);
-            Toast.makeText(getContext(), "Terjadi kesalahan saat memeriksa pendaftaran.", Toast.LENGTH_SHORT).show();
-        });
     }
+
+
+
 
 }

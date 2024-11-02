@@ -74,7 +74,7 @@ public class RegistrationActivity extends AppCompatActivity {
             // Berpindah ke langkah berikutnya
             Intent intent = new Intent(RegistrationActivity.this, UploadActivity.class);
             startActivity(intent);
-            finish(); // Menutup RegistrationActivity
+
         });
     }
 

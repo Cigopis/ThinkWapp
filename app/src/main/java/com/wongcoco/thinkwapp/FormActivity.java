@@ -3,23 +3,19 @@ package com.wongcoco.thinkwapp;
 import android.app.Application;
 
 public class FormActivity extends Application {
-    private DoubleLinkedList<RegistrationData> registrationList;
+    private DoubleLinkedList registrationList = new DoubleLinkedList();
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        registrationList = new DoubleLinkedList<>(); // Inisialisasi linked list saat aplikasi dimulai
+    public DoubleLinkedList getRegistrationList() {
+        return registrationList;
     }
 
-    public DoubleLinkedList<RegistrationData> getRegistrationList() {
-        return registrationList; // Metode untuk mendapatkan linked list
-    }
-
+    // Tambahkan data baru ke dalam registrationList
     public void addRegistrationData(RegistrationData data) {
-        registrationList.add(data); // Menambahkan data pendaftaran ke dalam linked list
+        registrationList.add(data);
     }
 
-    public RegistrationData getLast() {
-        return registrationList.getLast(); // Mengambil data pendaftaran terakhir
+    // Hapus data terakhir jika perlu
+    public void removeLastRegistration() {
+        registrationList.removeLast();
     }
 }
