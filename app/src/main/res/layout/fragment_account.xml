@@ -53,7 +53,7 @@
                             android:id="@+id/namaTv"
                             android:layout_width="180dp"
                             android:layout_height="wrap_content"
-                            android:text="Tn. Nafis Arrosyid"
+                            android:text="Daftar sebagai mitra kami terlebih dahulu!"
                             android:layout_marginLeft="16dp"
                             android:textSize="18sp"
                             android:textColor="@color/white"
@@ -63,7 +63,7 @@
                             android:id="@+id/tahunMasa"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="2024 - 2028"
+                            android:text=" "
                             android:textColor="@color/white"
                             android:layout_marginLeft="16dp"/>
 
@@ -102,9 +102,10 @@
                 android:layout_marginBottom="-20dp">
 
                 <TextView
+                    android:id="@+id/JudulBantuan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Bantuan"
+                    android:text=""
                     android:layout_marginTop="12dp"
                     android:layout_marginLeft="20dp"/>
 
@@ -112,7 +113,7 @@
                     android:id="@+id/bantuanTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Bibit Pohon"
+                    android:text=""
                     android:layout_marginTop="36dp"
                     android:textSize="20dp"
                     android:textStyle="bold"
