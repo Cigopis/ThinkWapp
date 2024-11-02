@@ -54,6 +54,8 @@ public class PanduanActivity extends AppCompatActivity {
         // Child data
         List<String> panduan1 = new ArrayList<>();
         panduan1.add("Setelah berhasil masuk, pilih menu registrasi di halaman beranda");
+        panduan1.add("kemudian ada 3 step yang perlu dilakukan, isi data formulir, unggah foto KTP dan foto lahan, lalu konfirmasi kembali data yang sudah diinputkan tadi agar tidak terjadi kesalahan dan kekeliruhan ");
+        panduan1.add("Jika ada kesalahan sistem, laporkan perihal ini kepada kami");
 
         List<String> panduan2 = new ArrayList<>();
         panduan2.add("Jika ingin mengunggah foto, usahakan file berukuran max. 100mb");
@@ -63,6 +65,9 @@ public class PanduanActivity extends AppCompatActivity {
 
         List<String> panduan4 = new ArrayList<>();
         panduan4.add("Komitmen adalah sebuah langkah awal untuk menjalin hubungan baik dan tanggung jawab.");
+        panduan4.add("Pastikan komunikasi dengan mitra berjalan secara terbuka dan jujur. Beri tahu informasi penting secara tepat waktu, termasuk hambatan atau masalah yang mungkin timbul.");
+        panduan4.add("Kepercayaan adalah dasar dari setiap hubungan kemitraan yang sukses. Bersikaplah jujur, terbuka, dan berintegritas dalam setiap tindakan dan keputusan. Hindari perilaku yang dapat merusak kepercayaan.");
+        panduan4.add("Hargai kontribusi mitra, bahkan untuk hal-hal kecil. Menunjukkan rasa terima kasih dan apresiasi atas usaha mitra membuat hubungan kemitraan semakin kuat.");
 
         listDataChild.put(listDataHeader.get(0), panduan1);
         listDataChild.put(listDataHeader.get(1), panduan2);

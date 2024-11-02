@@ -3,6 +3,7 @@ package com.wongcoco.thinkwapp;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,11 +91,14 @@ public class AccountFragment extends Fragment {
                             // Tampilkan nama atau username sesuai kebutuhan
                             if (name != null && !name.isEmpty()) {
                                 namaTv.setText(name);
+                                namaTv.setGravity(Gravity.CENTER);
+                                namaTv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER); // Jika API level 17 ke atas
+
                             } else {
-                                namaTv.setText(username != null ? username : "Nama tidak tersedia"); // Jika nama tidak ada, tampilkan username
+                                namaTv.setText(username != null ? username : "Daftar sebagai mitra terlebih dahulu!"); // Jika nama tidak ada, tampilkan username
                             }
                         } else {
-                            namaTv.setText("Nama tidak tersedia");
+                            namaTv.setText("Daftar sebagai mitra terlebih dahulu!");
                         }
                     } else {
                         Toast.makeText(getActivity(), "Gagal mengambil data nama", Toast.LENGTH_SHORT).show();

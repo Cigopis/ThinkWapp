@@ -1,5 +1,6 @@
 package com.wongcoco.thinkwapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -65,43 +66,62 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void registerUser(String email, String username, String password) {
-        // Hash kata sandi sebelum disimpan
-        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+        // Validasi email
+        if (email.isEmpty() || !email.contains("@")) {
+            Toast.makeText(this, "Email harus valid dan mengandung '@'", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
+        // Validasi username
+        if (username.isEmpty()) {
+            Toast.makeText(this, "Username tidak boleh kosong", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Validasi password
+        if (password.length() <= 6) {
+            Toast.makeText(this, "Password harus lebih dari 6 karakter", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
+        // Buat akun dengan email dan password
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Jika pendaftaran berhasil, simpan data pengguna ke Firestore
-                            String userId = mAuth.getCurrentUser().getUid();
-                            saveUserToFirestore(userId, email, username, hashedPassword);
-                        } else {
-                            Toast.makeText(SignUpActivity.this, "Pendaftaran gagal: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        }
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        // Jika pendaftaran berhasil, simpan data pengguna ke Firestore
+                        String userId = mAuth.getCurrentUser().getUid();
+                        saveUserToFirestore(userId, email, username, password);
+                        Toast.makeText(SignUpActivity.this, "Pendaftaran berhasil", Toast.LENGTH_SHORT).show();
+
+                        // Arahkan setelah pendaftaran
+                        Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(SignUpActivity.this, "Pendaftaran gagal: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
-    private void saveUserToFirestore(String userId, String email, String username, String hashedPassword) {
-        Map<String, Object> user = new HashMap<>();
-        user.put("email", email);
-        user.put("username", username);
-        user.put("password", hashedPassword);  // Simpan kata sandi yang telah di-hash
+    private void saveUserToFirestore(String userId, String email, String username, String password) {
+        // Buat data pengguna
+        Map<String, Object> userData = new HashMap<>();
+        userData.put("email", email);
+        userData.put("username", username);
+        userData.put("password", password); // Menyimpan password yang sudah di-hash
 
+        // Menyimpan data pengguna ke Firestore
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("users").document(userId)
-                .set(user)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(SignUpActivity.this, "Pendaftaran berhasil dan data disimpan!", Toast.LENGTH_SHORT).show();
-                            // Lanjutkan ke aktivitas lain jika diperlukan
-                        } else {
-                            Toast.makeText(SignUpActivity.this, "Gagal menyimpan data: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                .set(userData)
+                .addOnSuccessListener(aVoid ->
+                        Toast.makeText(SignUpActivity.this, "Data pengguna disimpan di Firestore", Toast.LENGTH_SHORT).show()
+                )
+                .addOnFailureListener(e ->
+                        Toast.makeText(SignUpActivity.this, "Gagal menyimpan data di Firestore", Toast.LENGTH_SHORT).show()
+                );
     }
+
 
 }

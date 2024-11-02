@@ -30,9 +30,12 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import okhttp3.Call;
@@ -85,30 +88,63 @@ public class SignInActivity extends AppCompatActivity {
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
-
     private void signInWithEmail() {
         String email = emailField.getText().toString().trim();
         String password = passwordField.getText().toString().trim();
 
+        // Validasi email dan password
         if (email.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "Email dan password harus diisi", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        if (user != null) {
-                            // Simpan email ke SharedPreferences
-                            saveEmailToPreferences(email);
-                            sendOtp(user);
+        // Validasi email harus mengandung '@'
+        if (!email.contains("@")) {
+            Toast.makeText(this, "Email harus mengandung '@'", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Validasi password harus lebih dari 6 karakter
+        if (password.length() <= 6) {
+            Toast.makeText(this, "Password harus lebih dari 6 karakter", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Mengambil data dari Firestore untuk verifikasi
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users")
+                .whereEqualTo("email", email)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                        // Ambil data pengguna dari Firestore
+                        DocumentSnapshot document = task.getResult().getDocuments().get(0);
+                        String storedPassword = document.getString("password");
+
+                        // Cocokkan password
+                        if (storedPassword != null && storedPassword.equals(password)) {
+                            // Login berhasil
+                            Toast.makeText(this, "Login berhasil", Toast.LENGTH_SHORT).show();
+
+                            // Arahkan ke MainActivity
+                            Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            // Password tidak cocok
+                            Toast.makeText(this, "Password salah", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(SignInActivity.this, "Autentikasi Gagal.", Toast.LENGTH_SHORT).show();
+                        // Pengguna tidak ditemukan
+                        Toast.makeText(this, "Email tidak terdaftar", Toast.LENGTH_SHORT).show();
                     }
-                });
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(this, "Gagal mengambil data dari Firestore", Toast.LENGTH_SHORT).show()
+                );
     }
+
+
 
     private void signInWithGoogle() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
