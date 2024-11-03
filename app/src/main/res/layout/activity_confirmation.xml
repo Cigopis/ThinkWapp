@@ -2,13 +2,128 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@color/white">
 
+    <!-- Step Indicator -->
+    <LinearLayout
+        android:id="@+id/stepIndicatorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:padding="8dp">
+
+        <!-- Formulir Step -->
+        <ImageView
+            android:id="@+id/stepFormulir"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/circle_green" />
+
+        <TextView
+            android:id="@+id/textFormulir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Formulir"
+            android:textColor="@color/black"
+            android:paddingStart="4dp"
+            android:paddingEnd="8dp" />
+
+        <View
+            android:id="@+id/lineFormulirToUnggah"
+            android:layout_width="24dp"
+            android:layout_height="2dp"
+            android:background="@color/Primary" />
+
+        <!-- Unggah Step -->
+        <ImageView
+            android:id="@+id/stepUnggah"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/circle_green" />
+
+        <TextView
+            android:id="@+id/textUnggah"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Unggah"
+            android:textColor="@color/black"
+            android:paddingStart="4dp"
+            android:paddingEnd="8dp" />
+
+        <View
+            android:id="@+id/lineUnggahToKonfirmasi"
+            android:layout_width="24dp"
+            android:layout_height="2dp"
+            android:background="@color/Primary" />
+
+        <!-- Konfirmasi Step -->
+        <ImageView
+            android:id="@+id/stepKonfirmasi"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/circle_green" />
+
+        <TextView
+            android:id="@+id/textKonfirmasi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Konfirmasi"
+            android:textColor="@color/black"
+            android:paddingStart="4dp" />
+    </LinearLayout>
+
+    <!-- Confirmation Text -->
     <TextView
         android:id="@+id/tvConfirmation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp" />
+        android:text="Silahkan periksa data berikut sebelum menyimpan."
+        android:textSize="18sp"
+        android:layout_marginTop="20dp"/>
+
+    <!-- Data Display -->
+    <TextView
+        android:id="@+id/textNik"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="NIK: [data_nik]"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/textNama"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nama: [data_nama]"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/textAlamat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Alamat: [data_alamat]"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/textNomor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No. Telepon: [data_nomor]"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/textLuasTanah"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Luas Lahan: [data_luas_tanah]"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"/>
 
     <ImageView
         android:id="@+id/imgKTP"
@@ -24,9 +139,27 @@
         android:background="#CCCCCC"
         android:scaleType="centerCrop" />
 
-    <Button
-        android:id="@+id/btnConfirm"
+    <!-- Save Button -->
+    <LinearLayout
+        android:id="@+id/saveButtonLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Simpan Data" />
+        android:gravity="end"
+        android:paddingTop="16dp">
+
+        <TextView
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Simpan Data"
+            android:textColor="@color/Primary"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/iconSave"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/arrow_right"
+            android:paddingStart="4dp" />
+    </LinearLayout>
 </LinearLayout>
