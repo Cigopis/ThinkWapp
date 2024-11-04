@@ -1,7 +1,9 @@
 package com.wongcoco.thinkwapp;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -135,6 +137,12 @@ public class AccountFragment extends Fragment {
         // Logout akun Google jika pengguna login dengan Google
         mGoogleSignInClient.signOut().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
+                // Menghapus status login dari SharedPreferences
+                SharedPreferences preferences = requireActivity().getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putBoolean("is_logged_in", false); // Status login diatur ke false
+                editor.apply();
+
                 // Logout berhasil, kembali ke StartActivity
                 Intent intent = new Intent(getActivity(), StartActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -146,4 +154,5 @@ public class AccountFragment extends Fragment {
             }
         });
     }
+
 }

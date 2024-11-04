@@ -51,6 +51,8 @@ dependencies {
     implementation ("com.google.firebase:firebase-auth:22.0.0")
     implementation ("com.google.firebase:firebase-firestore:24.4.0")
     implementation ("com.google.android.gms:play-services-auth:20.5.0")
+    implementation ("com.google.firebase:firebase-database")
+
 
     implementation("org.mindrot:jbcrypt:0.4")
 
@@ -64,12 +66,6 @@ dependencies {
 
     implementation ("com.google.android.gms:play-services-location:21.0.1") // Versi terbaru dapat diperiksa
     implementation ("com.github.bumptech.glide:glide:4.15.0")
-
-
-
-
-
-
 
 
 }
