@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_chat"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/layout_message_box"
+        android:padding="8dp" />
+
+    <LinearLayout
+        android:id="@+id/layout_message_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:background="#C8E6C9">
+
+        <EditText
+            android:id="@+id/edit_text_message"
+            android:layout_width="300dp"
+            android:layout_weight="0"
+            android:layout_height="wrap_content"
+            android:hint="Ketik pesan"
+            android:background="@android:color/white"
+            android:padding="8dp" />
+
+        <ImageButton
+            android:id="@+id/button_send"
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/baseline_send_24"
+            android:contentDescription="Send" />
+
+    </LinearLayout>
+
+</RelativeLayout>
