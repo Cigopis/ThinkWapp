@@ -5,31 +5,85 @@
     android:padding="16dp"
     android:background="@drawable/bgpanduan">
 
-    <!-- Formulir Step -->
-    <ImageView
-        android:id="@+id/stepFormulir"
-        android:layout_width="wrap_content"
+    <!-- Step Indicator -->
+    <LinearLayout
+        android:id="@+id/stepIndicatorLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="80dp"
-        android:src="@drawable/ellformulir"/>
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="100dp"
+        android:padding="8dp">
 
-    <!-- NIK Fields -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="NIK"
-        android:textStyle="bold"
-        android:textSize="13dp"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/black"/>
+        <!-- Formulir Step -->
+        <ImageView
+            android:id="@+id/stepFormulir"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/circle_green" />
 
+        <TextView
+            android:id="@+id/textFormulir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Formulir"
+            android:textColor="@color/black"
+            android:paddingStart="4dp"
+            android:paddingEnd="8dp" />
+
+        <View
+            android:id="@+id/lineFormulirToUnggah"
+            android:layout_width="24dp"
+            android:layout_height="2dp"
+            android:background="@color/Primary" />
+
+        <!-- Unggah Step -->
+        <ImageView
+            android:id="@+id/stepUnggah"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/circle_grey" />
+
+        <TextView
+            android:id="@+id/textUnggah"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Unggah"
+            android:textColor="@color/black"
+            android:paddingStart="4dp"
+            android:paddingEnd="8dp" />
+
+        <View
+            android:id="@+id/lineUnggahToKonfirmasi"
+            android:layout_width="24dp"
+            android:layout_height="2dp"
+            android:background="@color/Secondary" />
+
+        <!-- Konfirmasi Step -->
+        <ImageView
+            android:id="@+id/stepKonfirmasi"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/circle_grey" />
+
+        <TextView
+            android:id="@+id/textKonfirmasi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Konfirmasi"
+            android:textColor="@color/black"
+            android:paddingStart="4dp" />
+    </LinearLayout>
+
+    <!-- Form Fields -->
     <EditText
         android:id="@+id/editTxtNik"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bgedittext"
-        android:layout_marginTop="5dp"
+        android:hint="NIK"
+        android:background="@drawable/reg_edit_text_background"
+        android:layout_marginTop="60dp"
+        android:padding="12dp"
         android:textColor="@color/black" />
 
     <EditText
@@ -79,6 +133,14 @@
         android:layout_height="wrap_content"
         android:gravity="end"
         android:paddingTop="16dp">
+
+        <TextView
+            android:id="@+id/btnNextUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selanjutnya"
+            android:textColor="@color/Primary"
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/iconNextArrow"
