@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,7 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class RegistrationActivity extends AppCompatActivity {
 
     private EditText etNik, etNama, etAlamat, etNomorTelepon, etLuasLahan;
-    private TextView btnNext;
+    private ImageButton btnNext;
     private String userId;
     private int currentStep = 1;  // Menambahkan currentStep untuk melacak langkah saat ini
 

@@ -3,8 +3,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@color/white">
+    android:background="@drawable/bgpanduan">
 
+    <!-- Indikator Step -->
     <!-- Step Indicator -->
     <LinearLayout
         android:id="@+id/stepIndicatorLayout"
@@ -12,7 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="100dp"
         android:padding="8dp">
 
         <!-- Formulir Step -->
@@ -42,7 +43,7 @@
             android:id="@+id/stepUnggah"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:background="@drawable/circle_green" />
+            android:background="@drawable/circle_grey" />
 
         <TextView
             android:id="@+id/textUnggah"
@@ -57,14 +58,14 @@
             android:id="@+id/lineUnggahToKonfirmasi"
             android:layout_width="24dp"
             android:layout_height="2dp"
-            android:background="@color/Primary" />
+            android:background="@color/Secondary" />
 
         <!-- Konfirmasi Step -->
         <ImageView
             android:id="@+id/stepKonfirmasi"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:background="@drawable/circle_green" />
+            android:background="@drawable/circle_grey" />
 
         <TextView
             android:id="@+id/textKonfirmasi"
@@ -78,88 +79,187 @@
     <!-- Confirmation Text -->
     <TextView
         android:id="@+id/tvConfirmation"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Silahkan periksa data berikut sebelum menyimpan."
-        android:textSize="18sp"
-        android:layout_marginTop="20dp"/>
+        android:textSize="15sp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/black"/>
 
-    <!-- Data Display -->
+    <!-- NIK Display -->
+    <TextView
+        android:id="@+id/txtNik"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NIK"
+        android:textStyle="bold"
+        android:textSize="13sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"/>
+
     <TextView
         android:id="@+id/textNik"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="NIK: [data_nik]"
-        android:textSize="16sp"
-        android:layout_marginTop="16dp"/>
+        android:background="@drawable/bgedittext"
+        android:layout_marginTop="5dp" />
+
+    <!-- Nama Display -->
+    <TextView
+        android:id="@+id/txtNama"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nama"
+        android:textStyle="bold"
+        android:textSize="13sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:id="@+id/textNama"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nama: [data_nama]"
-        android:textSize="16sp"
-        android:layout_marginTop="8dp"/>
+        android:background="@drawable/bgedittext"
+        android:layout_marginTop="5dp" />
+
+    <!-- Alamat Display -->
+    <TextView
+        android:id="@+id/txtAlamat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Alamat"
+        android:textStyle="bold"
+        android:textSize="13sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:id="@+id/textAlamat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Alamat: [data_alamat]"
-        android:textSize="16sp"
-        android:layout_marginTop="8dp"/>
+        android:background="@drawable/bgedittext"
+        android:layout_marginTop="5dp" />
+
+    <!-- No. Telepon Display -->
+    <TextView
+        android:id="@+id/txtTelepon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No. Telepon"
+        android:textStyle="bold"
+        android:textSize="13sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:id="@+id/textNomor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="No. Telepon: [data_nomor]"
-        android:textSize="16sp"
-        android:layout_marginTop="8dp"/>
+        android:background="@drawable/bgedittext"
+        android:layout_marginTop="5dp" />
+
+    <!-- Luas Lahan Display -->
+    <TextView
+        android:id="@+id/txtLahan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Luas lahan"
+        android:textStyle="bold"
+        android:textSize="13sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:id="@+id/textLuasTanah"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Luas Lahan: [data_luas_tanah]"
-        android:textSize="16sp"
-        android:layout_marginTop="8dp"/>
+        android:background="@drawable/bgedittext"
+        android:layout_marginTop="5dp" />
 
-    <ImageView
-        android:id="@+id/imgKTP"
+    <!-- Text Layout or KTP and Land-->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="#CCCCCC"
-        android:scaleType="centerCrop" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical">
 
-    <ImageView
-        android:id="@+id/imgLahan"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Foto KTP"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:layout_gravity="start"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Foto Lahan"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:layout_marginLeft="170dp"/>
+    </LinearLayout>
+
+    <!-- Image Layout for ktp and land -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="#CCCCCC"
-        android:scaleType="centerCrop" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:gravity="center_vertical">
 
-    <!-- Save Button -->
+        <ImageView
+            android:id="@+id/imgKTP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bgktplahan"
+            android:layout_gravity="start"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/imgLahan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bgktplahan"
+            android:layout_gravity="end"/>
+    </LinearLayout>
+
+    <!-- Button Layout -->
     <LinearLayout
         android:id="@+id/saveButtonLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="end"
-        android:paddingTop="16dp">
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal">
 
+        <!-- Previous Button -->
+        <TextView
+            android:id="@+id/btnPrevious"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/kembali"
+            android:gravity="start" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <!-- Next Button -->
         <TextView
             android:id="@+id/btnSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Simpan Data"
-            android:textColor="@color/Primary"
-            android:textSize="16sp" />
-
-        <ImageView
-            android:id="@+id/iconSave"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/arrow_right"
-            android:paddingStart="4dp" />
+            android:background="@drawable/konfirmasi"
+            android:layout_gravity="end"/>
     </LinearLayout>
 </LinearLayout>

@@ -7,51 +7,50 @@
     android:background="@color/Four"
     tools:context=".AccountFragment">
 
+    <!-- Google Map Fragment -->
     <fragment
         android:id="@+id/frameMaps"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="250dp"/>
+        android:layout_height="250dp" />
 
-    <!-- SwipeRefreshLayout for refreshing content -->
+    <!-- SwipeRefreshLayout for content refresh -->
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_marginTop="240dp"
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-        <!-- ScrollView for content with rounded background -->
+        <!-- ScrollView for scrolling content -->
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:padding="16dp"
             android:background="@drawable/rounded_top_corner">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:orientation="vertical">
 
                 <!-- Register Text -->
                 <TextView
                     android:id="@+id/registerClick"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="6dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="25dp"
                     android:background="@drawable/supplier"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
-                <!-- Row with syarat panduan and tanya kami -->
+                <!-- Row with "Syarat" and "Tanya Kami" -->
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:orientation="horizontal"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center">
+                    android:layout_marginTop="10dp">
 
                     <TextView
                         android:id="@+id/syarat"
@@ -67,7 +66,7 @@
                         android:background="@drawable/tanya_kami" />
                 </LinearLayout>
 
-                <!-- Ellipses animations -->
+                <!-- Ellipse animations -->
                 <ImageView
                     android:id="@+id/ellips1"
                     android:layout_width="wrap_content"
@@ -92,7 +91,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp" />
 
-                <!-- Sejarah Section -->
+                <!-- Section Title and Description -->
                 <TextView
                     android:id="@+id/sejarahTitle"
                     android:layout_width="wrap_content"
@@ -101,28 +100,25 @@
                     android:textStyle="bold"
                     android:textSize="24sp"
                     android:textColor="@color/unselectedTextColor"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="25dp" />
+                    android:layout_marginTop="20dp" />
 
                 <TextView
                     android:id="@+id/sejarahDesc"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginEnd="25dp"
                     android:layout_marginTop="8dp"
                     android:justificationMode="inter_word"
                     android:text="Usaha Wong Coco Group dimulai pada tahun 1986 dengan berdirinya PT. Keong Nusantara Abadi
 yang memproduksi escargot (daging bekicot) yang sebagian besar diekspor seluruhnya ke luar negeri. Pabrik pengolahan escargot pertama kali didirikan di Natar, Lampung. Daging bekicot yang awalnya tidak terlalu menarik perhatian masyarakat Indonesia, ternyata menjadi makanan favorit dan mewah bagi masyarakat dunia." />
 
-                <!-- Gedung image -->
+                <!-- Image of Building -->
                 <ImageView
                     android:id="@+id/imageContent"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:src="@drawable/gedung_wongcoco"
                     android:layout_marginTop="20dp"
-                    android:layout_gravity="center" />
+                    android:scaleType="centerCrop" />
 
                 <!-- Think Wood Section -->
                 <TextView
@@ -133,43 +129,41 @@ yang memproduksi escargot (daging bekicot) yang sebagian besar diekspor seluruhn
                     android:textStyle="bold"
                     android:textSize="24sp"
                     android:textColor="@color/unselectedTextColor"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="25dp" />
+                    android:layout_marginTop="20dp" />
 
                 <TextView
                     android:id="@+id/thinkWoodDesc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginEnd="25dp"
-                    android:layout_marginTop="8dp"
-                    android:justificationMode="inter_word"
-                    android:text="Pada tahun 2009, PT. KNA meluncurkan divisi baru “thinkWood” yang memproduksi kemasan kayu dari bahan Kayu Sengon dengan orientasi pasar utama ekspor. Kayu sengon ramah lingkungan dan menambah nilai hakiki Wong Coco Group sebagai korporasi yang peduli terhadap lingkungan sekitarnya." />
-
-                <!-- Product and Pahami Images -->
-                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="60dp"
-                    android:gravity="center">
+                    android:layout_marginTop="8dp"
+                    android:justificationMode="inter_word"
+                    android:text="Pada tahun 2009, PT. KNA meluncurkan divisi baru “thinkWood” yang memproduksi kemasan kayu dari bahan Kayu Sengon dengan orientasi pasar utama ekspor. Kayu sengon ramah lingkungan dan menambah nilai hakiki Wong Coco Group sebagai korporasi yang peduli terhadap lingkungan sekitarnya" />
 
-                    <ImageView
-                        android:id="@+id/produkImage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/produk"
-                        android:layout_marginEnd="40dp"
-                        android:background="@drawable/produk"/>
+                <!-- Product and Understand Images -->
+                <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="20dp">
 
-                    <ImageView
-                        android:id="@+id/pahamiImage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/pahami"
-                        android:background="@drawable/pahami"/>
-                </LinearLayout>
+                <ImageView
+                    android:id="@+id/produkImage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/produk"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/produk" />
+
+                <ImageView
+                    android:id="@+id/pahamiImage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/pahami"
+                    android:background="@drawable/pahami" />
+            </LinearLayout>
 
             </LinearLayout>
         </ScrollView>

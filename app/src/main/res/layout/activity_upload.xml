@@ -3,8 +3,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@color/white">
+    android:background="@drawable/bgpanduan">
 
+    <!-- Indikator Step -->
     <!-- Step Indicator -->
     <LinearLayout
         android:id="@+id/stepIndicatorLayout"
@@ -12,7 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="100dp"
         android:padding="8dp">
 
         <!-- Formulir Step -->
@@ -42,7 +43,7 @@
             android:id="@+id/stepUnggah"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:background="@drawable/circle_green" /> <!-- Ubah jadi hijau untuk menandakan langkah aktif -->
+            android:background="@drawable/circle_grey" />
 
         <TextView
             android:id="@+id/textUnggah"
@@ -57,7 +58,7 @@
             android:id="@+id/lineUnggahToKonfirmasi"
             android:layout_width="24dp"
             android:layout_height="2dp"
-            android:background="@color/Primary" />
+            android:background="@color/Secondary" />
 
         <!-- Konfirmasi Step -->
         <ImageView
@@ -76,14 +77,36 @@
     </LinearLayout>
 
     <!-- Image for KTP -->
+    <TextView
+        android:id="@+id/textKTP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Foto KTP"
+        android:textStyle="bold"
+        android:textSize="13sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="30dp"
+        android:contentDescription="Teks yang menjelaskan foto KTP yang harus diunggah"/>
+
     <ImageView
         android:id="@+id/imgKTP"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/third"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/unggah_foto"
         android:scaleType="centerCrop"
-        />
+        android:contentDescription="Petunjuk untuk mengunggah foto KTP"/>
+
+    <TextView
+        android:id="@+id/textLahan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Foto Lahan"
+        android:textStyle="bold"
+        android:textSize="13sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:contentDescription="Teks yang menjelaskan foto Lahan yang harus diunggah"/>
 
     <!-- Button to add land image -->
     <LinearLayout
@@ -91,49 +114,45 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="5dp">
+
+        <!-- Image untuk Lahan -->
+        <ImageView
+            android:id="@+id/tambahFoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/upload_foto"
+            android:contentDescription="Petunjuk untuk mengunggah foto lahan"/>
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/tambahFoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/upload_foto"
-
-        />
 
     <!-- Button Layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="end"
-        android:paddingTop="16dp">
+        android:layout_marginTop="30dp"
+        android:gravity="center_horizontal">
 
         <!-- Previous Button -->
         <TextView
             android:id="@+id/btnPrevious"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Kembali"
-            android:textColor="@color/Secondary"
-            android:textSize="16sp"
-            android:paddingEnd="16dp" />
+            android:background="@drawable/kembali"
+            android:gravity="start" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
 
         <!-- Next Button -->
         <TextView
             android:id="@+id/btnNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Selanjutnya"
-            android:textColor="@color/Primary"
-            android:textSize="16sp" />
-
-        <ImageView
-            android:id="@+id/iconNextArrow"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/arrow_right"
-            android:paddingStart="4dp" />
+            android:background="@drawable/selanjutnya"
+            android:layout_gravity="end"/>
     </LinearLayout>
+
 </LinearLayout>

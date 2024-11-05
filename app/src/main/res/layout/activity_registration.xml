@@ -5,6 +5,7 @@
     android:padding="16dp"
     android:background="@drawable/bgpanduan">
 
+    <!-- Indikator Step -->
     <!-- Step Indicator -->
     <LinearLayout
         android:id="@+id/stepIndicatorLayout"
@@ -75,56 +76,100 @@
             android:paddingStart="4dp" />
     </LinearLayout>
 
-    <!-- Form Fields -->
+    <!-- NIK Fields -->
+    <TextView
+        android:id="@+id/textNik"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NIK"
+        android:textStyle="bold"
+        android:textSize="13sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="30dp"/>
+
     <EditText
         android:id="@+id/editTxtNik"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="NIK"
-        android:background="@drawable/reg_edit_text_background"
-        android:layout_marginTop="60dp"
-        android:padding="12dp"
-        android:textColor="@color/black" />
+        android:background="@drawable/bgedittext"
+        android:layout_marginTop="5dp"
+        android:hint="Masukkan NIK"/>
+
+    <!-- Nama Fields -->
+    <TextView
+        android:id="@+id/textNama"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nama"
+        android:textStyle="bold"
+        android:textSize="13sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"/>
 
     <EditText
         android:id="@+id/editTxtNama"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nama"
-        android:background="@drawable/reg_edit_text_background"
-        android:padding="12dp"
-        android:layout_marginTop="16dp"
-        android:textColor="@color/black" />
+        android:background="@drawable/bgedittext"
+        android:layout_marginTop="5dp"
+        android:hint="Masukkan Nama"/>
+
+    <!-- Alamat Fields -->
+    <TextView
+        android:id="@+id/textAlamat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Alamat"
+        android:textStyle="bold"
+        android:textSize="13sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"/>
 
     <EditText
         android:id="@+id/editTxtAlamat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Alamat"
-        android:background="@drawable/reg_edit_text_background"
-        android:padding="12dp"
-        android:layout_marginTop="16dp"
-        android:textColor="@color/black" />
+        android:background="@drawable/bgedittext"
+        android:layout_marginTop="5dp"
+        android:hint="Masukkan Alamat"/>
+
+    <!-- No. Telepon Fields -->
+    <TextView
+        android:id="@+id/textTelepon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No. Telepon"
+        android:textStyle="bold"
+        android:textSize="13sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"/>
 
     <EditText
         android:id="@+id/editTxtNomor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="No. Telepon"
-        android:background="@drawable/reg_edit_text_background"
-        android:layout_marginTop="16dp"
-        android:padding="12dp"
-        android:textColor="@color/black" />
+        android:background="@drawable/bgedittext"
+        android:layout_marginTop="5dp"
+        android:hint="Masukkan No. Telepon"/>
+
+    <!-- Luas Lahan Fields -->
+    <TextView
+        android:id="@+id/textLahan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Luas lahan"
+        android:textStyle="bold"
+        android:textSize="13sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"/>
 
     <EditText
         android:id="@+id/editTxtLuasTanah"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Luas Lahan"
-        android:background="@drawable/reg_edit_text_background"
-        android:layout_marginTop="16dp"
-        android:padding="12dp"
-        android:textColor="@color/black" />
+        android:background="@drawable/bgedittext"
+        android:layout_marginTop="5dp"
+        android:hint="Masukkan Luas lahan"/>
 
     <!-- Next Button -->
     <LinearLayout
@@ -132,21 +177,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="end"
-        android:paddingTop="16dp">
+        android:layout_marginTop="30dp">
 
-        <TextView
+        <ImageButton
             android:id="@+id/btnNextUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Selanjutnya"
-            android:textColor="@color/Primary"
-            android:textSize="16sp" />
-
-        <ImageView
-            android:id="@+id/iconNextArrow"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/arrow_right"
-            android:paddingStart="4dp" />
+            android:background="@drawable/selanjutnya"
+            android:layout_gravity="end"
+            android:contentDescription="Tombol lanjut"/>
     </LinearLayout>
 </LinearLayout>
