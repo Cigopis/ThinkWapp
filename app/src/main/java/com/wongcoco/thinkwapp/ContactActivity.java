@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -16,7 +18,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ContactActivity extends AppCompatActivity {
 
@@ -28,6 +32,7 @@ public class ContactActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseFirestore firestore;
     private String userPhoneNumber;
+    private Map<String, String> userIdMap; // Menyimpan nomor telepon dan ID pengguna
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,7 @@ public class ContactActivity extends AppCompatActivity {
         // Inisialisasi Firebase Auth dan Firestore
         auth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
+        userIdMap = new HashMap<>(); // Inisialisasi map
 
         // Inisialisasi tampilan
         searchContactInput = findViewById(R.id.searchContact_input);
@@ -57,10 +63,12 @@ public class ContactActivity extends AppCompatActivity {
             Toast.makeText(this, "User belum login", Toast.LENGTH_SHORT).show();
         }
 
+
         // Listener untuk tombol FAB menambah kontak
-        fabAddContact.setOnClickListener(v ->
-                Toast.makeText(ContactActivity.this, "Tambah Kontak Baru", Toast.LENGTH_SHORT).show()
-        );
+        fabAddContact.setOnClickListener(v -> {
+            // Fitur untuk menambah kontak baru
+            Toast.makeText(ContactActivity.this, "Tambah Kontak Baru", Toast.LENGTH_SHORT).show();
+        });
 
         // Filter daftar kontak saat pengguna mengetik di search bar
         searchContactInput.addTextChangedListener(new TextWatcher() {
@@ -74,6 +82,30 @@ public class ContactActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {}
+        });
+
+        // Menangani klik pada item kontak
+        contactListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Ambil nomor telepon dari kontak yang dipilih
+                String selectedContact = contactList.get(position);
+                String[] contactDetails = selectedContact.split(" - ");
+                String receiverPhoneNumber = contactDetails[1]; // Nomor telepon
+
+                // Ambil ID pengguna dari map berdasarkan nomor telepon
+                String receiverId = userIdMap.get(receiverPhoneNumber);
+
+                if (receiverId != null) {
+                    // Kirim nomor telepon dan ID penerima ke RoomActivity
+                    Intent intent = new Intent(ContactActivity.this, RoomActivity.class);
+                    intent.putExtra("RECEIVER_PHONE_NUMBER", receiverPhoneNumber);
+                    intent.putExtra("RECEIVER_UID", receiverId);  // Kirim ID penerima juga
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(ContactActivity.this, "ID pengguna tidak ditemukan", Toast.LENGTH_SHORT).show();
+                }
+            }
         });
     }
 
@@ -91,22 +123,30 @@ public class ContactActivity extends AppCompatActivity {
                         Toast.makeText(this, "Data user tidak ditemukan", Toast.LENGTH_SHORT).show();
                     }
                 })
-                .addOnFailureListener(e ->
-                        Toast.makeText(this, "Gagal mengambil data: " + e.getMessage(), Toast.LENGTH_SHORT).show()
-                );
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Gagal mengambil data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
 
     private void searchContacts(String queryText) {
         CollectionReference contactsRef = firestore.collection("registrations");
 
-        Query query = contactsRef.whereEqualTo("nomorTelepon", queryText);
+        Query query = contactsRef.whereGreaterThanOrEqualTo("nomorTelepon", queryText)
+                .whereLessThanOrEqualTo("nomorTelepon", queryText + "\uf8ff"); // Pencarian menggunakan query text
+
         query.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 contactList.clear();
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     String name = document.getString("nama");
                     String phone = document.getString("nomorTelepon");
+                    String userId = document.getId();  // Ambil ID pengguna
+
+                    // Format kontak menjadi nama dan nomor telepon
                     contactList.add(name + " - " + phone);
+
+                    // Simpan ID pengguna untuk digunakan nanti
+                    userIdMap.put(phone, userId); // Simpan nomor telepon dan ID pengguna
                 }
                 if (contactList.isEmpty()) {
                     contactList.add("Kontak tidak ditemukan");
@@ -116,13 +156,5 @@ public class ContactActivity extends AppCompatActivity {
                 Toast.makeText(ContactActivity.this, "Gagal mencari kontak", Toast.LENGTH_SHORT).show();
             }
         });
-
-        contactListView.setOnItemClickListener((parent, view, position, id) -> {
-            String selectedContact = contactList.get(position); // Mendapatkan kontak yang dipilih
-            Intent intent = new Intent(ContactActivity.this, RoomActivity.class);
-            intent.putExtra("name", selectedContact); // Kirim nama kontak yang dipilih
-            startActivity(intent);
-        });
-
     }
 }

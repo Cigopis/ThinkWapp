@@ -9,6 +9,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <!-- Search bar for messages -->
         <EditText
             android:id="@+id/searchMessage_input"
             android:layout_width="match_parent"
@@ -18,23 +19,33 @@
             android:background="@drawable/edittext_background"
             android:layout_marginTop="40dp"/>
 
-        <!-- Tambahkan ListView atau RecyclerView untuk menampilkan pesan atau kontak -->
-        <ListView
+        <!-- RecyclerView for messages -->
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/pesan_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />
 
+        <!-- Input for typing new message -->
+        <EditText
+            android:id="@+id/input_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ketik Pesan"
+            android:padding="10dp"
+            android:background="@drawable/edittext_background"
+            android:layout_marginTop="8dp"/>
+
     </LinearLayout>
 
-    <!-- Floating Action Button untuk Kontak -->
+    <!-- Floating Action Button to send message -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_contact"
+        android:id="@+id/send_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:src="@drawable/baseline_contacts_24"
-        android:contentDescription="Buka Kontak"
+        android:src="@drawable/baseline_send_24"
+        android:contentDescription="Kirim Pesan"
         android:backgroundTint="@color/Primary"/>
 </FrameLayout>

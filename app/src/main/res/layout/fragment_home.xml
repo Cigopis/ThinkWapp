@@ -7,66 +7,139 @@
     android:background="@color/Four"
     tools:context=".AccountFragment">
 
-    <!-- Google Map Fragment -->
     <fragment
         android:id="@+id/frameMaps"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="250dp" />
+        android:layout_height="250dp"/>
 
-    <!-- SwipeRefreshLayout for content refresh -->
+    <!-- SwipeRefreshLayout for refreshing content -->
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_marginTop="240dp"
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- ScrollView for scrolling content -->
+
+        <!-- ScrollView for content with rounded background -->
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="16dp"
             android:background="@drawable/rounded_top_corner">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="16dp">
 
                 <!-- Register Text -->
-                <TextView
-                    android:id="@+id/registerClick"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="25dp"
-                    android:background="@drawable/supplier"
-                    android:visibility="gone" />
-
-                <!-- Row with "Syarat" and "Tanya Kami" -->
+                <!-- Panduan -->
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/registerClick"
                     android:layout_gravity="center"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="16dp"
+                    android:padding="10dp"
+                    android:background="@drawable/button_background"
+                    android:elevation="4dp"
+                    android:visibility="gone">
 
-                    <TextView
-                        android:id="@+id/syarat"
+                    <!-- Icon -->
+                    <ImageView
+                        android:layout_marginLeft="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:background="@drawable/syarat_panduan" />
+                        android:src="@drawable/icon_register"
+                        />
 
-                    <TextView
-                        android:id="@+id/tanya"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/tanya_kami" />
+                    <LinearLayout
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <!-- Text -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Daftar sebagai supplier kami!"
+                            android:textStyle="bold"
+                            android:textColor="@color/white"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:textSize="10dp"
+                            android:text="Dengan langkah mudah, klik disini sekarang!"
+                            android:textColor="@color/white"/>
+                    </LinearLayout>
                 </LinearLayout>
 
-                <!-- Ellipse animations -->
+                <!-- Row with syarat panduan and tanya kami -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <!-- Panduan -->
+                    <LinearLayout
+                        android:id="@+id/syarat"
+                        android:layout_gravity="center"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="33dp"
+                        android:layout_marginRight="26dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginTop="16dp"
+                        android:padding="8dp"
+                        android:background="@drawable/button_background"
+                        android:elevation="8dp">
+
+
+                        <!-- Text -->
+                        <TextView
+                            android:layout_marginLeft="16dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Syarat, ketentuan"
+                            android:textColor="@color/white"/>
+                    </LinearLayout>
+                    <!-- Panduan -->
+                    <LinearLayout
+                        android:id="@+id/tanya"
+                        android:layout_gravity="center"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="26dp"
+                        android:layout_marginRight="33dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginTop="16dp"
+                        android:padding="8dp"
+                        android:background="@drawable/button_background"
+                        android:elevation="8dp">
+
+                        <!-- Text -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30dp"
+                            android:text="Tanya kami"
+                            android:textColor="@color/white"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Ellipses animations -->
                 <ImageView
                     android:id="@+id/ellips1"
                     android:layout_width="wrap_content"
@@ -91,7 +164,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp" />
 
-                <!-- Section Title and Description -->
+                <!-- Sejarah Section -->
                 <TextView
                     android:id="@+id/sejarahTitle"
                     android:layout_width="wrap_content"
@@ -100,72 +173,108 @@
                     android:textStyle="bold"
                     android:textSize="24sp"
                     android:textColor="@color/unselectedTextColor"
-                    android:layout_marginTop="20dp" />
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="25dp" />
 
                 <TextView
                     android:id="@+id/sejarahDesc"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
                     android:layout_marginTop="8dp"
                     android:justificationMode="inter_word"
                     android:text="Usaha Wong Coco Group dimulai pada tahun 1986 dengan berdirinya PT. Keong Nusantara Abadi
 yang memproduksi escargot (daging bekicot) yang sebagian besar diekspor seluruhnya ke luar negeri. Pabrik pengolahan escargot pertama kali didirikan di Natar, Lampung. Daging bekicot yang awalnya tidak terlalu menarik perhatian masyarakat Indonesia, ternyata menjadi makanan favorit dan mewah bagi masyarakat dunia." />
 
-                <!-- Image of Building -->
+                <!-- Gedung image -->
                 <ImageView
                     android:id="@+id/imageContent"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/gedung_wongcoco"
                     android:layout_marginTop="20dp"
-                    android:scaleType="centerCrop" />
+                    android:layout_gravity="center" />
 
                 <!-- Think Wood Section -->
                 <TextView
                     android:id="@+id/thinkWoodTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Think Wood"
+                    android:text="Divisi Kami"
                     android:textStyle="bold"
                     android:textSize="24sp"
                     android:textColor="@color/unselectedTextColor"
-                    android:layout_marginTop="20dp" />
+                    android:layout_marginTop="50dp"
+                    android:layout_marginStart="25dp" />
 
                 <TextView
                     android:id="@+id/thinkWoodDesc"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
                     android:layout_marginTop="8dp"
                     android:justificationMode="inter_word"
-                    android:text="Pada tahun 2009, PT. KNA meluncurkan divisi baru “thinkWood” yang memproduksi kemasan kayu dari bahan Kayu Sengon dengan orientasi pasar utama ekspor. Kayu sengon ramah lingkungan dan menambah nilai hakiki Wong Coco Group sebagai korporasi yang peduli terhadap lingkungan sekitarnya" />
+                    android:text="@string/deskripsi_divisi" />
 
-                <!-- Product and Understand Images -->
+                <!-- Product and Pahami Images -->
                 <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_marginTop="20dp">
-
-                <ImageView
-                    android:id="@+id/produkImage"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/produk"
-                    android:layout_marginEnd="8dp"
-                    android:background="@drawable/produk" />
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="60dp"
+                    android:gravity="center">
 
-                <ImageView
-                    android:id="@+id/pahamiImage"
-                    android:layout_width="0dp"
+                    <ImageView
+                        android:id="@+id/produkImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_galeri"
+                        android:layout_marginEnd="40dp"
+                        />
+
+                    <ImageView
+                        android:id="@+id/pahamiImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/pahami"
+                        />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/SengonDeskripsi"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/pahami"
-                    android:background="@drawable/pahami" />
+                    android:text="Sengon"
+                    android:textStyle="bold"
+                    android:textSize="24sp"
+                    android:textColor="@color/unselectedTextColor"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="25dp" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="80dp"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+
             </LinearLayout>
 
-            </LinearLayout>
+
         </ScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </FrameLayout>

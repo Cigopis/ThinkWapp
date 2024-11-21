@@ -33,6 +33,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.wongcoco.thinkwapp.admin.AdminDashboardActivity;
 
 import java.io.IOException;
 import java.util.Random;
@@ -97,22 +98,35 @@ public class SignInActivity extends AppCompatActivity {
             return;
         }
 
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        if (user != null) {
-                            // Simpan email ke SharedPreferences
-                            saveEmailToPreferences(email);
+        // Pemeriksaan admin
+        if (email.equals("admin") && password.equals("admin123")) {
+            // Jika login sebagai admin berhasil
+            Toast.makeText(SignInActivity.this, "Login sebagai Admin berhasil", Toast.LENGTH_SHORT).show();
 
-                            // Ambil nama pengguna dari Firestore
-                            checkUserInFirestore(user.getUid());
+            // Redirect ke halaman AdminDashboardActivity
+            Intent intent = new Intent(SignInActivity.this, AdminDashboardActivity.class);
+            startActivity(intent);
+            finish(); // Agar tidak kembali ke halaman login
+        } else {
+            // Jika bukan admin, lanjutkan dengan login Firebase
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, task -> {
+                        if (task.isSuccessful()) {
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            if (user != null) {
+                                // Simpan email ke SharedPreferences
+                                saveEmailToPreferences(email);
+
+                                // Ambil nama pengguna dari Firestore
+                                checkUserInFirestore(user.getUid());
+                            }
+                        } else {
+                            Toast.makeText(SignInActivity.this, "Autentikasi Gagal.", Toast.LENGTH_SHORT).show();
                         }
-                    } else {
-                        Toast.makeText(SignInActivity.this, "Autentikasi Gagal.", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                    });
+        }
     }
+
 
     private void checkUserInFirestore(String userId) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();

@@ -1,117 +1,103 @@
 package com.wongcoco.thinkwapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class RoomActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private ChatAdapter chatAdapter;
-    private List<Message> messageList;
     private EditText editTextMessage;
     private ImageButton buttonSend;
-
-    // Referensi database
-    private DatabaseReference databaseReference;
-    private FirebaseAuth mAuth; // Menambahkan FirebaseAuth untuk mendapatkan userId
-    private String receiverId; // Tambahkan receiverId di sini
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore firestore;
+    private String receiverPhoneNumber;
+    private String receiverUid;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_room); // Pastikan layout ini ada
+        FirebaseApp.initializeApp(this);
+        setContentView(R.layout.activity_room);
 
-        // Inisialisasi Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+        firestore = FirebaseFirestore.getInstance();
 
-        // Ambil receiverId dari Intent (jika diperlukan)
-        receiverId = getIntent().getStringExtra("RECEIVER_ID"); // Pastikan Anda mengirimkan ID penerima dari activity sebelumnya
+        // Ambil nomor telepon dan ID penerima dari Intent
+        receiverPhoneNumber = getIntent().getStringExtra("RECEIVER_PHONE_NUMBER");
+        receiverUid = getIntent().getStringExtra("RECEIVER_UID");
 
-        recyclerView = findViewById(R.id.recycler_view_chat);
         editTextMessage = findViewById(R.id.edit_text_message);
         buttonSend = findViewById(R.id.button_send);
 
-        // Inisialisasi data dan adapter
-        messageList = new ArrayList<>();
-        chatAdapter = new ChatAdapter(messageList);
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            Toast.makeText(RoomActivity.this, "Anda harus login terlebih dahulu", Toast.LENGTH_SHORT).show();
+            return;  // Keluar dari metode jika pengguna belum login
+        }
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(chatAdapter);
 
-        // Inisialisasi Firebase Realtime Database
-        databaseReference = FirebaseDatabase.getInstance().getReference("messages");
-
-        // Set click listener untuk tombol kirim
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendMessage(receiverId); // Panggil sendMessage dengan receiverId
+                String messageText = editTextMessage.getText().toString().trim();
+                if (!messageText.isEmpty() && receiverUid != null) {
+                    sendMessage(messageText);
+                    editTextMessage.setText("");
+                } else {
+                    Toast.makeText(RoomActivity.this, "Pesan tidak boleh kosong atau penerima tidak ditemukan", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
 
-    private void sendMessage(String receiverId) {
-        // Ambil teks dari EditText
-        String messageText = editTextMessage.getText().toString().trim();
+    private void sendMessage(String messageText) {
+        String senderId = mAuth.getCurrentUser().getUid();
+        String senderPhoneNumber = mAuth.getCurrentUser().getPhoneNumber();
 
-        // Pastikan pesan tidak kosong
-        if (!messageText.isEmpty()) {
-            // Ambil userId dari FirebaseAuth
-            FirebaseUser currentUser = mAuth.getCurrentUser();
-            if (currentUser == null) {
-                Toast.makeText(RoomActivity.this, "Anda perlu login untuk mengirim pesan", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            String senderId = currentUser.getUid();
+        // Pastikan nomor telepon pengirim tersedia
+        if (senderPhoneNumber == null) {
+            Toast.makeText(RoomActivity.this, "Nomor telepon pengirim tidak tersedia", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-            // Tambahkan pesan ke list
-            Message message = new Message(messageText, true, receiverId); // Tambahkan receiverId
-            messageList.add(message);
-
-            // Simpan pesan ke Realtime Database
-            String messageId = databaseReference.push().getKey(); // Dapatkan ID unik untuk pesan
-            if (messageId != null) {
-                HashMap<String, Object> messageMap = new HashMap<>();
-                messageMap.put("messageId", messageId);
-                messageMap.put("messageText", messageText);
-                messageMap.put("senderId", senderId); // Menggunakan userId dari FirebaseAuth
-                messageMap.put("receiverId", receiverId); // Menambahkan receiverId
-
-                // Simpan ke database
-                databaseReference.child(messageId).setValue(messageMap)
-                        .addOnCompleteListener(task -> {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(RoomActivity.this, "Pesan berhasil dikirim", Toast.LENGTH_SHORT).show();
-                                Log.d("RoomActivity", "Pesan berhasil disimpan dengan ID: " + messageId);
-                            } else {
-                                Toast.makeText(RoomActivity.this, "Gagal mengirim pesan", Toast.LENGTH_SHORT).show();
-                                Log.e("RoomActivity", "Gagal menyimpan pesan: " + task.getException().getMessage());
-                            }
-                        });
-            }
-
-            // Beritahu adapter ada data baru
-            chatAdapter.notifyItemInserted(messageList.size() - 1);
-            recyclerView.scrollToPosition(messageList.size() - 1);
-
-            // Kosongkan EditText setelah mengirim pesan
-            editTextMessage.setText("");
+        // Pastikan receiverUid dan receiverPhoneNumber valid
+        if (receiverUid != null && receiverPhoneNumber != null) {
+            Message message = new Message(senderId, senderPhoneNumber, receiverPhoneNumber, messageText, System.currentTimeMillis());
+            firestore.collection("messages")
+                    .add(message)
+                    .addOnSuccessListener(documentReference -> {
+                        // Setelah berhasil mengirim, navigasi ke MessageActivity untuk melihat percakapan
+                        Intent intent = new Intent(RoomActivity.this, MessageActivity.class);
+                        intent.putExtra("receiverPhoneNumber", receiverPhoneNumber);
+                        startActivity(intent);
+                    })
+                    .addOnFailureListener(e -> {
+                        // Log untuk membantu debugging
+                        Log.e("RoomActivity", "Gagal mengirim pesan: ", e);
+                        Toast.makeText(RoomActivity.this, "Gagal mengirim pesan: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
+        } else {
+            Toast.makeText(RoomActivity.this, "Receiver tidak ditemukan", Toast.LENGTH_SHORT).show();
         }
     }
+
+
 }
+
+

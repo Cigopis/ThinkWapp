@@ -1,13 +1,20 @@
 package com.wongcoco.thinkwapp;
 
+import static android.view.Gravity.BOTTOM;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.content.res.ColorStateList;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowInsetsController;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
@@ -28,8 +35,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setNotchColor();
+
         fab = findViewById(R.id.fab);
         bottomNav = findViewById(R.id.bottomNav);
+        // Mengatur warna ikon dan teks navbar menjadi putih
+        bottomNav.setItemIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.white)));
+        bottomNav.setItemTextColor(ColorStateList.valueOf(getResources().getColor(R.color.white)));
 
         moveFabToBottomRight();
 
@@ -38,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
             loadFragment(new HomeFragment());
             updateFabIcon(R.drawable.baseline_home_filled_24);
 
+
+            centerFab();
         }
 
         // Listener untuk BottomNavigationView
@@ -47,12 +61,12 @@ public class MainActivity extends AppCompatActivity {
                 Fragment selectedFragment = null;
 
                 // If-else untuk navigasi
-                if (item.getItemId() == R.id.nav_home) {
-                    selectedFragment = new HomeFragment();
-                    updateFabIcon(R.drawable.baseline_home_filled_24);
-                } else if (item.getItemId() == R.id.nav_messages) {
+                if (item.getItemId() == R.id.nav_messages) {
                     selectedFragment = new MessageFragment();
                     updateFabIcon(R.drawable.baseline_message_24);
+                } else if (item.getItemId() == R.id.nav_home) {
+                    selectedFragment = new HomeFragment();
+                    updateFabIcon(R.drawable.baseline_home_filled_24);
                 } else if (item.getItemId() == R.id.nav_account) {
                     selectedFragment = new AccountFragment();
                     updateFabIcon(R.drawable.baseline_person_24);
@@ -73,6 +87,27 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    private void setNotchColor() {
+        // Using getWindow() directly for activity context
+        Window window = getWindow();
+
+        // Set status bar color
+        window.setStatusBarColor(getResources().getColor(R.color.Primary, getTheme()));
+
+        // Option to set light/dark status bar text
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            WindowInsetsController controller = window.getInsetsController();
+            if (controller != null) {
+                controller.setSystemBarsAppearance(
+                        WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+                        WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+                );
+            }
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
     }
 
     private void loadFragment(Fragment fragment) {
@@ -106,9 +141,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String getTitleForMenuItem(int itemId) {
-        if (itemId == R.id.nav_home) {
+        if (itemId == R.id.nav_messages) {
             return "Beranda"; // Judul untuk Home
-        } else if (itemId == R.id.nav_messages) {
+        } else if (itemId == R.id.nav_home) {
             return "Pesan"; // Judul untuk Company
         } else if (itemId == R.id.nav_account) {
             return "Akun"; // Judul untuk Message
@@ -118,10 +153,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private int getIconForMenuItem(int itemId) {
-        if (itemId == R.id.nav_home) {
-            return R.drawable.baseline_home_filled_24; // Ikon home
-        } else if (itemId == R.id.nav_messages) {
-            return R.drawable.baseline_message_24; // Ikon company
+        if (itemId == R.id.nav_messages) {
+            return R.drawable.baseline_message_24; // Ikon home
+        } else if (itemId == R.id.nav_home) {
+            return R.drawable.baseline_home_filled_24; // Ikon company
         } else if (itemId == R.id.nav_account) {
             return R.drawable.baseline_person_24; // Ikon message
         } else {
@@ -161,15 +196,27 @@ public class MainActivity extends AppCompatActivity {
 
     private int getFabTargetX(int itemId) {
         // Menentukan posisi FAB berdasarkan item yang dipilih
-        if (itemId == R.id.nav_home) {
-            return 0; // Posisi FAB untuk Home
-        } else if (itemId == R.id.nav_messages) {
-            return 400; // Posisi FAB untuk Messages
+        if (itemId == R.id.nav_messages) {
+            return -400; // Posisi FAB untuk Home
+        } else if (itemId == R.id.nav_home) {
+            return 0; // Posisi FAB untuk Messages
         } else if (itemId == R.id.nav_account) {
-            return 800; // Posisi FAB untuk Account
+            return 400; // Posisi FAB untuk Account
         } else {
             return 0; // Default
         }
+    }
+
+    private void centerFab() {
+        FloatingActionButton fab = findViewById(R.id.fab);
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
+        ViewGroup.MarginLayoutParams margin = (ViewGroup.MarginLayoutParams) fab.getLayoutParams();
+
+        // Mengatur aturan layout untuk memastikan FAB berada di tengah
+        params.gravity = Gravity.BOTTOM;
+        margin.leftMargin = 467;
+        fab.setLayoutParams(params);
+        fab.setLayoutParams(margin);
     }
 
     private void updateFabIcon(int drawableResId) {
@@ -202,6 +249,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     private void moveFabToBottomRight() {
         CoordinatorLayout.LayoutParams params = new CoordinatorLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -209,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
         );
 
         // Mengatur posisi FAB di pojok kanan bawah
-        params.gravity = Gravity.BOTTOM | Gravity.START;
+        params.gravity = BOTTOM | Gravity.START;
 
         // Menambahkan margin (misalnya, 16dp)
         int marginLeft = (int) getResources().getDimension(R.dimen.fab_margin_left); // Ubah sesuai kebutuhan

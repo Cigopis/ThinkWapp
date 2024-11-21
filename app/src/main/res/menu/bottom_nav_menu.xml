@@ -1,16 +1,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/nav_home"
-        android:icon="@drawable/baseline_home_filled_24"
+        android:id="@+id/nav_messages"
+        android:icon="@drawable/baseline_message_24"
+        android:iconTint="@color/white"
         android:title="" />
 
     <item
-        android:id="@+id/nav_messages"
-        android:icon="@drawable/baseline_message_24"
+        android:id="@+id/nav_home"
+        android:icon="@drawable/baseline_home_filled_24"
+        android:iconTint="@color/white"
         android:title="" />
 
     <item
         android:id="@+id/nav_account"
         android:icon="@drawable/baseline_person_24"
+        android:iconTint="@color/white"
         android:title="" />
 </menu>

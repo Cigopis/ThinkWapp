@@ -16,6 +16,7 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,8 +46,9 @@ import java.util.List;
 public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
     private ImageView bulat1, bulat2, bulat3, produkImage, pahamiImage, imageContent;
-    private TextView registerClick, sejarahTitle, thinkWoodTitle, sejarahDesc, thinkWoodDesc, syarat, tanya;
+    private TextView sejarahTitle, thinkWoodTitle, sejarahDesc, thinkWoodDesc;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private LinearLayout registerClick,syarat,tanya;
 
     private ScrollView scrollView;
     private GoogleMap mMap;
@@ -271,10 +273,11 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 // Call animateOnScroll for each view
                 animateOnScroll(sejarahTitle, scrollPercentage);
                 animateOnScroll(sejarahDesc, scrollPercentage);
+                animateOnScroll(imageContent, scrollPercentage);
                 animateOnScroll(thinkWoodTitle, scrollPercentage);
                 animateOnScroll(thinkWoodDesc, scrollPercentage);
-                animateOnScroll(produkImage, scrollPercentage);
-                animateOnScroll(pahamiImage, scrollPercentage);
+//                animateOnScroll(produkImage, scrollPercentage);
+//                animateOnScroll(pahamiImage, scrollPercentage);
             }
         });
     }
@@ -317,8 +320,5 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                     Toast.makeText(getContext(), "Terjadi kesalahan saat memeriksa pendaftaran.", Toast.LENGTH_SHORT).show();
                 });
     }
-
-
-
 
 }

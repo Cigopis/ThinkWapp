@@ -1,130 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".HomeFragment"
+    android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/profilbg"
-    tools:context=".HomeFragment">
+    >
+
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/third"
+    >
+
+    <ImageView
+        android:id="@+id/gifImageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:scaleX="2"
+        android:scaleY="2"
+        android:layout_centerInParent="true" />
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="350dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="100dp"
+        app:cardCornerRadius="35dp"
+        android:backgroundTint="@color/Four">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/logoprofil"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="2dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="55dp"
+            android:layout_marginLeft="16dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/namaTv"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:text=" "
+                        android:layout_marginLeft="16dp"
+                        android:textSize="18sp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tahunMasa"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=" "
+                        android:textColor="@color/white"
+                        android:layout_marginLeft="16dp"/>
+
+                </LinearLayout>
+                <androidx.cardview.widget.CardView
+                    android:layout_marginLeft="60dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:cardCornerRadius="30dp">
+
+                    <ImageView
+                        android:id="@+id/fotoProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/baseline_person_24"/>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="212dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center|bottom"
+            app:cardCornerRadius="20dp"
+            android:backgroundTint="@color/Secondary"
+            android:layout_marginBottom="-25dp"
+            />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center|bottom"
+            app:cardCornerRadius="20dp"
+            android:layout_marginBottom="-40dp">
+
+            <TextView
+                android:id="@+id/JudulBantuan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bantuan"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_marginTop="6dp"
+                android:layout_marginLeft="23dp"/>
+
+            <TextView
+                android:id="@+id/bantuanTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_marginTop="26dp"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="20dp"/>
+
+        </androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
+
+
+    <LinearLayout
+        android:id="@+id/backgroundCard"
+        android:layout_width="match_parent"
+        android:layout_height="670dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/rounded_top_corner">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="350dp"
-            android:layout_height="300dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="80dp"
-            app:cardCornerRadius="35dp"
-            android:backgroundTint="@color/Primary">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/logoprofil"
-                    android:layout_margin="10dp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="80dp"
-                android:layout_marginLeft="16dp"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/namaTv"
-                            android:layout_width="180dp"
-                            android:layout_height="wrap_content"
-                            android:text=" "
-                            android:layout_marginLeft="16dp"
-                            android:textSize="18sp"
-                            android:textColor="@color/white"
-                            android:textStyle="bold"/>
-
-                        <TextView
-                            android:id="@+id/tahunMasa"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text=" "
-                            android:textColor="@color/white"
-                            android:layout_marginLeft="16dp"/>
-
-                    </LinearLayout>
-                    <androidx.cardview.widget.CardView
-                        android:layout_marginLeft="60dp"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        app:cardCornerRadius="30dp">
-
-                        <ImageView
-                            android:id="@+id/fotoProfile"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:src="@drawable/baseline_person_24"/>
-                    </androidx.cardview.widget.CardView>
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="212dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center|bottom"
-                app:cardCornerRadius="20dp"
-                android:backgroundTint="@color/Secondary"
-                android:layout_marginBottom="2dp"
-                />
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="250dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center|bottom"
-                app:cardCornerRadius="20dp"
-                android:layout_marginBottom="-20dp">
-
-                <TextView
-                    android:id="@+id/JudulBantuan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:layout_marginTop="12dp"
-                    android:layout_marginLeft="20dp"/>
-
-                <TextView
-                    android:id="@+id/bantuanTxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:layout_marginTop="36dp"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="20dp"/>
-
-            </androidx.cardview.widget.CardView>
-        </androidx.cardview.widget.CardView>
-
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="130dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -150,32 +179,105 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <ImageView
+            <!-- Panduan -->
+            <LinearLayout
                 android:id="@+id/edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/bt_img_ubahakun"
                 android:layout_gravity="center"
-                android:layout_marginTop="40dp"/>
-            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="60dp"
+                android:padding="8dp"
+                android:background="@drawable/button_profile_background"
+                android:elevation="4dp">
+
+                <!-- Icon -->
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="16dp"
+                    android:src="@drawable/edit_icon"
+                    />
+
+                <!-- Text -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="Edit Profil"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+
+            <!-- Panduan -->
+            <LinearLayout
                 android:id="@+id/panduan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/bt_img_panduan"
                 android:layout_gravity="center"
-                android:layout_marginTop="6dp"/>
-            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
+                android:layout_marginBottom="16dp"
+                android:padding="8dp"
+                android:background="@drawable/button_profile_background"
+                android:elevation="4dp">
+
+                <!-- Icon -->
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="16dp"
+                    android:src="@drawable/panduan_icon"
+                    />
+
+                <!-- Text -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="Panduan Aplikasi"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+
+            <!-- Keluar Akun -->
+            <LinearLayout
                 android:id="@+id/logout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/bt_img_logout"
                 android:layout_gravity="center"
-                android:layout_marginTop="6dp"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="26dp"
+                android:layout_marginRight="26dp"
+                android:padding="8dp"
+                android:background="@drawable/button_profile_background"
+                android:elevation="4dp">
+
+                <!-- Icon -->
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="16dp"
+                    android:src="@drawable/logout_icon"
+                    />
+
+                <!-- Text -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="Keluar Akun"
+                    android:textColor="#D94343"
+                    android:textStyle="bold"/>
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>
-
+    </LinearLayout>
 </FrameLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

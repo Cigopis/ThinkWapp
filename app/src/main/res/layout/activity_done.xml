@@ -13,28 +13,52 @@
         android:src="@drawable/verified"
     android:contentDescription="@string/verified_image_desc"/>
 
-    <TextView
-        android:id="@+id/successMessage"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/successMessageLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/Primary"/>
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/successMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pendaftaran berhasil"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/Primary"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/successMessageBottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tunggu pemberitahuan selanjutnya"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:textColor="@color/Primary"
+            android:gravity="center" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/thankYouMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/Secondary"/>
+        android:text="dikirim ke email anda"
+        android:textSize="14sp"
+        android:textStyle="bold"
+
+        android:textColor="@color/Four"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonFinish"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Selesai"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         style="@style/MyButtonStyle"/>
 
 

@@ -1,44 +1,63 @@
 package com.wongcoco.thinkwapp;
 
 public class Message {
-    private String text;
-    private boolean isSentByUser;
-    private String receiverId;
 
-    // Konstruktor tanpa parameter diperlukan untuk Firebase
+    private String senderId;
+    private String senderPhoneNumber;
+    private String receiverPhoneNumber;
+    private String messageText;
+    private long timestamp;
+
+    // Konstruktor kosong untuk Firebase
     public Message() {}
 
-    // Konstruktor untuk membuat objek pesan
-    public Message(String text, boolean isSentByUser, String receiverId) {
-        this.text = text;
-        this.isSentByUser = isSentByUser;
-        this.receiverId = receiverId;
+    // Konstruktor dengan parameter
+    public Message(String senderId, String senderPhoneNumber, String receiverPhoneNumber, String messageText, long timestamp) {
+        this.senderId = senderId;
+        this.senderPhoneNumber = senderPhoneNumber;
+        this.receiverPhoneNumber = receiverPhoneNumber;
+        this.messageText = messageText;
+        this.timestamp = timestamp;
     }
 
-    // Getter dan Setter untuk atribut 'text'
-    public String getText() {
-        return text;
+    // Getter dan Setter
+    public String getSenderId() {
+        return senderId;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setSenderId(String senderId) {
+        this.senderId = senderId;
     }
 
-    // Getter dan Setter untuk atribut 'isSentByUser'
-    public boolean isSentByUser() {
-        return isSentByUser;
+    public String getSenderPhoneNumber() {
+        return senderPhoneNumber;
     }
 
-    public void setSentByUser(boolean sentByUser) {
-        isSentByUser = sentByUser;
+    public void setSenderPhoneNumber(String senderPhoneNumber) {
+        this.senderPhoneNumber = senderPhoneNumber;
     }
 
-    // Getter dan Setter untuk atribut 'receiverId'
-    public String getReceiverId() {
-        return receiverId;
+    public String getReceiverPhoneNumber() {
+        return receiverPhoneNumber;
     }
 
-    public void setReceiverId(String receiverId) {
-        this.receiverId = receiverId;
+    public void setReceiverPhoneNumber(String receiverPhoneNumber) {
+        this.receiverPhoneNumber = receiverPhoneNumber;
+    }
+
+    public String getMessageText() {
+        return messageText;
+    }
+
+    public void setMessageText(String messageText) {
+        this.messageText = messageText;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 }

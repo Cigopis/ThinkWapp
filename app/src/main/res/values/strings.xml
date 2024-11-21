@@ -6,5 +6,10 @@
     <string name="google_maps_key">AIzaSyCjeZHaZx256XkmgRwCutDNjnQpDy7ECYg</string>
     <string name="verified_image_desc">Gambar verifikasi pendaftaran berhasil</string>
 
+    <string name="navigation_drawer_open">Open Navigation Drawer</string>
+    <string name="navigation_drawer_close">Close Navigation Drawer</string>
+    <string name="deskripsi_divisi">PT Keong Nusantara Abadi memperkenalkan divisi yang fokus pada sektor pertanian, bertujuan untuk mengelola dan mengembangkan produk pertanian yang berkelanjutan. Divisi ini mencakup berbagai inisiatif, termasuk pengolahan lidah buaya menjadi minuman, pengolahan jagung menjadi kemasan kaleng seperti sweet corn, serta pencarian mitra untuk menanam bibit sengon.Divisi pertanian ini dirancang untuk memenuhi kebutuhan pasar lokal dan mendukung para petani melalui program yang ramah lingkungan dan inovatif. Dengan mengedepankan praktik pertanian yang berkelanjutan, PT Keong Nusantara Abadi berkomitmen untuk meningkatkan kesejahteraan mitra tani dan memastikan pengelolaan sumber daya alam yang bertanggung jawab. Divisi ini menjadi bagian penting dari strategi perusahaan untuk memperluas kontribusinya dalam sektor pertanian, sambil tetap berfokus pada keberlanjutan dan kemitraan yang saling menguntungkan.</string>
+
+
 
 </resources>

@@ -23,7 +23,7 @@ public class MessageFragment extends Fragment {
         ImageView btnCariKontak = view.findViewById(R.id.carikontak);
         btnCariKontak.setOnClickListener(v -> {
             // Navigasi ke halaman kontak
-            Intent intent = new Intent(getActivity(), MessageActivity.class);
+            Intent intent = new Intent(getActivity(), ContactActivity.class);
             startActivity(intent);
         });
 

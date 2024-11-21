@@ -1,5 +1,6 @@
 package com.wongcoco.thinkwapp;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,42 +10,36 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHolder> {
 
+    private Context context;
     private List<Message> messageList;
-    private static final int VIEW_TYPE_USER = 1;
-    private static final int VIEW_TYPE_OTHER = 2;
+    private String currentUserId;
 
-    public ChatAdapter(List<Message> messageList) {
+    public ChatAdapter(Context context, List<Message> messageList, String currentUserId) {
+        this.context = context;
         this.messageList = messageList;
+        this.currentUserId = currentUserId;
     }
 
     @Override
     public int getItemViewType(int position) {
         Message message = messageList.get(position);
-        return message.isSentByUser() ? VIEW_TYPE_USER : VIEW_TYPE_OTHER;
+        // Pilih layout berdasarkan apakah pesan dikirim oleh pengguna saat ini
+        return message.getSenderId().equals(currentUserId) ? R.layout.right_message_item : R.layout.left_message_item;
     }
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (viewType == VIEW_TYPE_USER) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.right_message_item, parent, false);
-            return new UserMessageViewHolder(view);
-        } else {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.left_message_item, parent, false);
-            return new OtherMessageViewHolder(view);
-        }
+    public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(viewType, parent, false);
+        return new MessageViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
         Message message = messageList.get(position);
-        if (holder.getItemViewType() == VIEW_TYPE_USER) {
-            ((UserMessageViewHolder) holder).bind(message);
-        } else {
-            ((OtherMessageViewHolder) holder).bind(message);
-        }
+        holder.messageTextView.setText(message.getMessageText());
     }
 
     @Override
@@ -52,29 +47,23 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return messageList.size();
     }
 
-    static class UserMessageViewHolder extends RecyclerView.ViewHolder {
-        TextView textView;
-
-        UserMessageViewHolder(View itemView) {
-            super(itemView);
-            textView = itemView.findViewById(R.id.text_message_right);
-        }
-
-        void bind(Message message) {
-            textView.setText(message.getText());
-        }
+    public void updateMessageList(List<Message> newMessageList) {
+        this.messageList.clear();
+        this.messageList.addAll(newMessageList);
+        notifyDataSetChanged(); // Memberitahukan adapter bahwa data telah berubah
     }
 
-    static class OtherMessageViewHolder extends RecyclerView.ViewHolder {
-        TextView textView;
+    public void addMessage(Message newMessage) {
+        messageList.add(newMessage);
+        notifyItemInserted(messageList.size() - 1); // Menambahkan pesan baru ke dalam list
+    }
 
-        OtherMessageViewHolder(View itemView) {
+    public static class MessageViewHolder extends RecyclerView.ViewHolder {
+        TextView messageTextView;
+
+        public MessageViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.text_message_left);
-        }
-
-        void bind(Message message) {
-            textView.setText(message.getText());
+            messageTextView = itemView.findViewById(R.id.message);
         }
     }
 }

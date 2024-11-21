@@ -93,6 +93,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bgedittext"
         android:layout_marginTop="5dp"
+        android:padding="10dp"
         android:hint="Masukkan NIK"/>
 
     <!-- Nama Fields -->
@@ -112,6 +113,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bgedittext"
         android:layout_marginTop="5dp"
+        android:padding="10dp"
         android:hint="Masukkan Nama"/>
 
     <!-- Alamat Fields -->
@@ -131,6 +133,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bgedittext"
         android:layout_marginTop="5dp"
+        android:padding="10dp"
         android:hint="Masukkan Alamat"/>
 
     <!-- No. Telepon Fields -->
@@ -150,6 +153,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bgedittext"
         android:layout_marginTop="5dp"
+        android:padding="10dp"
         android:hint="Masukkan No. Telepon"/>
 
     <!-- Luas Lahan Fields -->
@@ -169,6 +173,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bgedittext"
         android:layout_marginTop="5dp"
+        android:padding="10dp"
         android:hint="Masukkan Luas lahan"/>
 
     <!-- Next Button -->
