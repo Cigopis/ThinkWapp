@@ -3,6 +3,8 @@
     <style name="Base.Theme.ThinkWapp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <item name="buttonStyle">@style/MyButtonStyle</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+
     </style>
 
     <style name="Theme.ThinkWapp" parent="Base.Theme.ThinkWapp" />

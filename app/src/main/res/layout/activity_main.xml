@@ -14,19 +14,21 @@
         android:layout_height="wrap_content"
         android:id="@+id/bottomApp"
         android:layout_gravity="bottom"
-        android:backgroundTint="@color/transparent"
+        android:backgroundTint="@color/Primary"
         app:fabCradleMargin="10dp"
-        app:contentInsetStart="0dp"
-        app:fabCradleRoundedCornerRadius="50dp">
+        app:fabCradleRoundedCornerRadius="30dp"
+        app:elevation="0dp">
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/bottomNav"
             android:layout_marginEnd="0dp"
-            android:background="@color/Primary"
-            app:menu="@menu/bottom_nav_menu"/>
+            android:background="@android:color/transparent"
+            app:menu="@menu/bottom_nav_menu"
+            app:elevation="0dp"/>
     </com.google.android.material.bottomappbar.BottomAppBar>
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -35,8 +37,8 @@
         android:backgroundTint="@color/white"
         android:src="@drawable/baseline_message_24"
         android:tint="@color/Primary"
-        app:borderWidth="2dp"
         app:layout_anchor="@id/bottomApp"
+        android:layout_gravity="center"
         android:contentDescription="fab"
         app:maxImageSize="30dp"/>
 

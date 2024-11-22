@@ -3,5 +3,6 @@
 
     <dimen name="fab_margin_left">23dp</dimen>
     <dimen name="fab_margin_bottom">16dp</dimen>
+    <dimen name="fab_margin"></dimen>
 
 </resources>
