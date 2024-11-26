@@ -56,6 +56,7 @@ dependencies {
     implementation ("com.google.firebase:firebase-firestore:24.4.0")
     implementation ("com.google.android.gms:play-services-auth:20.5.0")
     implementation ("com.google.firebase:firebase-database")
+    implementation ("com.google.firebase:firebase-storage")
 
 
     implementation("org.mindrot:jbcrypt:0.4")
@@ -64,13 +65,17 @@ dependencies {
     implementation ("com.squareup.okhttp3:okhttp:4.9.3")
 
     implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
-    implementation ("com.google.android.gms:play-services-maps:18.1.0")
+    implementation ("com.google.android.gms:play-services-maps:19.0.0")
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
 
     implementation ("com.google.android.gms:play-services-location:21.0.1") // Versi terbaru dapat diperiksa
-    implementation ("com.github.bumptech.glide:glide:4.15.0")
+    implementation ("com.github.bumptech.glide:glide:4.15.1")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.15.1")
+
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
+
 
 
 }

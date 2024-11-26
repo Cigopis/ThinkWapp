@@ -1,20 +1,17 @@
 package com.wongcoco.thinkwapp;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowInsetsController;
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,7 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -43,7 +40,6 @@ public class AccountFragment extends Fragment {
     private FirebaseFirestore db;
     private TextView bantuanTxt, namaTv, emailTxt;
     private String userId;
-    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -54,23 +50,17 @@ public class AccountFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
+        SharedViewModel sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
-        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
-
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshData();
+        // Observasi perubahan data
+        sharedViewModel.getUserData().observe(getViewLifecycleOwner(), data -> {
+            if (data != null) {
+                TextView nameTextView = view.findViewById(R.id.namaTv);
+                nameTextView.setText((String) data.get("nama"));
             }
         });
 
-
         setNotchColor();
-
-        // Animasi Slide Up untuk backgroundCard
-        LinearLayout backgroundCard = view.findViewById(R.id.backgroundCard);
-        Animation slideUp = AnimationUtils.loadAnimation(getContext(), R.anim.slide_up);
-        backgroundCard.startAnimation(slideUp);
 
         // Inisialisasi View lainnya
         bantuanTxt = view.findViewById(R.id.bantuanTxt);
@@ -78,10 +68,9 @@ public class AccountFragment extends Fragment {
         namaTv = view.findViewById(R.id.namaTv);
         ImageView gifImageView = view.findViewById(R.id.gifImageView);
 
-        // Muat GIF menggunakan Glide
         Glide.with(this)
                 .asGif()
-                .load(R.drawable.pohon) // Ganti dengan nama GIF Anda di folder `res/drawable`
+                .load(R.drawable.pohon) // Ganti dengan nama GIF di folder `res/drawable`
                 .into(gifImageView);
 
         // Konfigurasi GoogleSignInClient
@@ -101,6 +90,34 @@ public class AccountFragment extends Fragment {
             emailTxt.setText("Email: Belum login");
             namaTv.setText("Nama: Belum login");
         }
+
+        SharedPreferences preferences = requireActivity().getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+
+// Ambil status checkbox dan tanggal aktivasi
+        boolean isCheckboxChecked = preferences.getBoolean("checkbox_status", false);
+        long activationDate = preferences.getLong("checkbox_activation_date", 0L);
+
+// Tambahkan log untuk status checkbox saat ini
+        Log.d("CheckboxStatus", "Status Checkbox: " + (isCheckboxChecked ? "Aktif" : "Tidak Aktif"));
+        if (isCheckboxChecked) {
+            Log.d("CheckboxStatus", "Tanggal aktivasi: " + activationDate);
+        }
+
+// Periksa apakah 7 hari telah berlalu
+        if (isCheckboxChecked && System.currentTimeMillis() - activationDate > 7 * 24 * 60 * 60 * 1000) {
+            // Reset status checkbox
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("checkbox_status", false);
+            editor.putLong("checkbox_activation_date", 0L);
+            editor.apply();
+
+            // Tambahkan log untuk perubahan status checkbox
+            Log.d("CheckboxStatus", "Checkbox di-reset ke: Tidak Aktif");
+
+            // Paksa logout dan arahkan ke halaman login
+            forceLogout();
+        }
+
 
         // Ambil data bantuan dari Firestore
         getJenisBantuanFromFirestore();
@@ -126,22 +143,55 @@ public class AccountFragment extends Fragment {
             Intent intent = new Intent(getActivity(), EditActivity.class);
             intent.putExtra("USER_ID", userId);
             startActivity(intent);
-
             v.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.zoom_in));
         });
 
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadData();
+
+        SharedPreferences preferences = requireActivity().getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+        boolean isCheckboxChecked = preferences.getBoolean("checkbox_status", false);
+        long activationDate = preferences.getLong("checkbox_activation_date", 0L);
+
+//        // Log status checkbox saat resume
+//        logCheckboxStatus(isCheckboxChecked);
+
+        // Periksa apakah 7 hari telah berlalu
+        if (isCheckboxChecked && System.currentTimeMillis() - activationDate > 7 * 24 * 60 * 60 * 1000) {
+            // Reset status checkbox
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("checkbox_status", false);
+            editor.putLong("checkbox_activation_date", 0L);
+            editor.apply();
+
+//            logCheckboxStatus(false); // Log perubahan status checkbox
+
+            // Paksa logout
+            forceLogout();
+        }
+    }
+
+    private void loadData() {
+        db.collection("registrations").document(userId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        String name = documentSnapshot.getString("nama");
+                        namaTv.setText(name);
+                    }
+                })
+                .addOnFailureListener(e -> Toast.makeText(getContext(), "Gagal memuat data", Toast.LENGTH_SHORT).show());
+    }
+
     private void setNotchColor() {
-        // Ensure that the fragment is attached to an activity
         if (getActivity() != null) {
             Window window = getActivity().getWindow();
-
-            // Mengatur status bar menjadi transparan
-            window.setStatusBarColor(Color.TRANSPARENT); // Set transparan
-
-            // Jika perangkat mendukung notch (notch-aware), kita bisa mengatur padding dan menghindari teks terhalang
+            window.setStatusBarColor(Color.TRANSPARENT);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 WindowInsetsController controller = window.getInsetsController();
                 if (controller != null) {
@@ -151,17 +201,11 @@ public class AccountFragment extends Fragment {
                     );
                 }
             } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                // Untuk Android M ke atas, status bar tetap terang
                 window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
             }
-
-            // Mengatur konten agar tidak tertutup notch, memberikan padding atas
             window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         }
     }
-
-
-
 
     private void getJenisBantuanFromFirestore() {
         db.collection("bantuan")
@@ -174,38 +218,22 @@ public class AccountFragment extends Fragment {
                     } else {
                         bantuanTxt.setText("Tidak ada data bantuan.");
                     }
-                    // Setelah data diperbarui, matikan animasi refresh
-                    swipeRefreshLayout.setRefreshing(false);
                 })
-                .addOnFailureListener(e -> {
-                    bantuanTxt.setText("Terjadi kesalahan: " + e.getMessage());
-                    Log.e("FirestoreError", "Error fetching bantuan: ", e);
-                    swipeRefreshLayout.setRefreshing(false);  // Matikan animasi refresh jika terjadi kesalahan
-                });
+                .addOnFailureListener(e -> Log.e("FirestoreError", "Error fetching bantuan: ", e));
     }
 
-
     private void getUserNameFromFirestore(String userId, TextView namaTv) {
-        db.collection("registrations")
-                .document(userId)
+        db.collection("registrations").document(userId)
                 .get()
                 .addOnSuccessListener(document -> {
                     if (document.exists()) {
                         String name = document.getString("nama");
                         namaTv.setText(name != null ? name : "Daftar sebagai mitra terlebih dahulu!");
-                        namaTv.setGravity(Gravity.START);
-
                     } else {
                         namaTv.setText("Daftar sebagai mitra terlebih dahulu!");
-
                     }
-                    // Setelah data diperbarui, matikan animasi refresh
-                    swipeRefreshLayout.setRefreshing(false);
                 })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(getActivity(), "Gagal mengambil data nama", Toast.LENGTH_SHORT).show();
-                    Log.e("FirestoreError", "Error fetching user name: ", e);
-                });
+                .addOnFailureListener(e -> Log.e("FirestoreError", "Error fetching user name: ", e));
     }
 
     private void showLogoutConfirmationDialog() {
@@ -231,20 +259,40 @@ public class AccountFragment extends Fragment {
         });
     }
 
-    private void refreshData() {
-        // Menyegarkan data pengguna dan bantuan
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
-            userId = user.getUid();
-            // Mengambil nama pengguna dari Firestore
-            getUserNameFromFirestore(userId, namaTv);
-            // Ambil data bantuan dari Firestore
-            getJenisBantuanFromFirestore();
-        }
-
-        // Matikan animasi refresh setelah data diperbarui
-        swipeRefreshLayout.setRefreshing(false);
+    private void forceLogout() {
+        Toast.makeText(requireContext(), "Login Anda telah kedaluwarsa. Silakan login kembali.", Toast.LENGTH_SHORT).show();
+        mAuth.signOut();
+        mGoogleSignInClient.signOut().addOnCompleteListener(task -> {
+            Intent intent = new Intent(getActivity(), StartActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            requireActivity().finish();
+        });
     }
 
+    private void checkLoginExpiration(SharedPreferences preferences) {
+        boolean isCheckboxChecked = preferences.getBoolean("checkbox_status", false);
+        long activationDate = preferences.getLong("checkbox_activation_date", 0L);
 
+        // Log status checkbox saat ini
+        Log.d("CheckboxStatus", "Status Checkbox: " + (isCheckboxChecked ? "Aktif" : "Tidak Aktif"));
+        if (isCheckboxChecked) {
+            Log.d("CheckboxStatus", "Tanggal aktivasi: " + activationDate);
+        }
+
+        // Periksa apakah 7 hari telah berlalu
+        if (isCheckboxChecked && System.currentTimeMillis() - activationDate > 7 * 24 * 60 * 60 * 1000) {
+            // Reset status checkbox
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("checkbox_status", false);
+            editor.putLong("checkbox_activation_date", 0L);
+            editor.apply();
+
+            // Log perubahan status checkbox
+            Log.d("CheckboxStatus", "Checkbox di-reset ke: Tidak Aktif");
+
+            // Paksa logout
+            forceLogout();
+        }
+    }
 }

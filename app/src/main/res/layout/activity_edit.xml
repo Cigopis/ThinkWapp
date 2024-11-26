@@ -1,115 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/third"
     android:padding="16dp">
 
-    <!-- User ID -->
-    <EditText
-        android:id="@+id/et_user_id"
-        android:layout_width="0dp"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="6dp"
-        android:hint="User ID"
-        android:focusable="false"
-        android:background="@drawable/bgedittext"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:scrollbars="none"
+        android:orientation="vertical">
 
-    <!-- Nama -->
-    <EditText
-        android:id="@+id/et_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Nama"
-        android:focusable="false"
-        app:layout_constraintTop_toBottomOf="@id/et_user_id"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
 
-    <!-- NIK -->
-    <EditText
-        android:id="@+id/et_nik"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="NIK"
-        android:focusable="false"
-        app:layout_constraintTop_toBottomOf="@id/et_name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
+        <LinearLayout
+            android:layout_width="match_parent"            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <!-- Nomor Telepon -->
-    <EditText
-        android:id="@+id/et_phone"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Nomor Telepon"
-        android:focusable="false"
-        app:layout_constraintTop_toBottomOf="@id/et_nik"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
 
-    <!-- Alamat -->
-    <EditText
-        android:id="@+id/et_address"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Alamat"
-        android:focusable="false"
-        app:layout_constraintTop_toBottomOf="@id/et_phone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/CardFotoProfile"
+                android:layout_marginTop="60dp"
+                android:layout_gravity="center"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:cardCornerRadius="60dp">
 
-    <!-- Button Ambil Lokasi -->
-    <Button
-        android:id="@+id/btnAmbilLokasi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ambil Lokasi Terkini"
-        app:layout_constraintTop_toBottomOf="@id/et_address"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
 
-    <!-- Luas Lahan -->
-    <EditText
-        android:id="@+id/et_land_area"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Luas Lahan"
-        android:focusable="false"
-        app:layout_constraintTop_toBottomOf="@id/btnAmbilLokasi"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
+            </androidx.cardview.widget.CardView>
 
-    <!-- Button Edit -->
-    <Button
-        android:id="@+id/btn_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Edit"
-        app:layout_constraintTop_toBottomOf="@id/et_land_area"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit foto atau avatar"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:textColor="#4379F2"/>
 
-    <!-- Button Simpan -->
-    <Button
-        android:id="@+id/btn_save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Simpan"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/btn_edit"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="700dp"
+                android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <!-- User ID -->
+                <EditText
+                    android:id="@+id/et_user_id"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:paddingLeft="6dp"
+                    android:hint="User ID"
+                    android:focusable="false"
+                    android:layout_gravity="center"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nama"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="16dp"/>
+
+                <!-- Nama -->
+                <EditText
+                    android:id="@+id/et_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nama"
+                    android:focusable="false"
+                    app:layout_constraintTop_toBottomOf="@id/et_user_id"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="2dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="NIK"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="16dp"/>
+                <!-- NIK -->
+                <EditText
+                    android:id="@+id/et_nik"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="NIK"
+                    android:focusable="false"
+                    app:layout_constraintTop_toBottomOf="@id/et_name"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nomor Telepon"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="16dp"/>
+                <!-- Nomor Telepon -->
+                <EditText
+                    android:id="@+id/et_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nomor Telepon"
+                    android:focusable="false"
+                    app:layout_constraintTop_toBottomOf="@id/et_nik"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Alamat"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="16dp"/>
+                <!-- Alamat -->
+                <EditText
+                    android:id="@+id/et_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Alamat"
+                    android:focusable="false"
+                    app:layout_constraintTop_toBottomOf="@id/et_phone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="8dp" />
+                <!-- Button Ambil Lokasi -->
+                <Button
+                    android:id="@+id/btnAmbilLokasi"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:drawableLeft="@drawable/baseline_share_location_24"
+                    android:text="Lokasi saya"
+                    android:textAlignment="textStart"
+                    android:background="@color/third"
+                    android:paddingLeft="20dp"
+                    android:textSize="8dp"
+                    android:layout_gravity="right"
+                    app:layout_constraintTop_toBottomOf="@id/et_address"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="8dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Luas Lahan"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="16dp"/>
+                <!-- Luas Lahan -->
+                <EditText
+                    android:id="@+id/et_land_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Luas Lahan"
+                    android:focusable="false"
+                    app:layout_constraintTop_toBottomOf="@id/btnAmbilLokasi"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="8dp" />
+
+                <!-- Button Edit -->
+                <Button
+                    android:id="@+id/btn_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Edit"
+                    app:layout_constraintTop_toBottomOf="@id/et_land_area"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="16dp" />
+
+                <!-- Button Simpan -->
+                <Button
+                    android:id="@+id/btn_save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Simpan"
+                    android:visibility="gone"
+                    android:layout_gravity="center"
+                    app:layout_constraintTop_toBottomOf="@id/btn_edit"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="8dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

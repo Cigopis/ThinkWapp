@@ -251,23 +251,61 @@ yang memproduksi escargot (daging bekicot) yang sebagian besar diekspor seluruhn
                     android:textStyle="bold"
                     android:textSize="24sp"
                     android:textColor="@color/unselectedTextColor"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginStart="25dp" />
+
+                <TextView
+                    android:id="@+id/thinkWoodDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginTop="8dp"
+                    android:justificationMode="inter_word"
+                    android:text="@string/deskripsi_sengon" />
+
+                <TextView
+                    android:id="@+id/thinkWoodDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginTop="8dp"
+                    android:justificationMode="inter_word"
+                    android:text="@string/deskripsi_sengon2" />
+
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="80dp"
+                    android:scrollbars="none"
                     >
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="horizontal">
 
-                        <ImageButton
+                        <ImageView
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginTop="16dp"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/sengon_gambar1"
+                            android:layout_gravity="center"
+                            />
+
+                        <ImageView
+
+                            android:layout_marginTop="16dp"
+                            android:layout_marginLeft="6dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/sengon_gambar2"
+                            android:layout_gravity="center"
+                            />
+
                     </LinearLayout>
                 </HorizontalScrollView>
 

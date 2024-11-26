@@ -33,7 +33,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.wongcoco.thinkwapp.admin.AdminDashboardActivity;
+import com.wongcoco.thinkwapp.admin.MenuAdminActivity;
 
 import java.io.IOException;
 import java.util.Random;
@@ -104,7 +104,7 @@ public class SignInActivity extends AppCompatActivity {
             Toast.makeText(SignInActivity.this, "Login sebagai Admin berhasil", Toast.LENGTH_SHORT).show();
 
             // Redirect ke halaman AdminDashboardActivity
-            Intent intent = new Intent(SignInActivity.this, AdminDashboardActivity.class);
+            Intent intent = new Intent(SignInActivity.this, MenuAdminActivity.class);
             startActivity(intent);
             finish(); // Agar tidak kembali ke halaman login
         } else {

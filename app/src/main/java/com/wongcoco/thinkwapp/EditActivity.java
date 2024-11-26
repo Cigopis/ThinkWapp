@@ -2,6 +2,7 @@ package com.wongcoco.thinkwapp;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -37,11 +39,15 @@ public class EditActivity extends AppCompatActivity {
     private FusedLocationProviderClient locationProvider;
     private boolean isEditable = false;
     private ProgressDialog progressDialog;
+    private SharedViewModel sharedViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
+
+        sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
 
         // Inisialisasi View
         etUserId = findViewById(R.id.et_user_id);
@@ -126,13 +132,19 @@ public class EditActivity extends AppCompatActivity {
                 .addOnSuccessListener(aVoid -> {
                     progressDialog.dismiss();
                     Toast.makeText(this, "Data berhasil diperbarui", Toast.LENGTH_SHORT).show();
-                    toggleFields(false);
+
+                    // Kirim data ke ViewModel
+                    sharedViewModel.setUserData(data);
+
+                    // Kembali ke Fragment
+                    finish();
                 })
                 .addOnFailureListener(e -> {
                     progressDialog.dismiss();
                     Toast.makeText(this, "Gagal memperbarui data", Toast.LENGTH_SHORT).show();
                 });
     }
+
 
     private void toggleFields(boolean enable) {
         etName.setEnabled(enable);

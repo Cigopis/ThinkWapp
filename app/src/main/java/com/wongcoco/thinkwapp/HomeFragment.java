@@ -1,10 +1,12 @@
 package com.wongcoco.thinkwapp;
 
+import static android.app.ProgressDialog.show;
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -123,16 +125,16 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             startActivity(intent);
         });
 
-        // Set OnClickListener untuk tanya
         tanya.setOnClickListener(v -> {
-            v.startAnimation(zoomIn);
-            // Tambahkan aksi lain yang diinginkan
+            v.startAnimation(zoomIn); // Animasi zoom
+            openWhatsApp("+62 823-3068-7309");
         });
 
         // Set OnClickListener untuk produkImage
         produkImage.setOnClickListener(v -> {
             v.startAnimation(zoomIn);
-            // Tambahkan aksi lain yang diinginkan
+            Intent intent = new Intent(getActivity(), GalleryActivity.class);
+            startActivity(intent);
         });
 
         // Set OnClickListener untuk pahamiImage
@@ -321,4 +323,17 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 });
     }
 
+
+    private void openWhatsApp(String phoneNumber) {
+        try {
+            // Membuka WhatsApp dengan nomor tujuan
+            String url = "https://wa.me/" + phoneNumber.replace("+", "");
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(url));
+            startActivity(intent);
+        } catch (Exception e) {
+            // Tangani jika aplikasi WhatsApp tidak ditemukan
+            Toast.makeText(getContext(), "WhatsApp tidak ditemukan di perangkat Anda", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

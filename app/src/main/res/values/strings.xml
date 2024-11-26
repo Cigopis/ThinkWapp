@@ -9,7 +9,9 @@
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
     <string name="deskripsi_divisi">PT Keong Nusantara Abadi memperkenalkan divisi yang fokus pada sektor pertanian, bertujuan untuk mengelola dan mengembangkan produk pertanian yang berkelanjutan. Divisi ini mencakup berbagai inisiatif, termasuk pengolahan lidah buaya menjadi minuman, pengolahan jagung menjadi kemasan kaleng seperti sweet corn, serta pencarian mitra untuk menanam bibit sengon.Divisi pertanian ini dirancang untuk memenuhi kebutuhan pasar lokal dan mendukung para petani melalui program yang ramah lingkungan dan inovatif. Dengan mengedepankan praktik pertanian yang berkelanjutan, PT Keong Nusantara Abadi berkomitmen untuk meningkatkan kesejahteraan mitra tani dan memastikan pengelolaan sumber daya alam yang bertanggung jawab. Divisi ini menjadi bagian penting dari strategi perusahaan untuk memperluas kontribusinya dalam sektor pertanian, sambil tetap berfokus pada keberlanjutan dan kemitraan yang saling menguntungkan.</string>
-
+    <string name="deskripsi_sengon">Sengon (Albizia chinensis) adalah sejenis pohon anggota suku Fabaceae. Pohon peneduh dan penghasil kayu ini tersebar secara alami di India, Asia Tenggara, Tiongkok selatan, dan Indonesia.[1]
+Di beberapa daerah, pohon ini dikenal sebagai séngon, singon, sengon</string>
+    <string name="deskripsi_sengon2">   Kayu sengon biasa dimanfaatkan untuk membuat peti, perahu, ramuan rumah dan jembatan.[2] Di Sabah, kayu A. chinensis diperdagangkan sebagai kayu ‘batai’, dalam campuran bersama kayu-kayu A. pedicellata dan Paraserianthes falcataria.</string>
 
 
 </resources>

@@ -1,16 +1,33 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/navRegistrations"
-        android:title="Registrations"
-        android:icon="@android:drawable/ic_menu_add" />
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn = "navigation_view">
 
-    <item
-        android:id="@+id/navEditAdmin"
-        android:title="Edit Admin"
-        android:icon="@android:drawable/ic_menu_edit" />
+    <group
+        android:checkableBehavior="single">
 
+        <item
+            android:id="@+id/nav_dashboard"
+            android:icon="@drawable/baseline_home_filled_24"
+            android:title="Home"/>
+
+        <item
+            android:id="@+id/nav_uploadAdmin"
+            android:icon="@drawable/baseline_drive_folder_upload_24"
+            android:title="Upload Gallery"/>
+
+    </group>
     <item
-        android:id="@+id/navUsers"
-        android:title="Users"
-        android:icon="@android:drawable/ic_menu_view" />
+        android:title="">
+
+        <menu>
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/logout_icon"
+                android:title="Logout"/>
+        </menu>
+
+    </item>
+
 </menu>

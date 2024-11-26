@@ -50,8 +50,9 @@
         <activity android:name=".UploadActivity" android:exported="true" />
         <activity android:name=".DoneActivity" android:exported="true"/>
         <activity android:name=".RoomActivity" android:exported="true" />
-        <activity android:name=".admin.AdminDashboardActivity" android:exported="true"/>
         <activity android:name=".EditActivity" android:exported="true" />
+
+        <activity android:name=".admin.MenuAdminActivity" android:exported="true"/>
 
     </application>
 

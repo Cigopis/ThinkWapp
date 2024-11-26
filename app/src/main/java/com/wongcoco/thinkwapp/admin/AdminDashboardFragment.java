@@ -1,9 +1,13 @@
 package com.wongcoco.thinkwapp.admin;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -11,11 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.firestore.CollectionReference;
@@ -27,62 +29,31 @@ import com.wongcoco.thinkwapp.R;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AdminDashboardActivity extends AppCompatActivity {
-    private static final String TAG = "AdminDashboardActivity";
+public class AdminDashboardFragment extends Fragment {
+    private static final String TAG = "AdminDashboardFragment";
     private TextView tvTotalRegistrations, tvTotalUsers;
     private TableLayout tableLayoutRegistrations;
     private FirebaseFirestore firestore;
-    private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
-    private ActionBarDrawerToggle toggle;
 
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.dashboard_activity);
+    public View onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_admin_dashboard, container, false);
 
         // Initialize Firebase Firestore
         firestore = FirebaseFirestore.getInstance();
 
         // Initialize Views
-        tvTotalRegistrations = findViewById(R.id.tvTotalRegistrations);
-        tvTotalUsers = findViewById(R.id.tvTotalUsers);
-        tableLayoutRegistrations = findViewById(R.id.tableLayoutRegistrations);
+        tvTotalRegistrations = view.findViewById(R.id.tvTotalRegistrations);
+        tvTotalUsers = view.findViewById(R.id.tvTotalUsers);
+        tableLayoutRegistrations = view.findViewById(R.id.tableLayoutRegistrations);
 
-        // Initialize DrawerLayout and NavigationView
-        drawerLayout = findViewById(R.id.drawerLayout);
-        navigationView = findViewById(R.id.navView);
-
-        // Initialize Toolbar and set it as ActionBar
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        // Set up ActionBarDrawerToggle
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState(); // Sync the toggle state
-
-        // Set up Navigation Drawer item clicks
-        navigationView.setNavigationItemSelectedListener(item -> {
-            int id = item.getItemId();
-            if (id == R.id.navRegistrations) {
-                Toast.makeText(this, "Navigating to Registrations", Toast.LENGTH_SHORT).show();
-            } else if (id == R.id.navEditAdmin) {
-                Toast.makeText(this, "Navigating to Edit Admin", Toast.LENGTH_SHORT).show();
-            } else if (id == R.id.navUsers) {
-                Toast.makeText(this, "Navigating to Users", Toast.LENGTH_SHORT).show();
-            }
-
-            // Fetch data from Firestore
-            fetchDataFromFirestore();
-
-            // Close the drawer after selecting an item
-            drawerLayout.closeDrawer(GravityCompat.START);
-            return true;
-        });
         // Fetch data from Firestore
         fetchDataFromFirestore();
+
+        return view;
     }
 
     private void fetchDataFromFirestore() {
@@ -97,7 +68,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
                 tableLayoutRegistrations.removeAllViews();
 
                 // Add header to table
-                TableRow headerRow = new TableRow(this);
+                TableRow headerRow = new TableRow(requireContext());
                 headerRow.setBackgroundColor(getResources().getColor(R.color.Primary));
                 addTableHeader(headerRow, "Nama");
                 addTableHeader(headerRow, "NIK");
@@ -108,7 +79,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
                 tableLayoutRegistrations.addView(headerRow);
 
                 for (QueryDocumentSnapshot document : task.getResult()) {
-                    TableRow row = new TableRow(this);
+                    TableRow row = new TableRow(requireContext());
 
                     String userId = document.getId(); // Ambil ID user
                     addTableData(row, document.getString("nama"));
@@ -120,19 +91,19 @@ public class AdminDashboardActivity extends AppCompatActivity {
                     fetchStatusForUser(userId, row);
 
                     // Tombol Edit
-                    Button btnEdit = new Button(this);
+                    Button btnEdit = new Button(requireContext());
                     btnEdit.setText("Edit");
                     btnEdit.setOnClickListener(v -> editRegistration(userId));
                     row.addView(btnEdit);
 
                     // Tombol Delete
-                    Button btnDelete = new Button(this);
+                    Button btnDelete = new Button(requireContext());
                     btnDelete.setText("Delete");
                     btnDelete.setOnClickListener(v -> deleteRegistration(userId));
                     row.addView(btnDelete);
 
                     // Tombol Beri Bantuan
-                    Button btnBeriBantuan = new Button(this);
+                    Button btnBeriBantuan = new Button(requireContext());
                     btnBeriBantuan.setText("Beri Bantuan");
                     btnBeriBantuan.setOnClickListener(v -> beriBantuan(userId, document.getString("nama")));
                     row.addView(btnBeriBantuan);
@@ -168,9 +139,8 @@ public class AdminDashboardActivity extends AppCompatActivity {
                 });
     }
 
-
     private void addTableHeader(TableRow row, String headerText) {
-        TextView header = new TextView(this);
+        TextView header = new TextView(requireContext());
         header.setText(headerText);
         header.setTextColor(getResources().getColor(android.R.color.white));
         header.setTextSize(14);
@@ -179,7 +149,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
     }
 
     private void addTableData(TableRow row, String data) {
-        TextView tvData = new TextView(this);
+        TextView tvData = new TextView(requireContext());
         tvData.setText(data);
         tvData.setPadding(16, 8, 16, 8);
         row.addView(tvData);
@@ -197,21 +167,12 @@ public class AdminDashboardActivity extends AppCompatActivity {
         }).addOnFailureListener(e -> Log.w(TAG, "Error deleting document", e));
     }
 
-    @Override
-    public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
     private void beriBantuan(String userId, String nama) {
         // Pilihan bantuan
         String[] bantuanOptions = {"Uang Tunai", "Bibit pohon", "Pupuk", "Bantuan telah selesai"};
 
         // Dialog untuk memilih jenis bantuan
-        new AlertDialog.Builder(this)
+        new AlertDialog.Builder(requireContext())
                 .setTitle("Pilih Jenis Bantuan")
                 .setItems(bantuanOptions, (dialog, which) -> {
                     String jenisBantuan = bantuanOptions[which];
@@ -234,64 +195,43 @@ public class AdminDashboardActivity extends AppCompatActivity {
                         // Jika sudah ada bantuan, lakukan update
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             String bantuanId = document.getId(); // Ambil ID bantuan yang ada
-                            updateBantuan(bantuanId, jenisBantuan); // Perbarui data bantuan
+                            updateBantuan(bantuanId, jenisBantuan);
                         }
                     } else {
-                        // Jika belum ada bantuan, buat data baru
-                        saveNewBantuan(userId, nama, jenisBantuan);
+                        // Jika belum ada, buat data bantuan baru
+                        addNewBantuan(userId, nama, jenisBantuan);
                     }
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(this, "Gagal memeriksa data bantuan", Toast.LENGTH_SHORT).show();
-                    Log.w(TAG, "Error checking existing bantuan", e);
                 });
     }
 
-    private void saveNewBantuan(String userId, String nama, String jenisBantuan) {
-        // Data bantuan baru yang akan disimpan
-        Map<String, Object> bantuanData = new HashMap<>();
-        String bantuanId = java.util.UUID.randomUUID().toString(); // Generate ID unik untuk bantuan
-        bantuanData.put("bantuanId", bantuanId);
-        bantuanData.put("userId", userId);
-        bantuanData.put("nama", nama);
-        bantuanData.put("jenisBantuan", jenisBantuan);
-        bantuanData.put("adminId", "admin123"); // Ganti dengan ID admin yang sesuai
-        bantuanData.put("waktuBantuan", System.currentTimeMillis());
-        bantuanData.put("status", "Diberikan");
+    private void addNewBantuan(String userId, String nama, String jenisBantuan) {
+        Map<String, Object> bantuan = new HashMap<>();
+        bantuan.put("userId", userId);
+        bantuan.put("nama", nama);
+        bantuan.put("status", jenisBantuan);
 
-        // Simpan data bantuan baru
-        firestore.collection("bantuan").document(bantuanId)
-                .set(bantuanData)
-                .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(this, "Bantuan Berhasil Diberikan: " + jenisBantuan, Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "Bantuan dicatat dengan ID: " + bantuanId);
+        firestore.collection("bantuan")
+                .add(bantuan)
+                .addOnSuccessListener(documentReference -> {
+                    Log.d(TAG, "Bantuan added successfully");
+                    Toast.makeText(getContext(), "Bantuan diberikan: " + jenisBantuan, Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(this, "Gagal Memberikan Bantuan", Toast.LENGTH_SHORT).show();
-                    Log.w(TAG, "Error mencatat bantuan", e);
+                    Log.w(TAG, "Error adding bantuan", e);
+                    Toast.makeText(getContext(), "Gagal memberikan bantuan", Toast.LENGTH_SHORT).show();
                 });
     }
 
     private void updateBantuan(String bantuanId, String jenisBantuan) {
-        // Data bantuan yang akan diperbarui
-        Map<String, Object> updateData = new HashMap<>();
-        updateData.put("jenisBantuan", jenisBantuan);
-        updateData.put("status", "Diberikan");
-        updateData.put("waktuBantuan", System.currentTimeMillis());
-
-        // Perbarui data bantuan di Firestore
-        firestore.collection("bantuan").document(bantuanId)
-                .update(updateData)
+        DocumentReference bantuanRef = firestore.collection("bantuan").document(bantuanId);
+        bantuanRef.update("status", jenisBantuan)
                 .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(this, "Bantuan berhasil diperbarui: " + jenisBantuan, Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "Bantuan diperbarui dengan ID: " + bantuanId);
+                    Log.d(TAG, "Bantuan updated successfully");
+                    Toast.makeText(getContext(), "Bantuan diperbarui menjadi: " + jenisBantuan, Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(this, "Gagal Memperbarui Bantuan", Toast.LENGTH_SHORT).show();
-                    Log.w(TAG, "Error memperbarui bantuan", e);
+                    Log.w(TAG, "Error updating bantuan", e);
+                    Toast.makeText(getContext(), "Gagal memperbarui bantuan", Toast.LENGTH_SHORT).show();
                 });
     }
-
-
-
 }
