@@ -81,7 +81,7 @@
         android:id="@+id/textKTP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Foto KTP"
+        android:text="Foto Surat"
         android:textStyle="bold"
         android:textSize="13sp"
         android:textColor="@color/black"
@@ -89,7 +89,7 @@
         android:contentDescription="Teks yang menjelaskan foto KTP yang harus diunggah"/>
 
     <ImageView
-        android:id="@+id/imgKTP"
+        android:id="@+id/imgSurat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"

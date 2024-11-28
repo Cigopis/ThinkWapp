@@ -220,12 +220,11 @@
 
                                 <!-- Icon -->
                                 <ImageView
-                                    android:layout_width="16dp"
-                                    android:layout_height="16dp"
-                                    android:layout_marginLeft="6dp"
-                                    android:src="@drawable/edit_icon"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    />
+                                    android:layout_marginLeft="6dp"
+                                    android:src="@drawable/edit_icon" />
 
                                 <!-- Text -->
                                 <TextView
@@ -280,7 +279,7 @@
 
                             <!-- Keluar Akun -->
                             <LinearLayout
-                                android:id="@+id/switchAkun"
+                                android:id="@+id/GantiPassword"
                                 android:layout_gravity="center"
                                 android:layout_width="120dp"
                                 android:layout_height="45dp"
@@ -306,9 +305,9 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="6dp"
+                                    android:layout_marginStart="16dp"
                                     android:layout_gravity="center"
-                                    android:text="Ganti Akun"
+                                    android:text="Ganti Password"
                                     android:textSize="12sp"
                                     android:textStyle="bold"/>
                             </LinearLayout>
@@ -382,7 +381,7 @@
 
                                 <!-- Panduan -->
                                 <LinearLayout
-                                    android:id="@+id/edit"
+                                    android:id="@+id/cbHideLocation"
                                     android:layout_gravity="center"
                                     android:layout_width="match_parent"
                                     android:layout_height="45dp"
@@ -397,7 +396,7 @@
 
                                     <!-- Checkbox -->
                                     <CheckBox
-                                        android:id="@+id/checkbox_location"
+                                        android:id="@+id/checkbox_HideLocation"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:buttonTint="@color/black" />
@@ -423,7 +422,7 @@
 
                                 <!-- Panduan -->
                                 <LinearLayout
-                                    android:id="@+id/edit"
+                                    android:id="@+id/cbLoginRestart"
                                     android:layout_gravity="center"
                                     android:layout_width="match_parent"
                                     android:layout_height="45dp"
@@ -439,48 +438,6 @@
                                     <!-- Checkbox -->
                                     <CheckBox
                                         android:id="@+id/checkbox_loginback"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:buttonTint="@color/black" />
-
-                                    <!-- Text -->
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="16dp"
-                                        android:text="Masuk ulang setiap 7hari"
-                                        android:layout_gravity="center"
-                                        android:textColor="@color/black"/>
-                                </LinearLayout>
-                            </LinearLayout>
-
-
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="20dp"
-                                android:layout_marginLeft="40dp"
-                                android:orientation="horizontal">
-
-                                <!-- Panduan -->
-                                <LinearLayout
-                                    android:id="@+id/edit"
-                                    android:layout_gravity="center"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="45dp"
-                                    android:orientation="horizontal"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_marginRight="26dp"
-                                    android:layout_marginBottom="6dp"
-                                    android:layout_marginTop="6dp"
-                                    android:padding="8dp"
-                                    android:background="@drawable/button_profile_background"
-                                    android:elevation="4dp">
-
-                                    <!-- Checkbox -->
-                                    <CheckBox
-                                        android:id="@+id/checkbox_location"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:buttonTint="@color/black" />

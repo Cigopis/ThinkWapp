@@ -1,6 +1,7 @@
 package com.wongcoco.thinkwapp;
 
-import android.app.AlertDialog;
+import static android.text.InputType.TYPE_CLASS_NUMBER;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,13 +13,16 @@ import android.util.Log;
 import android.view.Gravity;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -257,23 +261,98 @@ public class SignInActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Masukkan OTP");
 
-        LinearLayout layout = new LinearLayout(this);
-        layout.setOrientation(LinearLayout.HORIZONTAL);
-        layout.setGravity(Gravity.CENTER);
-        int boxSize = 80, boxMargin = 16;
+        // Buat layout utama untuk dialog
+        LinearLayout mainLayout = new LinearLayout(this);
+        mainLayout.setOrientation(LinearLayout.VERTICAL);
+        mainLayout.setPadding(32, 32, 32, 32); // Tambahkan padding
+        mainLayout.setGravity(Gravity.CENTER);
 
+
+        // Tambahkan ImageView untuk GIF
+        ImageView gifImageView = new ImageView(this);
+        int gifSize = 300; // Ukuran GIF (width & height)
+        LinearLayout.LayoutParams gifParams = new LinearLayout.LayoutParams(gifSize, gifSize);
+        gifParams.gravity = Gravity.CENTER;
+        gifImageView.setLayoutParams(gifParams);
+
+        // Gunakan Glide untuk memuat GIF
+        Glide.with(this)
+                .asGif()
+                .load(R.drawable.email4) // Ganti dengan file GIF Anda di res/drawable
+                .into(gifImageView);
+
+        mainLayout.addView(gifImageView); // Tambahkan GIF ke layout utama
+
+        // Buat layout horizontal untuk input OTP
+        LinearLayout inputLayout = new LinearLayout(this);
+        inputLayout.setOrientation(LinearLayout.HORIZONTAL);
+        inputLayout.setGravity(Gravity.CENTER);
+
+        // Buat array untuk menyimpan EditText
         EditText[] otpInputs = new EditText[6];
+        int boxSize = 80; // Ukuran kotak OTP
+        int boxMargin = 16; // Jarak antar kotak
+
         for (int i = 0; i < 6; i++) {
-            otpInputs[i] = createOtpEditText(i, otpInputs);
-            layout.addView(otpInputs[i]);
+            otpInputs[i] = new EditText(this);
+            otpInputs[i].setInputType(InputType.TYPE_CLASS_NUMBER);
+            otpInputs[i].setWidth(boxSize);
+            otpInputs[i].setHeight(boxSize);
+            otpInputs[i].setGravity(Gravity.CENTER);
+            otpInputs[i].setTextSize(24);
+            otpInputs[i].setPadding(5, 5, 5, 5);
+            otpInputs[i].setBackgroundResource(R.drawable.otp_edittext_background);
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(boxSize, boxSize);
+            params.setMargins(i == 0 ? 0 : boxMargin, 0, 0, 0);
+            otpInputs[i].setLayoutParams(params);
+
+            // TextWatcher untuk memindahkan fokus
+            final int index = i;
+            otpInputs[i].addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (s.length() == 1 && index < otpInputs.length - 1) {
+                        otpInputs[index + 1].requestFocus();
+                    } else if (s.length() == 0 && index > 0) {
+                        otpInputs[index - 1].requestFocus();
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {}
+            });
+
+            inputLayout.addView(otpInputs[i]);
         }
 
-        builder.setView(layout);
-        builder.setPositiveButton("Verifikasi", (dialog, which) -> verifyEnteredOtp(otpInputs));
+        mainLayout.addView(inputLayout); // Tambahkan layout input OTP ke layout utama
+        builder.setView(mainLayout);
+
+        // Tambahkan tombol konfirmasi
+        builder.setPositiveButton("Verifikasi", (dialog, which) -> {
+            StringBuilder enteredOtp = new StringBuilder();
+            for (EditText otpInput : otpInputs) {
+                enteredOtp.append(otpInput.getText().toString());
+            }
+            if (enteredOtp.toString().equals(generatedOtp)) {
+                // Berhasil, lanjutkan ke MainActivity
+                startActivity(new Intent(SignInActivity.this, MainActivity.class));
+                finish();
+            } else {
+                Toast.makeText(this, "OTP salah, coba lagi.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Tambahkan tombol batal
         builder.setNegativeButton("Batal", (dialog, which) -> dialog.cancel());
 
         builder.show();
     }
+
 
     private EditText createOtpEditText(int index, EditText[] otpInputs) {
         EditText editText = new EditText(this);

@@ -142,7 +142,7 @@ public class ConfirmationActivity extends AppCompatActivity {
         registrationMap.put("alamat", data.getAlamat());
         registrationMap.put("nomorTelepon", data.getNomorTelepon());
         registrationMap.put("luasLahan", data.getLuasLahan());
-        registrationMap.put("uriKTP", data.getUriKTP());
+        registrationMap.put("uriSurat", data.getUriKTP());
         registrationMap.put("uriLahan", data.getUriLahan());
         registrationMap.put("userId", data.getUserId());
 

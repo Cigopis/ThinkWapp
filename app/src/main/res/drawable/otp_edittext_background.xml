@@ -1,6 +1,6 @@
 <!-- otp_edittext_background.xml -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@android:color/white"/>
+    <solid android:color="@color/Primary"/>
     <corners android:radius="8dp"/>
-    <stroke android:width="2dp" android:color="@android:color/darker_gray"/>
+    <stroke android:width="2dp" android:color="@color/Four"/>
 </shape>

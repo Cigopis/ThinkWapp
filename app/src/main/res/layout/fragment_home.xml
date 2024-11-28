@@ -272,42 +272,161 @@ yang memproduksi escargot (daging bekicot) yang sebagian besar diekspor seluruhn
                     android:layout_marginEnd="25dp"
                     android:layout_marginTop="8dp"
                     android:justificationMode="inter_word"
+                    android:layout_marginBottom="30dp"
                     android:text="@string/deskripsi_sengon2" />
 
 
                 <HorizontalScrollView
+                    android:id="@+id/horizontalScrollView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginBottom="80dp"
-                    android:scrollbars="none"
+                    android:scrollbars="horizontal"
+                    android:scrollbarThumbHorizontal="@drawable/rounded_scrollbar"
+                    android:scrollbarSize="8dp"
+
                     >
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="180dp"
                         android:orientation="horizontal">
 
-                        <ImageView
-                            android:layout_marginLeft="6dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/sengon_gambar1"
+                        <androidx.cardview.widget.CardView
+                            android:layout_marginTop="30dp"
+                            android:layout_marginBottom="30dp"
+                            android:layout_width="match_parent"
+                            app:cardCornerRadius="25dp"
                             android:layout_gravity="center"
-                            />
+                            android:layout_height="150dp">
 
-                        <ImageView
 
-                            android:layout_marginTop="16dp"
-                            android:layout_marginLeft="6dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/sengon_gambar2"
+                            <ImageView
+                                android:layout_marginBottom="60dp"
+                                android:layout_width="360dp"
+                                android:layout_gravity="center"
+                                android:layout_height="800dp"
+                                android:scaleX="2"
+                                android:scaleY="2"
+                                android:src="@drawable/content1"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Mari Berkontribusi!"
+                                android:textColor="@color/white"
+                                android:textSize="28sp"
+                                android:textStyle="bold"
+                                android:layout_marginTop="30dp"
+                                android:layout_marginLeft="16dp"/>
+
+                            <TextView
+                                android:layout_width="300dp"
+                                android:layout_height="wrap_content"
+                                android:textSize="16dp"
+                                android:textColor="@color/white"
+                                android:layout_marginLeft="16dp"
+                                android:text="Agar Indonesia menjadi penghasil sengon terbesar di dunia"
+                                android:layout_marginTop="80dp"/>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_marginTop="30dp"
+                            android:layout_marginBottom="30dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_width="match_parent"
+                            app:cardCornerRadius="25dp"
                             android:layout_gravity="center"
-                            />
+                            android:layout_height="150dp">
+
+
+                            <ImageView
+                                android:layout_marginBottom="60dp"
+                                android:layout_width="360dp"
+                                android:layout_gravity="center"
+                                android:layout_height="800dp"
+                                android:scaleX="2"
+                                android:scaleY="2"
+                                android:src="@drawable/content2"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Kayu Sengon"
+                                android:textColor="#022365"
+                                android:textSize="28sp"
+                                android:textStyle="bold"
+                                android:layout_marginTop="30dp"
+                                android:layout_marginLeft="16dp"/>
+
+                            <TextView
+                                android:layout_width="300dp"
+                                android:layout_height="wrap_content"
+                                android:textSize="25sp"
+                                android:textStyle="bold"
+                                android:textColor="#022365"
+                                android:layout_marginLeft="16dp"
+                                android:text="Berbagai manfaat untuk kehidupan"
+                                android:layout_marginTop="70dp"/>
+
+                        </androidx.cardview.widget.CardView>
+
 
                     </LinearLayout>
                 </HorizontalScrollView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:layout_marginBottom="70dp"
+                    android:orientation="vertical">
+
+                    <!-- Judul PDF -->
+                    <TextView
+                        android:id="@+id/pdfTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Surat Perjanjian"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="16dp"
+                        android:gravity="center"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        app:cardCornerRadius="25dp"
+                        android:layout_height="300dp">
+
+                        <!-- Deskripsi PDF -->
+                        <TextView
+                            android:id="@+id/pdfDescription"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Klik tombol di bawah untuk membuka PDF"
+                            android:textSize="14sp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:gravity="center"/>
+
+                        <ImageView
+                            android:id="@+id/PdfGif"
+
+                            android:layout_width="200dp"
+                            android:layout_gravity="center"
+                            android:layout_height="200dp"/>
+
+                        <!-- Tombol untuk membuka PDF -->
+                        <Button
+                            android:id="@+id/openPdfButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Buka PDF"
+                            android:layout_gravity="center|bottom"/>
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
 
 
             </LinearLayout>

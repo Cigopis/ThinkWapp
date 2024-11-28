@@ -26,7 +26,7 @@ public class UploadActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
 
-    private ImageView imgKTP;
+    private ImageView imgSurat;
     private TextView btnNext, tvPrevious; // Tambahkan TextView untuk Previous
     private List<Uri> lahanUris = new ArrayList<>();
     private LinearLayout layoutFotoLahan;
@@ -41,7 +41,7 @@ public class UploadActivity extends AppCompatActivity {
         setContentView(R.layout.activity_upload);
         db = FirebaseFirestore.getInstance();
 
-        imgKTP = findViewById(R.id.imgKTP);
+        imgSurat = findViewById(R.id.imgSurat);
         layoutFotoLahan = findViewById(R.id.layoutFotoLahan);
         btnNext = findViewById(R.id.btnNext);
         tvPrevious = findViewById(R.id.btnPrevious); // Inisialisasi TextView Previous
@@ -50,7 +50,7 @@ public class UploadActivity extends AppCompatActivity {
         // Inisialisasi data registrasi menggunakan DoubleLinkedList
         registrationData = ((FormActivity) getApplication()).getRegistrationList().getLast();
 
-        imgKTP.setOnClickListener(v -> openGallery(PICK_IMAGE_KTP));
+        imgSurat.setOnClickListener(v -> openGallery(PICK_IMAGE_KTP));
 
         btnTambahLahan.setOnClickListener(v -> {
             if (lahanUris.size() < MAX_LAHAN_IMAGES) {
@@ -107,7 +107,7 @@ public class UploadActivity extends AppCompatActivity {
             if (imageUri != null) { // Pastikan imageUri tidak null
                 if (requestCode == PICK_IMAGE_KTP) {
                     ktpUri = imageUri; // Simpan URI KTP
-                    imgKTP.setImageURI(ktpUri);
+                    imgSurat.setImageURI(ktpUri);
                 } else if (requestCode == PICK_IMAGE_LAHAN) {
                     addLahanImage(imageUri);
                 }

@@ -26,6 +26,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
 
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.wongcoco.thinkwapp.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <!-- Link to file_paths.xml -->
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
         <activity
             android:name=".StartActivity"
             android:exported="true">
@@ -51,6 +62,7 @@
         <activity android:name=".DoneActivity" android:exported="true"/>
         <activity android:name=".RoomActivity" android:exported="true" />
         <activity android:name=".EditActivity" android:exported="true" />
+        <activity android:name=".GantiPasswordActivity" android:exported="true" />
 
         <activity android:name=".admin.MenuAdminActivity" android:exported="true"/>
 
