@@ -63,6 +63,8 @@
         <activity android:name=".RoomActivity" android:exported="true" />
         <activity android:name=".EditActivity" android:exported="true" />
         <activity android:name=".GantiPasswordActivity" android:exported="true" />
+        <activity android:name=".PahamiActivity" android:exported="true" />
+        <activity android:name=".GalleryActivity" android:exported="true" />
 
         <activity android:name=".admin.MenuAdminActivity" android:exported="true"/>
 

@@ -43,7 +43,7 @@
             android:id="@+id/stepUnggah"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:background="@drawable/circle_grey" />
+            android:background="@drawable/circle_green" />
 
         <TextView
             android:id="@+id/textUnggah"

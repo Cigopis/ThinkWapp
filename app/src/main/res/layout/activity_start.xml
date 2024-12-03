@@ -88,23 +88,25 @@
         <LinearLayout
 
             android:layout_marginTop="6dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginLeft="110dp"
             android:gravity="center"
             android:layout_below="@id/button_container"
             android:layout_centerHorizontal="true"
             >
 
-
-            <ImageView
+            <LinearLayout
                 android:id="@+id/google_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/login_google"
-                android:contentDescription="Google Icon" />
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@drawable/background_email_auth"
+                android:orientation="horizontal">
 
 
+            </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
 

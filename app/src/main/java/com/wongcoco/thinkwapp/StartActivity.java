@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -82,7 +83,7 @@ public class StartActivity extends AppCompatActivity {
             updateUI(currentUser);
         }
 
-        ImageView googleSignInButton = findViewById(R.id.google_icon);
+        LinearLayout googleSignInButton = findViewById(R.id.google_icon);
         googleSignInButton.setOnClickListener(v -> signInWithGoogle());
     }
 
@@ -187,41 +188,53 @@ public class StartActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Masukkan OTP");
 
-        // Buat layout baru untuk dialog
-        LinearLayout layout = new LinearLayout(this);
-        layout.setOrientation(LinearLayout.HORIZONTAL);
+        // Buat layout utama untuk dialog
+        LinearLayout mainLayout = new LinearLayout(this);
+        mainLayout.setOrientation(LinearLayout.VERTICAL);
+        mainLayout.setPadding(32, 32, 32, 32); // Tambahkan padding
+        mainLayout.setGravity(Gravity.CENTER);
 
-        // Tambahkan padding untuk memberikan jarak di tepi dialog
-        int padding = 32; // Anda bisa mengubah nilai ini sesuai kebutuhan
-        layout.setPadding(padding, padding, padding, padding);
 
-        // Set layout params untuk menengahkan isi
-        layout.setGravity(Gravity.CENTER);
+        // Tambahkan ImageView untuk GIF
+        ImageView gifImageView = new ImageView(this);
+        int gifSize = 300; // Ukuran GIF (width & height)
+        LinearLayout.LayoutParams gifParams = new LinearLayout.LayoutParams(gifSize, gifSize);
+        gifParams.gravity = Gravity.CENTER;
+        gifImageView.setLayoutParams(gifParams);
+
+        // Gunakan Glide untuk memuat GIF
+        Glide.with(this)
+                .asGif()
+                .load(R.drawable.email4) // Ganti dengan file GIF Anda di res/drawable
+                .into(gifImageView);
+
+        mainLayout.addView(gifImageView); // Tambahkan GIF ke layout utama
+
+        // Buat layout horizontal untuk input OTP
+        LinearLayout inputLayout = new LinearLayout(this);
+        inputLayout.setOrientation(LinearLayout.HORIZONTAL);
+        inputLayout.setGravity(Gravity.CENTER);
 
         // Buat array untuk menyimpan EditText
         EditText[] otpInputs = new EditText[6];
-
-        // Ukuran kotak (dalam pixel atau dp)
-        int boxSize = 80; // Anda bisa mengubah nilai ini sesuai kebutuhan
+        int boxSize = 80; // Ukuran kotak OTP
         int boxMargin = 16; // Jarak antar kotak
 
         for (int i = 0; i < 6; i++) {
             otpInputs[i] = new EditText(this);
-            otpInputs[i].setInputType(TYPE_CLASS_NUMBER);
+            otpInputs[i].setInputType(InputType.TYPE_CLASS_NUMBER);
             otpInputs[i].setWidth(boxSize);
-            otpInputs[i].setHeight(boxSize); // Mengatur tinggi agar kotak berbentuk persegi
-            otpInputs[i].setLayoutParams(new LinearLayout.LayoutParams(boxSize, boxSize));
+            otpInputs[i].setHeight(boxSize);
             otpInputs[i].setGravity(Gravity.CENTER);
-            otpInputs[i].setTextSize(24); // Ukuran teks yang lebih besar
+            otpInputs[i].setTextSize(24);
             otpInputs[i].setPadding(5, 5, 5, 5);
-            otpInputs[i].setBackgroundResource(R.drawable.otp_edittext_background); // Ganti dengan background yang Anda inginkan
+            otpInputs[i].setBackgroundResource(R.drawable.otp_edittext_background);
 
-            // Tambahkan margin antar EditText
-            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) otpInputs[i].getLayoutParams();
-            params.setMargins(i == 0 ? 0 : boxMargin, 0, 0, 0); // Hanya untuk EditText pertama, tidak memberikan margin kiri
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(boxSize, boxSize);
+            params.setMargins(i == 0 ? 0 : boxMargin, 0, 0, 0);
             otpInputs[i].setLayoutParams(params);
 
-            // Tambahkan TextWatcher untuk mengatur fokus input
+            // TextWatcher untuk memindahkan fokus
             final int index = i;
             otpInputs[i].addTextChangedListener(new TextWatcher() {
                 @Override
@@ -230,9 +243,9 @@ public class StartActivity extends AppCompatActivity {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     if (s.length() == 1 && index < otpInputs.length - 1) {
-                        otpInputs[index + 1].requestFocus(); // Pindah ke input selanjutnya
+                        otpInputs[index + 1].requestFocus();
                     } else if (s.length() == 0 && index > 0) {
-                        otpInputs[index - 1].requestFocus(); // Kembali ke input sebelumnya
+                        otpInputs[index - 1].requestFocus();
                     }
                 }
 
@@ -240,10 +253,11 @@ public class StartActivity extends AppCompatActivity {
                 public void afterTextChanged(Editable s) {}
             });
 
-            layout.addView(otpInputs[i]);
+            inputLayout.addView(otpInputs[i]);
         }
 
-        builder.setView(layout);
+        mainLayout.addView(inputLayout); // Tambahkan layout input OTP ke layout utama
+        builder.setView(mainLayout);
 
         // Tambahkan tombol konfirmasi
         builder.setPositiveButton("Verifikasi", (dialog, which) -> {
@@ -265,6 +279,7 @@ public class StartActivity extends AppCompatActivity {
 
         builder.show();
     }
+
 
 
     private void verifyOtp(String enteredOtp) {

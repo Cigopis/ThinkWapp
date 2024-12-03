@@ -1,0 +1,60 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/Primary">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Kriteria Umum"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="16dp"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Berikut adalah kriteria umum yang berlaku untuk dokumen ini:"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:padding="8dp"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1.  Luas Lahan
+Pendaftaran sebagai pemasok pohon sengon dibuka untuk pemilik lahan dengan luas minimal 1 hektar. Ini memastikan bahwa pemilik lahan memiliki ruang yang cukup untuk menanam pohon sengon secara efektif. Tidak ada batasan maksimal untuk luas lahan, asalkan lahan tersebut dapat mendukung penanaman pohon sengon secara berkelanjutan."
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:layout_marginTop="6dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2.  Kelayakan Tanah
+Lahan yang akan digunakan harus memiliki kesuburan yang baik dan mampu mendukung pertumbuhan pohon sengon. Lahan tidak boleh memiliki sifat tanah yang terlalu asam atau terlalu basah, sehingga dapat mempengaruhi pertumbuhan pohon dengan baik."
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:layout_marginTop="6dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3.  Lokasi Lahan
+Lahan yang digunakan harus mudah dijangkau oleh kendaraan untuk memudahkan pengangkutan bibit dan hasil panen."
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:layout_marginTop="6dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="4.  Dokumen yang Dibutuhkan
+Pemohon harus dapat membuktikan kepemilikan atau izin untuk mengelola lahan yang akan digunakan. Surat kepemilikan tanah atau izin pengelolaan harus disertakan dalam proses pendaftaran."
+        android:textColor="@color/white"/>
+</LinearLayout>

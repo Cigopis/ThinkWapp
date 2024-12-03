@@ -1,5 +1,6 @@
 package com.wongcoco.thinkwapp.admin;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
 import com.wongcoco.thinkwapp.R;
+import com.wongcoco.thinkwapp.StartActivity;
 
 public class MenuAdminActivity extends AppCompatActivity {
 
@@ -52,7 +54,12 @@ public class MenuAdminActivity extends AppCompatActivity {
                 } else if (menuItem.getItemId() == R.id.nav_uploadAdmin) {
                     selectedFragment = new UploadGalleryFragment();  // Replace with your UploadFragment
                 } else if (menuItem.getItemId() == R.id.nav_logout) {
-                    // Handle logout logic here
+                    Intent intent = new Intent(MenuAdminActivity.this, StartActivity.class); // Ganti 'LoginActivity' dengan activity tujuan
+                    startActivity(intent);
+
+                    // Jika ingin mengakhiri Activity saat ini
+                    finish();
+
                 }
 
                 // Replace the fragment

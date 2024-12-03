@@ -13,5 +13,23 @@
 Di beberapa daerah, pohon ini dikenal sebagai séngon, singon, sengon</string>
     <string name="deskripsi_sengon2">   Kayu sengon biasa dimanfaatkan untuk membuat peti, perahu, ramuan rumah dan jembatan.[2] Di Sabah, kayu A. chinensis diperdagangkan sebagai kayu ‘batai’, dalam campuran bersama kayu-kayu A. pedicellata dan Paraserianthes falcataria.</string>
 
+    <string name="supabase_url">https://kcsmraysbaadhtzjvbwg.supabase.co</string>
+    <string name="supabase_key">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtjc21yYXlzYmFhZGh0emp2YndnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzI5OTEwMDIsImV4cCI6MjA0ODU2NzAwMn0.riUVMr6TtH0srNFOc3ox664pqI9bfyGuCvDwwF5wSKg</string>
+
+    <string name="kriteria">Berikut adalah kriteria umum untuk mendaftar sebagai pemasok pohon sengon sesuai dengan luas lahan yang dapat digunakan dalam aplikasi atau sistem pendaftaran:
+
+1. **Luas Lahan**
+   Pendaftaran sebagai pemasok pohon sengon dibuka untuk pemilik lahan dengan luas minimal 1 hektar. Ini memastikan bahwa pemilik lahan memiliki ruang yang cukup untuk menanam pohon sengon secara efektif. Tidak ada batasan maksimal untuk luas lahan, asalkan lahan tersebut dapat mendukung penanaman pohon sengon secara berkelanjutan.
+
+2. **Kelayakan Tanah**
+   Lahan yang akan digunakan harus memiliki kesuburan yang baik dan mampu mendukung pertumbuhan pohon sengon. Lahan tidak boleh memiliki sifat tanah yang terlalu asam atau terlalu basah, sehingga dapat mempengaruhi pertumbuhan pohon dengan baik.
+
+3. **Lokasi Lahan**
+   Lahan yang digunakan harus mudah dijangkau oleh kendaraan untuk memudahkan pengangkutan bibit dan hasil panen.
+
+4. **Dokumen yang Dibutuhkan**
+   Pemohon harus dapat membuktikan kepemilikan atau izin untuk mengelola lahan yang akan digunakan. Surat kepemilikan tanah atau izin pengelolaan harus disertakan dalam proses pendaftaran.
+
+Kriteria ini bertujuan untuk memastikan bahwa pemasok pohon sengon dapat mengelola lahan secara efektif dan berkelanjutan, mendukung pertumbuhan pohon yang optimal, serta mematuhi regulasi yang berlaku.</string>
 
 </resources>

@@ -119,11 +119,15 @@ public class MitraMapsFragment extends Fragment implements OnMapReadyCallback {
                 // Menyimpan latitude dan longitude ke Firestore jika perlu
                 document.getReference().update("latitude", latitude, "longitude", longitude);
 
+                // Mengambil informasi luas lahan dari dokumen Firestore
+                String luasLahan = document.getString("luasLahan"); // Pastikan field ini ada di Firestore
+
                 // Menambahkan marker untuk lokasi mitra di peta
                 LatLng mitraLocation = new LatLng(latitude, longitude);
                 googleMap.addMarker(new MarkerOptions()
                         .position(mitraLocation)
-                        .title("Mitra " + document.getString("nama")));
+                        .title("Mitra " + document.getString("nama"))
+                        .snippet("Luas Lahan: " + luasLahan + " m²")); // Menambahkan luas lahan sebagai keterangan tambahan
 
                 // Optional: Fokuskan peta ke lokasi mitra yang baru ditambahkan
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mitraLocation, 10));
@@ -133,6 +137,7 @@ public class MitraMapsFragment extends Fragment implements OnMapReadyCallback {
             Toast.makeText(getContext(), "Error geocoding alamat", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     // Mengelola siklus hidup MapView
     @Override

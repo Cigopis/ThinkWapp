@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.wongcoco.thinkwapp"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.wongcoco.thinkwapp"
@@ -40,6 +40,7 @@ dependencies {
     implementation("androidx.activity:activity-ktx:1.7.2")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation(libs.recyclerview)
+    implementation(libs.core.ktx)
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

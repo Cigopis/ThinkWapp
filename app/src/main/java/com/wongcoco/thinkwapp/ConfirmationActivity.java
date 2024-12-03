@@ -146,8 +146,11 @@ public class ConfirmationActivity extends AppCompatActivity {
         registrationMap.put("uriLahan", data.getUriLahan());
         registrationMap.put("userId", data.getUserId());
 
+        // Tambahkan registrationDate dengan Timestamp
+        registrationMap.put("registrationDate", com.google.firebase.Timestamp.now());
+
         db.collection("registrations")
-                .document(userId)
+                .document(data.getUserId())
                 .set(registrationMap)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(ConfirmationActivity.this, "Data berhasil disimpan!", Toast.LENGTH_SHORT).show();
@@ -159,4 +162,5 @@ public class ConfirmationActivity extends AppCompatActivity {
                     Toast.makeText(ConfirmationActivity.this, "Gagal menyimpan data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
+
 }

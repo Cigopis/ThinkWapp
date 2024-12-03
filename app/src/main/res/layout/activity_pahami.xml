@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#F5F5F5">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <!-- Gambar ilustrasi kayu sengon -->
+        <ImageView
+            android:id="@+id/imgSengon"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/sengon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Judul informasi -->
+        <TextView
+            android:id="@+id/judulSengon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kayu Sengon: Sumber Daya Berkelanjutan"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:gravity="start"
+            android:layout_marginTop="200dp"
+            android:padding="16dp"
+            app:layout_constraintTop_toBottomOf="@id/imgSengon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <!-- Paragraf pengelolaan kayu sengon -->
+        <TextView
+            android:id="@+id/descSengon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kayu sengon dikenal sebagai material yang cepat tumbuh dan ideal untuk berbagai kebutuhan, seperti konstruksi, furnitur, dan industri kertas. Dengan pengelolaan yang berkelanjutan, kayu sengon menjadi solusi ramah lingkungan untuk masa depan."
+            android:textSize="14sp"
+            android:textColor="#555555"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginTop="260dp"
+            app:layout_constraintTop_toBottomOf="@id/judulSengon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="16dp"
+            />
+
+        <!-- Tombol untuk informasi lebih lanjut -->
+        <Button
+            android:id="@+id/buttonLearnMore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pelajari Lebih Lanjut"
+            android:textAllCaps="false"
+            android:backgroundTint="#4CAF50"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="400dp"
+            app:layout_constraintTop_toBottomOf="@id/descSengon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

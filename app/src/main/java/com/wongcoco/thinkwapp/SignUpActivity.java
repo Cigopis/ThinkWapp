@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,6 +28,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private EditText emailField, usernameField, passwordField;
     private Button signUpButton;
+    private TextView loginTxt;
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -46,6 +48,10 @@ public class SignUpActivity extends AppCompatActivity {
         usernameField = findViewById(R.id.usernameField);
         passwordField = findViewById(R.id.passwordField);
         signUpButton = findViewById(R.id.signUpButton);
+        loginTxt = findViewById(R.id.login_text);
+
+        loginTxt.setOnClickListener(view -> startActivity(new Intent(SignUpActivity.this, SignInActivity.class)));
+
 
         // Aksi tombol daftar
         signUpButton.setOnClickListener(new View.OnClickListener() {

@@ -30,6 +30,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -114,6 +116,7 @@ public class EditActivity extends AppCompatActivity {
         btnSave.setOnClickListener(v -> {
             saveUserData(userId);
             uploadProfileImage(userId);
+
         });
 
         btnAmbilLokasi.setOnClickListener(v -> {
@@ -125,52 +128,99 @@ public class EditActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE) {
-            imageUri = data.getData();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-                fotoProfile.setImageBitmap(bitmap);  // Menampilkan gambar yang dipilih
-            } catch (IOException e) {
-                e.printStackTrace();
+        if (resultCode == RESULT_OK && data != null) {
+            if (requestCode == IMAGE_PICK_CODE) {
+                imageUri = data.getData();
+                fotoProfile.setImageURI(imageUri); // Set gambar sementara di ImageView
+            } else {
+                String imageUrl = data.getStringExtra("image_url");
+
+                // Perbarui Fragment dengan data gambar baru
+                AccountFragment accountFragment = new AccountFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("image_url", imageUrl);
+                accountFragment.setArguments(bundle);
+
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, accountFragment)
+                        .commit();
             }
         }
     }
 
+
     private void uploadProfileImage(String userId) {
         if (imageUri != null) {
-            StorageReference fileReference = storageReference.child(userId + ".jpg");
-            fileReference.putFile(imageUri)
-                    .addOnSuccessListener(taskSnapshot -> {
-                        fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
-                            // Simpan URL gambar di Firestore
-                            saveProfileImageUrlToFirestore(userId, uri.toString());
-                        });
-                    })
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(this, "Gagal mengunggah gambar", Toast.LENGTH_SHORT).show();
-                    });
+            try {
+                progressDialog.show();
+
+                // Ambil bitmap dari URI
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+
+                // Simpan gambar ke direktori internal
+                String fileName = userId + ".jpg";
+                File directory = new File(getFilesDir(), "profile_images");
+                if (!directory.exists()) {
+                    directory.mkdirs(); // Buat folder jika belum ada
+                }
+
+                // Hapus gambar lama jika ada
+                File oldFile = new File(directory, fileName);
+                if (oldFile.exists()) {
+                    oldFile.delete(); // Menghapus gambar lama
+                }
+
+                // Simpan gambar baru
+                File file = new File(directory, fileName);
+                FileOutputStream fos = new FileOutputStream(file);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                fos.close();
+
+                // Simpan path lokal ke Firestore atau ViewModel
+                String localPath = file.getAbsolutePath();
+                saveProfileImageUrlToFirestore(userId, localPath);  // Fungsi untuk menyimpan URL ke Firestore
+
+                // Menutup progress dialog dan memberi notifikasi
+                progressDialog.dismiss();
+                Toast.makeText(this, "Gambar berhasil diperbarui", Toast.LENGTH_SHORT).show();
+
+                // Kirim path gambar yang diperbarui ke Fragment atau Activity lain
+                Intent intent = new Intent();
+                intent.putExtra("image_url", localPath);
+                setResult(RESULT_OK, intent);
+                finish();
+            } catch (IOException e) {
+                progressDialog.dismiss();
+                Toast.makeText(this, "Gagal memperbarui gambar: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                e.printStackTrace();  // Cetak stack trace untuk membantu debugging
+            }
         } else {
             Toast.makeText(this, "Pilih gambar terlebih dahulu", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void saveProfileImageUrlToFirestore(String userId, String imageUrl) {
+
+
+
+
+    private void saveProfileImageUrlToFirestore(String userId, String imagePath) {
         progressDialog.show();
         Map<String, Object> data = new HashMap<>();
-        data.put("fotoProfile", imageUrl);
+        data.put("fotoProfile", imagePath);
 
         firestore.collection("registrations").document(userId)
                 .update(data)
                 .addOnSuccessListener(aVoid -> {
                     progressDialog.dismiss();
                     Toast.makeText(this, "Foto berhasil diperbarui", Toast.LENGTH_SHORT).show();
-                    finish();  // Kembali ke halaman sebelumnya
                 })
                 .addOnFailureListener(e -> {
                     progressDialog.dismiss();
                     Toast.makeText(this, "Gagal memperbarui foto", Toast.LENGTH_SHORT).show();
                 });
     }
+
 
 
     private void loadUserData(String userId) {
@@ -290,4 +340,6 @@ public class EditActivity extends AppCompatActivity {
             }
         }
     }
+
+
 }

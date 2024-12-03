@@ -38,18 +38,15 @@ public class GalleryActivity extends AppCompatActivity {
     }
 
     private void fetchGalleryData() {
-        firestore.collection("gallery").get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        galleryList.clear();
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            GalleryItem item = document.toObject(GalleryItem.class);
-                            galleryList.add(item);
-                        }
-                        adapter.notifyDataSetChanged();
-                    } else {
-                        Log.w(TAG, "Error getting documents: ", task.getException());
-                    }
-                });
+        galleryList.clear();
+        galleryList.add(new GalleryItem("Kayu Sengon: Pemotongan Kayu",
+                "https://images.unsplash.com/photo-1502082553048-f009c37129b9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400"));
+        galleryList.add(new GalleryItem("Pengelolaan Kayu Sengon",
+                "https://images.unsplash.com/photo-1611692558904-467b17215f98?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400"));
+        galleryList.add(new GalleryItem("Pengangkutan Kayu Sengon",
+                "https://images.unsplash.com/photo-1576664018968-007c1a93b5fa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400"));
+        adapter.notifyDataSetChanged();
     }
+
+
 }

@@ -296,6 +296,7 @@ yang memproduksi escargot (daging bekicot) yang sebagian besar diekspor seluruhn
                             android:layout_marginTop="30dp"
                             android:layout_marginBottom="30dp"
                             android:layout_width="match_parent"
+
                             app:cardCornerRadius="25dp"
                             android:layout_gravity="center"
                             android:layout_height="150dp">
@@ -378,59 +379,32 @@ yang memproduksi escargot (daging bekicot) yang sebagian besar diekspor seluruhn
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="400dp"
-                    android:layout_marginBottom="70dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="90dp"
                     android:orientation="vertical">
 
-                    <!-- Judul PDF -->
-                    <TextView
-                        android:id="@+id/pdfTitle"
+                    <!-- TabLayout untuk menu horizontal -->
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tabLayout"
+                        android:layout_width="200dp"
+                        android:layout_height="30dp"
+                        app:tabMode="fixed"
+                        app:tabGravity="fill"
+                        android:background="@color/Primary"
+                        app:tabTextColor="@color/white"
+                        app:tabSelectedTextColor="@color/Secondary"
+                        app:tabIndicatorColor="@color/Secondary" />
+
+                    <!-- ViewPager2 untuk konten menu -->
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/viewPager"
+                        android:background="@color/Primary"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Surat Perjanjian"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="16dp"
-                        android:gravity="center"/>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        app:cardCornerRadius="25dp"
-                        android:layout_height="300dp">
-
-                        <!-- Deskripsi PDF -->
-                        <TextView
-                            android:id="@+id/pdfDescription"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Klik tombol di bawah untuk membuka PDF"
-                            android:textSize="14sp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginBottom="16dp"
-                            android:gravity="center"/>
-
-                        <ImageView
-                            android:id="@+id/PdfGif"
-
-                            android:layout_width="200dp"
-                            android:layout_gravity="center"
-                            android:layout_height="200dp"/>
-
-                        <!-- Tombol untuk membuka PDF -->
-                        <Button
-                            android:id="@+id/openPdfButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Buka PDF"
-                            android:layout_gravity="center|bottom"/>
-                    </androidx.cardview.widget.CardView>
-
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
 
 
             </LinearLayout>
-
 
         </ScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

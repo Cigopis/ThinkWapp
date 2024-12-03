@@ -30,6 +30,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.GoogleMap;
@@ -42,6 +43,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -53,6 +56,10 @@ import java.io.InputStream;
 import java.util.List;
 
 public class HomeFragment extends Fragment implements OnMapReadyCallback {
+
+    public HomeFragment() {
+        // Required empty public constructor
+    }
 
     private ImageView bulat1, bulat2, bulat3, produkImage, pahamiImage, imageContent;
     private TextView sejarahTitle, thinkWoodTitle, sejarahDesc, thinkWoodDesc;
@@ -73,12 +80,12 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
 
-        Button openPdfButton = view.findViewById(R.id.openPdfButton);
-
-        // Button untuk membuka PDF dari res/raw
-        openPdfButton.setOnClickListener(v -> {
-            openPdfFromRaw();
-        });
+//        Button openPdfButton = view.findViewById(R.id.openPdfButton);
+//
+//        // Button untuk membuka PDF dari res/raw
+//        openPdfButton.setOnClickListener(v -> {
+//            openPdfFromRaw();
+//        });
 
 
         // Inisialisasi elemen
@@ -99,12 +106,12 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         syarat = view.findViewById(R.id.syarat);
         tanya = view.findViewById(R.id.tanya);
 
-        ImageView gifImageView = view.findViewById(R.id.PdfGif);
-
-        Glide.with(this)
-                .asGif()
-                .load(R.drawable.pdf1) // Ganti dengan nama GIF di folder `res/drawable`
-                .into(gifImageView);
+//        ImageView gifImageView = view.findViewById(R.id.PdfGif);
+//
+//        Glide.with(this)
+//                .asGif()
+//                .load(R.drawable.pdf1) // Ganti dengan nama GIF di folder `res/drawable`
+//                .into(gifImageView);
 
         HorizontalScrollView scrollView = view.findViewById(R.id.horizontalScrollView);
 
@@ -139,6 +146,21 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 // Mulai scroll otomatis
         handler.post(runnable);
 
+
+        // Menghubungkan TabLayout dan ViewPager2
+        TabLayout tabLayout = view.findViewById(R.id.tabLayout);
+        ViewPager2 viewPager = view.findViewById(R.id.viewPager);
+
+        // Menyiapkan adapter untuk ViewPager2
+        ViewPagerAdapter adapter = new ViewPagerAdapter(this);
+        viewPager.setAdapter(adapter);
+
+        // Menyambungkan TabLayout dengan ViewPager2
+        String[] tabTitles = new String[]{"Perjanjian", "Kriteria"};
+
+        new TabLayoutMediator(tabLayout, viewPager,
+                (tab, position) -> tab.setText(tabTitles[position]) // Mengatur nama tab berdasarkan array
+        ).attach();
 
 
 
@@ -199,12 +221,14 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         // Set OnClickListener untuk pahamiImage
         pahamiImage.setOnClickListener(v -> {
             v.startAnimation(zoomIn);
-            // Tambahkan aksi lain yang diinginkan
+            Intent intent = new Intent(getActivity(), PahamiActivity.class);
+            startActivity(intent);
         });
 
         // Setup SwipeRefreshLayout
         setupSwipeRefreshLayout();
         setupScrollListener();
+
 
         return view;
     }

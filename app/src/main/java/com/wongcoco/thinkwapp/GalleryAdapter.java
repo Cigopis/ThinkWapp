@@ -16,9 +16,8 @@ import com.wongcoco.thinkwapp.R;
 import java.util.List;
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryViewHolder> {
-
-    private final Context context;
-    private final List<GalleryItem> galleryList;
+    private Context context;
+    private List<GalleryItem> galleryList;
 
     public GalleryAdapter(Context context, List<GalleryItem> galleryList) {
         this.context = context;
@@ -35,8 +34,8 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryV
     @Override
     public void onBindViewHolder(@NonNull GalleryViewHolder holder, int position) {
         GalleryItem item = galleryList.get(position);
-        holder.tvDescription.setText(item.getDescription());
-        Glide.with(context).load(item.getImageUrl()).into(holder.ivImage);
+        holder.titleText.setText(item.getTitle());
+        Glide.with(context).load(item.getImageUrl()).into(holder.imageView);
     }
 
     @Override
@@ -45,13 +44,13 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.GalleryV
     }
 
     public static class GalleryViewHolder extends RecyclerView.ViewHolder {
-        ImageView ivImage;
-        TextView tvDescription;
+        TextView titleText;
+        ImageView imageView;
 
         public GalleryViewHolder(@NonNull View itemView) {
             super(itemView);
-            ivImage = itemView.findViewById(R.id.ivImage);
-            tvDescription = itemView.findViewById(R.id.tvDescription);
+            titleText = itemView.findViewById(R.id.textViewTitle);
+            imageView = itemView.findViewById(R.id.imageView);
         }
     }
 }
